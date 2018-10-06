@@ -89,7 +89,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Encryption\EncryptionManager.cs" />
-    <Compile Include="Jwt\CustomJwtFormat.cs" />
+    <Compile Include="Jwt\JwtTokenFormat.cs" />
     <Compile Include="OAuth\AuthorizationServiceProviderBase.cs" />
     <Compile Include="OAuth\SecurityKeyProvider.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
