@@ -82,9 +82,9 @@ namespace Security.Encryption
         {
             return new AesCryptoServiceProvider
             {
-                Key = privateKey,
-                Mode = CipherMode.CBC,
-                Padding = PaddingMode.PKCS7
+                Key      = privateKey,
+                Mode     = CipherMode.CBC,
+                Padding  = PaddingMode.PKCS7
             };
         }
 

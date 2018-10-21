@@ -43,8 +43,8 @@ namespace Security.Jwt
                     protectedText,
                     new TokenValidationParameters
                     {
-                        ValidateIssuerSigningKey = true,
-                        IssuerSigningKey = keyProvider.GetSigningKey()
+                        ValidateIssuerSigningKey  = true,
+                        IssuerSigningKey          = keyProvider.GetSigningKey()
                     },
                     out SecurityToken securityToken);
 

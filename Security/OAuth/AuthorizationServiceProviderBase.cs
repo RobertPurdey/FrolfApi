@@ -51,11 +51,11 @@ namespace Security.OAuth
             }
 
             var props = new AuthenticationProperties(new Dictionary<string, string>
+            {
                 {
-                    {
-                         "audience", "self"
-                    }
-                });
+                    "audience", "self"
+                }
+            });
 
 
             var newTicket = new AuthenticationTicket(context.Ticket.Identity, props);
