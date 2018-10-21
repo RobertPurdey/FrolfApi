@@ -16,9 +16,6 @@ namespace Frolf.Api
             WebApiConfig.Configure(config);
             OAuthConfig.Configure(app, config);
 
-            // todo: redo this in similar fashion to above classes
-            //ConfigureAuth(app);
-
             app.UseWebApi(config);
         }
     }

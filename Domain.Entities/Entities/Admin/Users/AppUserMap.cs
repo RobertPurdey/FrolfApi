@@ -11,7 +11,7 @@ namespace Domain.Entities
         {
             ToTable("app_user");
 
-            // Primary Key
+            // Primary key
             HasKey(u => u.EntityKey);
 
             // Properties
@@ -19,7 +19,7 @@ namespace Domain.Entities
             Property(u => u.Password).IsRequired();
             Property(u => u.Email).IsRequired();
 
-            // Table + Column Mappings
+            // Table + column mappings
             Property(u => u.EntityKey).HasColumnName("id");
             Property(u => u.LoginName).HasColumnName("login_name");
             Property(u => u.Password).HasColumnName("password");

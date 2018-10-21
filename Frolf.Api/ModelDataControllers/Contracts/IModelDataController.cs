@@ -9,8 +9,6 @@ namespace Frolf.Api.ModelDataControllers.Contracts
     {
         TApiModel GetById(Guid id);
         IEnumerable<TApiModel> GetAll();
-        //IEnumerable<TApiModel> Filter(TFilterModel filter);
-        //PageResult<TApiModel> Filter(HttpRequestMessage request, ODataQueryOptions<TApiModel> options, TFilterModel filter);
         void Insert(TApiModel newModel);
         void Update(TApiModel modelToUpdate);
         void Delete(TApiModel modelToDelete);

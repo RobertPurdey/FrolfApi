@@ -39,9 +39,7 @@ namespace Frolf.Api.ModelDataControllers.Users
                 appUserMapper.MapToApiModel(model, entity);
 
                 yield return model;
-            }
-            
-
+            }       
         }
 
         public AppUserModel GetById(Guid id)

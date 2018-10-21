@@ -5,6 +5,7 @@ using Domain.Entities.Entities;
 using Domain.Query.Contracts;
 using Frolf.Api.Mappers;
 using Frolf.Api.ModelDataControllers.Contracts;
+using Frolf.Api.ModelDataControllers.FrolfGroups;
 using Frolf.Api.ModelDataControllers.Users;
 using Security.Contracts;
 using Security.OAuth;
@@ -13,9 +14,9 @@ using System.Web.Http;
 
 namespace Frolf.Api.IoC
 {
-    public class DefaultRegistry : Registry
+    public class ApiRegistry : Registry
     {
-        public DefaultRegistry()
+        public ApiRegistry()
         {
             Scan(s =>
             {
@@ -34,6 +35,7 @@ namespace Frolf.Api.IoC
 
             // ModelDataControllers
             For<IAppUserModelDataController>().Use<AppUserModelDataController>();
+            For<IFrolfGroupModelDataController>().Use<FrolfGroupModelDataController>();
         }
     }
 }

@@ -1,11 +1,17 @@
 ﻿using Domain.Entities.Contracts;
 using System;
+using System.Collections.Generic;
 using System.Security.Principal;
 
 namespace Domain.Entities
 {
     public class AppUser : IAppUser
     {
+        public AppUser()
+        {
+            Players = new HashSet<Player>();
+        }
+
         public Guid EntityKey { get; set; }
 
         public string LoginName { get; set; }
@@ -17,6 +23,8 @@ namespace Domain.Entities
         public IIdentity Identity => this;
         public bool IsAuthenticated => true;
         public bool IsInRole(string role) => false;
+
+        public virtual ICollection<Player> Players { get; set; }
 
         public virtual void SetAsCurrentUser()
         {

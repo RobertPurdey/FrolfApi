@@ -9,7 +9,7 @@ using System.Web.Http;
 namespace Frolf.Api.Controllers
 {
     [RoutePrefix("api/appusers")]
-    public class AppUserController : ControllerBase
+    public class AppUserController : EditControllerBase<AppUserModel>
     {
         private readonly IAppUserModelDataController appUserModelDataController;
 
@@ -21,7 +21,7 @@ namespace Frolf.Api.Controllers
 
         [HttpGet]
         [Route("{id:guid}")]
-        public Task<AppUserModel> GetById([FromUri] Guid id)
+        public override Task<AppUserModel> GetById([FromUri] Guid id)
         {
             var foundAppUser = appUserModelDataController.GetById(id);
 
@@ -35,6 +35,21 @@ namespace Frolf.Api.Controllers
             var allUsers = appUserModelDataController.GetAll();
 
             return Task.FromResult(allUsers);
+        }
+
+        protected override Task<AppUserModel> Create([FromBody] AppUserModel newItem)
+        {
+            throw new NotImplementedException();
+        }
+
+        protected override Task Remove([FromUri] Guid id)
+        {
+            throw new NotImplementedException();
+        }
+
+        protected override Task Update([FromBody] AppUserModel newDetails)
+        {
+            throw new NotImplementedException();
         }
     }
 }

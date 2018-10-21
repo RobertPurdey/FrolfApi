@@ -28,4 +28,18 @@
     <Property Name="ParentElementType" Value="SqlTable" />
     <Property Name="NewName" Value="group_role" />
   </Operation>
+  <Operation Name="Rename Refactor" Key="67efd52d-6438-4608-865d-650c64afa76f" ChangeDateTime="10/21/2018 21:51:44">
+    <Property Name="ElementName" Value="[dbo].[frolf_group].[createdBy]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[frolf_group]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="created_by" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="6b560c97-d334-4d8d-bcec-00019ce60f30" ChangeDateTime="10/21/2018 22:10:51">
+    <Property Name="ElementName" Value="[dbo].[frolf_groupee].[Id]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[frolf_groupee]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="player_id" />
+  </Operation>
 </Operations>

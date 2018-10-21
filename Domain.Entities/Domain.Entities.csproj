@@ -49,9 +49,14 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Entities\Admin\UserExtensions.cs" />
-    <Compile Include="Entities\Admin\Users\Maps\AppUserMap.cs" />
-    <Compile Include="Entities\Admin\Users\Models\AppUser.cs" />
+    <Compile Include="Entities\Admin\Users\AppUserMap.cs" />
+    <Compile Include="Entities\Admin\Users\AppUser.cs" />
     <Compile Include="Entities\EntityDbContext.cs" />
+    <Compile Include="Entities\Players\PlayerMap.cs" />
+    <Compile Include="Entities\Players\Player.cs" />
+    <Compile Include="Entities\Players\GroupRole.cs" />
+    <Compile Include="Entities\FrolfGroups\FrolfGroupMap.cs" />
+    <Compile Include="Entities\FrolfGroups\FrolfGroup.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

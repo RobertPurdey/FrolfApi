@@ -9,7 +9,7 @@ namespace Frolf.Api.App_Start
     {
         public static void Configure(HttpConfiguration config)
         {
-            var container = new Container(new DefaultRegistry())
+            var container = new Container(new ApiRegistry())
             {
                 Name = "root container"
             };
