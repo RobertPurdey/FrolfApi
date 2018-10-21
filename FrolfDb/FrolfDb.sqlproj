@@ -61,6 +61,8 @@
   </ItemGroup>
   <ItemGroup>
     <Build Include="Tables\app_user.sql" />
+    <Build Include="Tables\frolf_group.sql" />
+    <Build Include="Tables\frolf_groupee.sql" />
   </ItemGroup>
   <ItemGroup>
     <RefactorLog Include="FrolfDb.refactorlog" />

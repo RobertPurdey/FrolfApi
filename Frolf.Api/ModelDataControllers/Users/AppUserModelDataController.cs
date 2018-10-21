@@ -33,7 +33,15 @@ namespace Frolf.Api.ModelDataControllers.Users
 
         public IEnumerable<AppUserModel> GetAll()
         {
-            throw new NotImplementedException();
+            foreach (var entity in appUserQueryService.GetAll())
+            {
+                var model = new AppUserModel();
+                appUserMapper.MapToApiModel(model, entity);
+
+                yield return model;
+            }
+            
+
         }
 
         public AppUserModel GetById(Guid id)

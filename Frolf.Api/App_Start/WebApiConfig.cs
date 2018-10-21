@@ -7,7 +7,6 @@ using System.Web.Http.ExceptionHandling;
 using Frolf.Api.MessageHandlers;
 using Frolf.Api.Routing;
 using Microsoft.Owin.Security.OAuth;
-using Newtonsoft.Json.Serialization;
 
 namespace Frolf.Api
 {
@@ -24,9 +23,9 @@ namespace Frolf.Api
             config.MapHttpAttributeRoutes(new DirectRouteProvider());
 
             config.Routes.MapHttpRoute(
-                name: "DefaultApi",
-                routeTemplate: "api/{controller}/{id}",
-                defaults: new { id = RouteParameter.Optional }
+                name:           "DefaultApi",
+                routeTemplate:  "api/{controller}/{id}",
+                defaults:       new { id = RouteParameter.Optional }
             );
 
             RegisterHandlers(config);

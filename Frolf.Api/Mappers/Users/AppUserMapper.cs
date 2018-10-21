@@ -12,16 +12,16 @@ namespace Frolf.Api.Mappers.Users
 
         public void MapToApiModel(AppUserModel apiModel, AppUser entity)
         {
-            apiModel.Id            = entity.EntityKey;
-            apiModel.LoginName     = entity.LoginName;
+            apiModel.IdKey         = entity.EntityKey;
+            apiModel.NickName      = entity.LoginName;
             apiModel.Password      = entity.Password;
             apiModel.Email         = entity.Email;
         }
 
         public void MapToEntity(AppUserModel apiModel, AppUser entity)
         {
-            entity.EntityKey    = apiModel.Id;
-            entity.LoginName    = apiModel.LoginName;
+            entity.EntityKey    = apiModel.IdKey;
+            entity.LoginName    = apiModel.NickName;
             entity.Password     = apiModel.Password;
             entity.Email        = apiModel.Email;
         }

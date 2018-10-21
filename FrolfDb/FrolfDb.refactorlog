@@ -7,4 +7,25 @@
     <Property Name="ParentElementType" Value="SqlTable" />
     <Property Name="NewName" Value="id" />
   </Operation>
+  <Operation Name="Rename Refactor" Key="29eaf40e-3bcd-4eb6-b52b-cfcd96a8fb16" ChangeDateTime="10/21/2018 03:02:41">
+    <Property Name="ElementName" Value="[dbo].[frolf_group].[Id]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[frolf_group]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="id" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="8f4eb4f7-f39e-44df-95dc-e86719a2ae0c" ChangeDateTime="10/21/2018 03:07:09">
+    <Property Name="ElementName" Value="[dbo].[frolf_groupee].[Id]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[frolf_groupee]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="id" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="e121a926-1315-4b25-b702-2b9fb8d84240" ChangeDateTime="10/21/2018 10:33:14">
+    <Property Name="ElementName" Value="[dbo].[frolf_groupee].[role]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[frolf_groupee]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="group_role" />
+  </Operation>
 </Operations>

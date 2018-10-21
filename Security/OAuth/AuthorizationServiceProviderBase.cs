@@ -43,7 +43,7 @@ namespace Security.OAuth
 
         public override Task GrantRefreshToken(OAuthGrantRefreshTokenContext context)
         {
-            if (context.Ticket == null)
+            if ( context.Ticket == null )
             {
                 context.SetError("invalid_grant", MessageResource.MissingPreviousTicketForRefreshToken);
 

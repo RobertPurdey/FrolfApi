@@ -1,0 +1,6 @@
+﻿CREATE TABLE [dbo].[frolf_group]
+(
+	[id] UNIQUEIDENTIFIER NOT NULL PRIMARY KEY, 
+    [name] VARCHAR(50) NOT NULL, 
+    [createdBy] UNIQUEIDENTIFIER NOT NULL
+)

@@ -4,6 +4,6 @@ namespace Frolf.Api.Models
 {
     public interface IApiDataModel
     {
-        Guid Id { get; set; }
+        Guid IdKey { get; set; }
     }
 }

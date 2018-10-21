@@ -440,7 +440,7 @@
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>53739</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://localhost:53739/</IISUrl>
+          <IISUrl>http://192.168.1.65:53739/</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>
