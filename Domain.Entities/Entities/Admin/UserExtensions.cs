@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -11,9 +12,12 @@ namespace Domain.Entities
 {
     public static class UserExtensions
     {
-        public static IAppUser GetCurrentUser()
+        public static Guid GetCurrentUserGuid()
         {
-            return Thread.CurrentPrincipal as IAppUser;
+            var claimsPrincipal = Thread.CurrentPrincipal as ClaimsPrincipal;
+            var userGuidClaim   = claimsPrincipal.FindFirst(ClaimTypes.NameIdentifier);
+
+            return Guid.Parse(userGuidClaim.Value);
         }
 
         public static void SetCurrentUser(IAppUser user)

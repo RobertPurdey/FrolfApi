@@ -32,11 +32,8 @@ namespace Domain.Entities
         }
 
         public virtual bool IsCurrentUser()
-        {
-            var user = UserExtensions.GetCurrentUser();
-
-            return user != null 
-                && user.EntityKey == EntityKey;
+        { 
+            return UserExtensions.GetCurrentUserGuid() == EntityKey;
         }
     }
 }

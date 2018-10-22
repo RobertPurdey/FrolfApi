@@ -1,6 +1,7 @@
 ﻿using Frolf.Api.ModelDataControllers.Contracts;
 using Frolf.Api.Models.FrolfGroups;
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Web.Http;
 
@@ -17,8 +18,13 @@ namespace Frolf.Api.Controllers
             frolfGroupModelDataController = frolfGroupDataController;
         }
 
-        [HttpGet]
-        [Route("{id:guid}")]
+        public override Task<IEnumerable<FrolfGroupModel>> GetAll()
+        {
+            var foundFrolfGroups = frolfGroupModelDataController.GetAll();
+
+            return Task.FromResult(foundFrolfGroups);
+        }
+
         public override Task<FrolfGroupModel> GetById([FromUri] Guid id)
         {
             var foundFrolfGroup = frolfGroupModelDataController.GetById(id);

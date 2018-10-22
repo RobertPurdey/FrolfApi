@@ -51,5 +51,10 @@ namespace Frolf.Api.Controllers
         {
             throw new NotImplementedException();
         }
+
+        public override Task<IEnumerable<AppUserModel>> GetAll()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

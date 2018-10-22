@@ -1,5 +1,6 @@
 ﻿using Frolf.Api.Models;
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Web.Http;
 
@@ -22,6 +23,10 @@ namespace Frolf.Api.Controllers
         protected abstract Task Remove([FromUri] Guid id);
 
         protected abstract Task Update([FromBody] TApiModel newDetails);
+        
+        [HttpGet]
+        [Route("")]
+        public abstract Task<IEnumerable<TApiModel>> GetAll();
 
         [HttpGet]
         [Route("{id:guid}")]

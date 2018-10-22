@@ -33,12 +33,20 @@ namespace Frolf.Api.ModelDataControllers.FrolfGroups
 
         public IEnumerable<FrolfGroupModel> GetAll()
         {
+            var currUserGuid = UserExtensions.GetCurrentUserGuid();
+
             foreach (var entity in frolfGroupQueryService.GetAll())
             {
-                var model = new FrolfGroupModel();
-                frolfGroupMapper.MapToApiModel(model, entity);
+                var isCurrUserInGroup = 
+                    entity.GroupMembers.Any(gm => gm.AppUserId == currUserGuid);
 
-                yield return model;
+                if ( isCurrUserInGroup )
+                {
+                    var model = new FrolfGroupModel();
+                    frolfGroupMapper.MapToApiModel(model, entity);
+
+                    yield return model;
+                }
             }       
         }
 

@@ -5,5 +5,6 @@ namespace Application.Query.Services.FrolfGroups
 {
     public class FrolfGroupQueryArg : GuidEntityQueryArg<FrolfGroup>
     {
+
     }
 }

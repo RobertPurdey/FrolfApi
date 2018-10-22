@@ -1,4 +1,5 @@
-﻿using Domain.Entities;
+﻿using System.Linq;
+using Domain.Entities;
 using Domain.Entities.Contracts;
 using Domain.Query;
 
