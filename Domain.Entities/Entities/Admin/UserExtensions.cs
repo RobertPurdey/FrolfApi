@@ -12,6 +12,18 @@ namespace Domain.Entities
 {
     public static class UserExtensions
     {
+        public static IAppUser GetCurrentUser()
+        {
+            IAppUser user = null;
+
+            if (HttpContext.Current != null)
+            {
+                user = HttpContext.Current.User as IAppUser;
+            }
+
+            return user;
+        }
+
         public static Guid GetCurrentUserGuid()
         {
             var claimsPrincipal = Thread.CurrentPrincipal as ClaimsPrincipal;
