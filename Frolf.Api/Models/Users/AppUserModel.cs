@@ -6,7 +6,7 @@ namespace Frolf.Api.Models.Users
     public class AppUserModel : IApiDataModel
     {
         public Guid IdKey { get; set; }
-        public string NickName { get; set; }
+        public string Handle { get; set; }
 
         [JsonIgnore]
         public string Password { get; set; }

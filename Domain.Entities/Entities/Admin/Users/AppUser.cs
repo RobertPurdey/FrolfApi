@@ -17,8 +17,9 @@ namespace Domain.Entities
         public string LoginName { get; set; }
         public string Password { get; set; }
         public string Email { get; set; }
-        public string AuthenticationType { get; set; }
+        public string Handle { get; set; }
 
+        public string AuthenticationType { get; set; }
         public string Name => EntityKey.ToString();
         public IIdentity Identity => this;
         public bool IsAuthenticated => true;

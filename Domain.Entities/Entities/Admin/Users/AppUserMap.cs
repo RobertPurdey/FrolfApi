@@ -15,15 +15,24 @@ namespace Domain.Entities
             HasKey(u => u.EntityKey);
 
             // Properties
-            Property(u => u.LoginName).IsRequired();
-            Property(u => u.Password).IsRequired();
-            Property(u => u.Email).IsRequired();
+            Property(u => u.EntityKey)
+                .HasColumnName("id");
 
-            // Table + column mappings
-            Property(u => u.EntityKey).HasColumnName("id");
-            Property(u => u.LoginName).HasColumnName("login_name");
-            Property(u => u.Password).HasColumnName("password");
-            Property(u => u.Email).HasColumnName("email");
+            Property(u => u.LoginName)
+                .IsRequired()
+                .HasColumnName("login_name");
+
+            Property(u => u.Password)
+                .IsRequired()
+                .HasColumnName("password");
+
+            Property(u => u.Email)
+                .IsRequired()
+                .HasColumnName("email");
+
+            Property(u => u.Handle)
+                .IsRequired()
+                .HasColumnName("handle");
 
             // Ignore Identity properties
             Ignore(t => t.Name);

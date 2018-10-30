@@ -2,7 +2,7 @@
 {
     public enum GroupRole : byte
     {
-        Member = 0,
+        Member = 1,
         Administrator = 99
     }
 }

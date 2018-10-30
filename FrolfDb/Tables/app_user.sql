@@ -3,5 +3,6 @@
 	[id] UNIQUEIDENTIFIER NOT NULL PRIMARY KEY, 
     [login_name] VARCHAR(16) NOT NULL, 
     [password] VARCHAR(100) NOT NULL, 
-    [email] VARCHAR(100) NOT NULL
+    [email] VARCHAR(100) NOT NULL, 
+    [handle] VARCHAR(20) NOT NULL
 )

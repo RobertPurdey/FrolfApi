@@ -23,6 +23,10 @@ namespace Domain.Entities
                 .IsRequired()
                 .HasColumnName("group_role");
 
+            Property(p => p.Handle)
+                .IsRequired()
+                .HasColumnName("handle");
+
             // Relationships
             HasRequired(p => p.AppUser)
                 .WithMany(u => u.Players)
