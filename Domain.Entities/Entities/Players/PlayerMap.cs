@@ -19,7 +19,7 @@ namespace Domain.Entities
                 .IsRequired()
                 .HasColumnName("app_user_id");
             
-            Property(p => p.AppUserId)
+            Property(p => p.FrolfGroupId)
                 .IsRequired()
                 .HasColumnName("frolf_group_id");
 
