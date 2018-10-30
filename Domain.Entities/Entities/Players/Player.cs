@@ -8,15 +8,16 @@ namespace Domain.Entities
     {
         public Player()
         {
-            FrolfGroups = new HashSet<FrolfGroup>();
+
         }
 
         public Guid EntityKey { get; set; }
         public Guid AppUserId { get; set; }
+        public Guid FrolfGroupId { get; set; }
         public GroupRole GroupRole { get; set; }
         public string Handle { get; set; }
 
         public virtual AppUser AppUser { get; set; }
-        public virtual ICollection<FrolfGroup> FrolfGroups { get; set; }
+        public virtual FrolfGroup FrolfGroup { get; set; }
     }
 }

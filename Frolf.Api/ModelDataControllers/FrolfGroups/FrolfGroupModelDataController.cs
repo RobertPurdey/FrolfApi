@@ -35,7 +35,7 @@ namespace Frolf.Api.ModelDataControllers.FrolfGroups
         {
             var currUserGuid = UserExtensions.GetCurrentUserGuid();
 
-            foreach (var entity in frolfGroupQueryService.GetAll())
+            foreach ( var entity in frolfGroupQueryService.GetAll() )
             {
                 var isCurrUserInGroup = 
                     entity.GroupMembers.Any(gm => gm.AppUserId == currUserGuid);

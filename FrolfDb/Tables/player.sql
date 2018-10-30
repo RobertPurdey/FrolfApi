@@ -2,6 +2,7 @@
 (
 	[id] UNIQUEIDENTIFIER NOT NULL PRIMARY KEY, 
     [app_user_id] UNIQUEIDENTIFIER NOT NULL, 
+	[frolf_group_id] UNIQUEIDENTIFIER NOT NULL, 
     [group_role] TINYINT NOT NULL, 
-    [handle] VARCHAR(20) NOT NULL
+    [handle] VARCHAR(20) NOT NULL, 
 )

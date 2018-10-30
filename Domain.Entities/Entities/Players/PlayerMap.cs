@@ -18,6 +18,10 @@ namespace Domain.Entities
             Property(p => p.AppUserId)
                 .IsRequired()
                 .HasColumnName("app_user_id");
+            
+            Property(p => p.AppUserId)
+                .IsRequired()
+                .HasColumnName("frolf_group_id");
 
             Property(p => p.GroupRole)
                 .IsRequired()
@@ -32,14 +36,18 @@ namespace Domain.Entities
                 .WithMany(u => u.Players)
                 .HasForeignKey(p => p.AppUserId);
 
-            HasMany(player => player.FrolfGroups)
-                .WithMany(group => group.GroupMembers)
-                .Map(config =>
-                {
-                    config.MapLeftKey("player_id");
-                    config.MapRightKey("frolf_group_id");
-                    config.ToTable("frolf_groupee");
-                });
+            HasRequired(p => p.FrolfGroup)
+                .WithMany(fg => fg.GroupMembers)
+                .HasForeignKey(p => p.FrolfGroupId);
+
+            //HasMany(player => player.FrolfGroups)
+            //    .WithMany(group => group.GroupMembers)
+            //    .Map(config =>
+            //    {
+            //        config.MapLeftKey("player_id");
+            //        config.MapRightKey("frolf_group_id");
+            //        config.ToTable("frolf_groupee");
+            //    });
         }
     }
 }
