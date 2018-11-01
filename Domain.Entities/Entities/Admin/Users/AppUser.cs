@@ -9,7 +9,8 @@ namespace Domain.Entities
     {
         public AppUser()
         {
-            Players = new HashSet<Player>();
+            Players       = new HashSet<Player>();
+            GroupInvites  = new HashSet<FrolfGroupInvite>();
         }
 
         public Guid EntityKey { get; set; }
@@ -26,6 +27,7 @@ namespace Domain.Entities
         public bool IsInRole(string role) => false;
 
         public virtual ICollection<Player> Players { get; set; }
+        public virtual ICollection<FrolfGroupInvite> GroupInvites { get; set; }
 
         public virtual void SetAsCurrentUser()
         {

@@ -42,4 +42,32 @@
     <Property Name="ParentElementType" Value="SqlTable" />
     <Property Name="NewName" Value="player_id" />
   </Operation>
+  <Operation Name="Rename Refactor" Key="e9fdcbc3-99a9-43dd-9037-54310c650edd" ChangeDateTime="11/01/2018 02:57:40">
+    <Property Name="ElementName" Value="[dbo].[frolf_group_invite].[Id]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[frolf_group_invite]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="id" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="dc3d0890-439f-4c4f-a31d-a3d016470b9e" ChangeDateTime="11/01/2018 03:00:28">
+    <Property Name="ElementName" Value="[dbo].[frolf_group_invite].[inviter_id]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[frolf_group_invite]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="invited_by" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="39e82d23-8a82-4f62-b3b8-5dd4fc7fe6f1" ChangeDateTime="11/01/2018 03:09:26">
+    <Property Name="ElementName" Value="[dbo].[frolf_group_invite].[invited_by]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[frolf_group_invite]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="created_by" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="21f437b2-b17f-44cd-8a15-3fc3245d7e42" ChangeDateTime="11/01/2018 03:36:30">
+    <Property Name="ElementName" Value="[dbo].[frolf_group_invite].[invitation_status]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[frolf_group_invite]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="status" />
+  </Operation>
 </Operations>

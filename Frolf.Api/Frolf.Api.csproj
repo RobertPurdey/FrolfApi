@@ -262,6 +262,7 @@
     <Compile Include="Controllers\ControllerBase.cs" />
     <Compile Include="Controllers\EditControllerBase.cs" />
     <Compile Include="Controllers\FrolfGroupController.cs" />
+    <Compile Include="Controllers\FrolfGroupInviteController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ValuesController.cs" />
     <Compile Include="Global.asax.cs">
@@ -270,6 +271,7 @@
     <Compile Include="IoC\ApiRegistry.cs" />
     <Compile Include="IoC\StructureMapResolver.cs" />
     <Compile Include="IoC\StructureMapScope.cs" />
+    <Compile Include="Mappers\FrolfGroups\FrolfGroupInviteMapper.cs" />
     <Compile Include="Mappers\FrolfGroups\FrolfGroupMapper.cs" />
     <Compile Include="Mappers\IReadOnlyEntityMapper.cs" />
     <Compile Include="Mappers\IReadWriteEntityMap.cs" />
@@ -277,10 +279,13 @@
     <Compile Include="Mappers\Users\AppUserMapper.cs" />
     <Compile Include="MessageHandlers\GeneralExceptionHandler.cs" />
     <Compile Include="ModelDataControllers\Contracts\IAppUserModelDataController.cs" />
+    <Compile Include="ModelDataControllers\Contracts\IFrolfGroupInviteModelDataController.cs" />
     <Compile Include="ModelDataControllers\Contracts\IFrolfGroupModelDataController.cs" />
     <Compile Include="ModelDataControllers\Contracts\IModelDataController.cs" />
+    <Compile Include="ModelDataControllers\FrolfGroups\FrolfGroupInviteModelDataController.cs" />
     <Compile Include="ModelDataControllers\FrolfGroups\FrolfGroupModelDataController.cs" />
     <Compile Include="ModelDataControllers\Users\AppUserModelDataController.cs" />
+    <Compile Include="Models\FrolfGroups\FrolfGroupInviteModel.cs" />
     <Compile Include="Models\FrolfGroups\FrolfGroupModel.cs" />
     <Compile Include="Models\IApiDataModel.cs" />
     <Compile Include="Models\Players\PlayerModel.cs" />

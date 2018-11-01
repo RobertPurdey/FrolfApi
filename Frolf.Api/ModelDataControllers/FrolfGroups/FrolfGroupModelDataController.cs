@@ -7,7 +7,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
-using System.Web;
 using System.Web.Http;
 
 namespace Frolf.Api.ModelDataControllers.FrolfGroups
@@ -38,7 +37,7 @@ namespace Frolf.Api.ModelDataControllers.FrolfGroups
             foreach ( var entity in frolfGroupQueryService.GetAll() )
             {
                 var isCurrUserInGroup = 
-                    entity.GroupMembers.Any(gm => gm.AppUserId == currUserGuid);
+                    entity.Members.Any(gm => gm.AppUserId == currUserGuid);
 
                 if ( isCurrUserInGroup )
                 {
