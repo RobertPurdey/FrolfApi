@@ -37,10 +37,9 @@ namespace Domain.Entities
                 .HasForeignKey(p => p.AppUserId);
 
             HasRequired(p => p.FrolfGroup)
-                .WithMany(fg => fg.Members)
+                .WithMany(fg => fg.GroupMembers)
                 .HasForeignKey(p => p.FrolfGroupId);
 
-            // todo: keep this as reference to auto associative table
             //HasMany(player => player.FrolfGroups)
             //    .WithMany(group => group.GroupMembers)
             //    .Map(config =>

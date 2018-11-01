@@ -63,7 +63,6 @@
     <Build Include="Tables\app_user.sql" />
     <Build Include="Tables\frolf_group.sql" />
     <Build Include="Tables\player.sql" />
-    <Build Include="Tables\frolf_group_invite.sql" />
   </ItemGroup>
   <ItemGroup>
     <RefactorLog Include="FrolfDb.refactorlog" />
