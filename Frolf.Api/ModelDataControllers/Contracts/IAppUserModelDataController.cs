@@ -2,7 +2,7 @@
 
 namespace Frolf.Api.ModelDataControllers.Contracts
 {
-    public interface IAppUserModelDataController : IModelDataController<AppUserModel>
+    public interface IAppUserModelDataController : IModelDataController<AppUserModel, AppUserFilterModel>
     {
     }
 }

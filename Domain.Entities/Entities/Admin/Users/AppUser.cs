@@ -28,6 +28,7 @@ namespace Domain.Entities
 
         public virtual ICollection<Player> Players { get; set; }
         public virtual ICollection<FrolfGroupInvite> GroupInvites { get; set; }
+        public virtual ICollection<FrolfGroupInvite> SentInvites { get; set; }
 
         public virtual void SetAsCurrentUser()
         {

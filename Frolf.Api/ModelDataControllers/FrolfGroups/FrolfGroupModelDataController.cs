@@ -1,4 +1,5 @@
-﻿using Domain.Entities;
+﻿using Application.Query.Services.FrolfGroups;
+using Domain.Entities;
 using Domain.Query.Contracts;
 using Frolf.Api.Mappers;
 using Frolf.Api.ModelDataControllers.Contracts;
@@ -49,6 +50,11 @@ namespace Frolf.Api.ModelDataControllers.FrolfGroups
             }       
         }
 
+        public IEnumerable<FrolfGroupModel> GetWithFilter(FrolfGroupFilterModel filter)
+        {
+            throw new NotImplementedException();
+        }
+
         public FrolfGroupModel GetById(Guid id)
         {
             var entity = FindFrolfGroup(id);
@@ -81,6 +87,14 @@ namespace Frolf.Api.ModelDataControllers.FrolfGroups
             }
 
             return entity;
+        }
+
+        private static FrolfGroupQueryArg ConvertToQueryArg(FrolfGroupFilterModel filter)
+        {
+            return new FrolfGroupQueryArg
+            {
+                // todo: frolf group mappings
+            };
         }
     }
 }

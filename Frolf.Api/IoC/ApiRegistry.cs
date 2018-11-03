@@ -25,7 +25,7 @@ namespace Frolf.Api.IoC
                 s.AddAllTypesOf<ApiController>();
                 s.AddAllTypesOf(typeof(IReadOnlyEntityMapper<,>));
                 s.AddAllTypesOf(typeof(IReadWriteEntityMapper<,>));
-                s.AddAllTypesOf(typeof(IModelDataController<>));
+                s.AddAllTypesOf(typeof(IModelDataController<,>));
                 s.AddAllTypesOf(typeof(IQueryService<>));
             });
 

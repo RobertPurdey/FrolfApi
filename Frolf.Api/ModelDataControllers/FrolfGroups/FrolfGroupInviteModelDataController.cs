@@ -1,4 +1,5 @@
-﻿using Domain.Entities;
+﻿using Application.Query.Services.FrolfGroups;
+using Domain.Entities;
 using Domain.Query.Contracts;
 using Frolf.Api.Mappers;
 using Frolf.Api.ModelDataControllers.Contracts;
@@ -47,6 +48,20 @@ namespace Frolf.Api.ModelDataControllers.FrolfGroups
                 }
             }       
         }
+    
+        public IEnumerable<FrolfGroupInviteModel> GetWithFilter(FrolfGroupInviteFilterModel filter)
+        {
+            var queryArg         = ConvertToQueryArg(filter);
+            var filteredInvites  = frolfGroupInviteQueryService.GetWithQueryArg(queryArg);
+
+            foreach ( var entity in filteredInvites )
+            {
+                var model = new FrolfGroupInviteModel();
+                frolfGroupInviteMapper.MapToApiModel(model, entity);
+
+                yield return model;
+            }  
+        }
 
         public FrolfGroupInviteModel GetById(Guid id)
         {
@@ -80,6 +95,15 @@ namespace Frolf.Api.ModelDataControllers.FrolfGroups
             }
 
             return entity;
+        }
+
+        private static FrolfGroupInviteQueryArg ConvertToQueryArg(FrolfGroupInviteFilterModel filter)
+        {
+            return new FrolfGroupInviteQueryArg
+            {
+                CurrentUserGuid = UserExtensions.GetCurrentUserGuid(),
+                InviteStatus    = filter.InviteStatus
+            };
         }
     }
 }

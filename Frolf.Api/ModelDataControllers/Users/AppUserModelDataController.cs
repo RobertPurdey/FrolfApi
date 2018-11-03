@@ -42,6 +42,11 @@ namespace Frolf.Api.ModelDataControllers.Users
             }       
         }
 
+        public IEnumerable<AppUserModel> GetWithFilter(AppUserFilterModel filter)
+        {
+            throw new NotImplementedException();
+        }
+
         public AppUserModel GetById(Guid id)
         {
             var entity = FindAppUser(id);

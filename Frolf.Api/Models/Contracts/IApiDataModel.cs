@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Frolf.Api.Models
+namespace Frolf.Api.Models.Contracts
 {
     public interface IApiDataModel
     {

@@ -36,6 +36,10 @@ namespace Domain.Entities.Entities.FrolfGroups
                 .WithMany(u => u.GroupInvites)
                 .HasForeignKey(p => p.AppUserId);
 
+            HasRequired(p => p.AppUser)
+                .WithMany(u => u.SentInvites)
+                .HasForeignKey(p => p.CreatedBy);
+
             HasRequired(p => p.FrolfGroup)
                 .WithMany(fg => fg.Invites)
                 .HasForeignKey(p => p.FrolfGroupId);

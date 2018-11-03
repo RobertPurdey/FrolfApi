@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Frolf.Api.Models.Contracts;
+using System;
 
 namespace Frolf.Api.Models.FrolfGroups
 {
@@ -6,5 +7,10 @@ namespace Frolf.Api.Models.FrolfGroups
     {
         public Guid IdKey { get; set; }
         public string Name { get; set; }
+    }
+
+    public class FrolfGroupFilterModel : IFilterModel
+    {
+
     }
 }

@@ -9,7 +9,7 @@ using System.Web.Http;
 namespace Frolf.Api.Controllers
 {
     [RoutePrefix("api/appusers")]
-    public class AppUserController : EditControllerBase<AppUserModel>
+    public class AppUserController : EditControllerBase<AppUserModel, AppUserFilterModel>
     {
         private readonly IAppUserModelDataController appUserModelDataController;
 
@@ -53,6 +53,11 @@ namespace Frolf.Api.Controllers
         }
 
         public override Task<IEnumerable<AppUserModel>> GetAll()
+        {
+            throw new NotImplementedException();
+        }
+
+        public override Task<IEnumerable<AppUserModel>> GetWithFilter([FromBody] AppUserFilterModel filter)
         {
             throw new NotImplementedException();
         }

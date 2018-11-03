@@ -1,4 +1,4 @@
-﻿using Frolf.Api.Models;
+﻿using Frolf.Api.Models.Contracts;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -10,8 +10,9 @@ namespace Frolf.Api.Controllers
     /// Provides API calls to perform CRUD operations on an entity.
     /// </summary>
     /// <typeparam name="TApiModel">Model corresponding to the entity being operated on.</typeparam>
-    public abstract class EditControllerBase<TApiModel> : ControllerBase
-        where TApiModel : class, IApiDataModel
+    public abstract class EditControllerBase<TApiModel, TFilterModel> : ControllerBase
+        where TApiModel     : class, IApiDataModel
+        where TFilterModel  : class, IFilterModel
     {
         public EditControllerBase()
         {
@@ -27,6 +28,10 @@ namespace Frolf.Api.Controllers
         [HttpGet]
         [Route("")]
         public abstract Task<IEnumerable<TApiModel>> GetAll();
+
+        [HttpPost]
+        [Route("filter")]
+        public abstract Task<IEnumerable<TApiModel>> GetWithFilter([FromBody] TFilterModel filter);
 
         [HttpGet]
         [Route("{id:guid}")]

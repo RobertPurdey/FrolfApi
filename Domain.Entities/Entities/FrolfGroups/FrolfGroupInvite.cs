@@ -21,6 +21,7 @@ namespace Domain.Entities
 
 
         public virtual AppUser AppUser { get; set; }
+        public virtual AppUser Inviter { get; set; }
         public virtual FrolfGroup FrolfGroup { get; set; }
     }
 }

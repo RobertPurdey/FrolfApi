@@ -8,7 +8,7 @@ using System.Web.Http;
 namespace Frolf.Api.Controllers
 {
     [RoutePrefix("api/frolfgroups")]
-    public class FrolfGroupController : EditControllerBase<FrolfGroupModel>
+    public class FrolfGroupController : EditControllerBase<FrolfGroupModel, FrolfGroupFilterModel>
     {
         private readonly IFrolfGroupModelDataController frolfGroupModelDataController;
 
@@ -45,6 +45,10 @@ namespace Frolf.Api.Controllers
         }
 
         protected override Task Update([FromBody] FrolfGroupModel newDetails)
+        {
+            throw new NotImplementedException();
+        }
+        public override Task<IEnumerable<FrolfGroupModel>> GetWithFilter([FromBody] FrolfGroupFilterModel filter)
         {
             throw new NotImplementedException();
         }

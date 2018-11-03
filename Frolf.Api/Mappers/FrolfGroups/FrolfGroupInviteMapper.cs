@@ -13,7 +13,9 @@ namespace Frolf.Api.Mappers.FrolfGroups
 
         public void MapToApiModel(FrolfGroupInviteModel apiModel, FrolfGroupInvite entity)
         {
-            apiModel.IdKey   = entity.EntityKey;
+            apiModel.IdKey         = entity.EntityKey;
+            apiModel.GroupName     = entity.FrolfGroup.Name;
+            apiModel.InviterName   = entity.Inviter.Name;
         }
 
         public void MapToEntity(FrolfGroupInviteModel apiModel, FrolfGroupInvite entity)

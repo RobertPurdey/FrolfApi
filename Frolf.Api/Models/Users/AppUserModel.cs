@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using Frolf.Api.Models.Contracts;
+using Newtonsoft.Json;
 using System;
 
 namespace Frolf.Api.Models.Users
@@ -13,5 +14,10 @@ namespace Frolf.Api.Models.Users
 
         [JsonIgnore]
         public string Email { get; set; }
+    }
+
+    public class AppUserFilterModel : IFilterModel
+    {
+
     }
 }

@@ -2,14 +2,13 @@
 using Frolf.Api.Models.FrolfGroups;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
-using System.Web;
 using System.Web.Http;
 
 namespace Frolf.Api.Controllers
 {
-    public class FrolfGroupInviteController : EditControllerBase<FrolfGroupInviteModel>
+    [RoutePrefix("api/frolfgroupinvites")]
+    public class FrolfGroupInviteController : EditControllerBase<FrolfGroupInviteModel, FrolfGroupInviteFilterModel>
     {
         private readonly IFrolfGroupInviteModelDataController frolfGroupInviteModelDataController;
 
@@ -21,16 +20,23 @@ namespace Frolf.Api.Controllers
 
         public override Task<IEnumerable<FrolfGroupInviteModel>> GetAll()
         {
-            var foundFrolfGroups = frolfGroupInviteModelDataController.GetAll();
+            var foundFrolfGroupInvites = frolfGroupInviteModelDataController.GetAll();
 
-            return Task.FromResult(foundFrolfGroups);
+            return Task.FromResult(foundFrolfGroupInvites);
+        }
+
+        public override Task<IEnumerable<FrolfGroupInviteModel>> GetWithFilter([FromBody] FrolfGroupInviteFilterModel filter)
+        {
+            var foundInvites = frolfGroupInviteModelDataController.GetWithFilter(filter);
+
+            return Task.FromResult(foundInvites);
         }
 
         public override Task<FrolfGroupInviteModel> GetById([FromUri] Guid id)
         {
-            var foundFrolfGroup = frolfGroupInviteModelDataController.GetById(id);
+            var foundFrolfGroupInvite = frolfGroupInviteModelDataController.GetById(id);
 
-            return Task.FromResult(foundFrolfGroup);
+            return Task.FromResult(foundFrolfGroupInvite);
         }
 
         protected override Task<FrolfGroupInviteModel> Create([FromBody] FrolfGroupInviteModel newEntity)

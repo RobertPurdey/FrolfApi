@@ -1,4 +1,5 @@
 ﻿using Domain.Entities;
+using Frolf.Api.Models.Contracts;
 using System;
 
 namespace Frolf.Api.Models.FrolfGroups
@@ -10,5 +11,10 @@ namespace Frolf.Api.Models.FrolfGroups
         public Guid FrolfGroupId { get; set; }
         public GroupRole GroupRole { get; set; }
         public string Handle { get; set; }
+    }
+
+    public class PlayerFilterModel : IFilterModel
+    {
+
     }
 }
