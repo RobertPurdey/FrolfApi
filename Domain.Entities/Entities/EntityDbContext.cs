@@ -77,6 +77,7 @@ namespace Domain.Entities.Entities
             modelBuilder.Configurations.Add(new AppUserMap());
             modelBuilder.Configurations.Add(new PlayerMap());
             modelBuilder.Configurations.Add(new FrolfGroupMap());
+            modelBuilder.Configurations.Add(new FrolfGroupInviteMap());
         }
     }
 }

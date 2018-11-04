@@ -37,7 +37,7 @@ namespace Frolf.Api.ModelDataControllers.FrolfGroups
 
             foreach ( var entity in frolfGroupInviteQueryService.GetAll() )
             {
-                var isInviteForCurrentUser = entity.AppUserId == currUserGuid;
+                var isInviteForCurrentUser = entity.InviteeId == currUserGuid;
 
                 if ( isInviteForCurrentUser )
                 {

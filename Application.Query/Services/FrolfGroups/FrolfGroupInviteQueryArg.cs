@@ -19,13 +19,13 @@ namespace Application.Query.Services.FrolfGroups
 
         private Expression<Func<FrolfGroupInvite, bool>> ForCurrentUser()
         {
-            return inv => inv.AppUserId == CurrentUserGuid;
+            return inv => inv.InviteeId == CurrentUserGuid;
         }
 
         private Expression<Func<FrolfGroupInvite, bool>> HasInviteState()
         {
             return InviteStatus.HasValue 
-                ? inv => inv.status == InviteStatus
+                ? inv => inv.Status == InviteStatus
                 : True;
         }
     }

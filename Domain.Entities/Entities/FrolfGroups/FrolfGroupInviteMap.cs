@@ -1,6 +1,6 @@
 ﻿using System.Data.Entity.ModelConfiguration;
 
-namespace Domain.Entities.Entities.FrolfGroups
+namespace Domain.Entities
 {
     public class FrolfGroupInviteMap : EntityTypeConfiguration<FrolfGroupInvite>
     {
@@ -15,9 +15,9 @@ namespace Domain.Entities.Entities.FrolfGroups
             Property(e => e.EntityKey)
                 .HasColumnName("id");
 
-            Property(e => e.AppUserId)
+            Property(e => e.InviteeId)
                 .IsRequired()
-                .HasColumnName("app_user_id");
+                .HasColumnName("invitee_id");
 
             Property(e => e.FrolfGroupId)
                 .IsRequired()
@@ -25,18 +25,18 @@ namespace Domain.Entities.Entities.FrolfGroups
 
             Property(e => e.CreatedBy)
                 .IsRequired()
-                .HasColumnName("created_by");
+                .HasColumnName("inviter_id");
 
-            Property(e => e.status)
+            Property(e => e.Status)
                 .IsRequired()
                 .HasColumnName("status");
 
             // Relationships
-            HasRequired(p => p.AppUser)
+            HasRequired(p => p.Invitee)
                 .WithMany(u => u.GroupInvites)
-                .HasForeignKey(p => p.AppUserId);
+                .HasForeignKey(p => p.InviteeId);
 
-            HasRequired(p => p.AppUser)
+            HasRequired(p => p.Inviter)
                 .WithMany(u => u.SentInvites)
                 .HasForeignKey(p => p.CreatedBy);
 

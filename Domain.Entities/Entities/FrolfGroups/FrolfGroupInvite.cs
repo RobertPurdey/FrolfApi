@@ -14,13 +14,13 @@ namespace Domain.Entities
         }
 
         public Guid EntityKey { get; set; }
-        public Guid AppUserId { get; set; }
+        public Guid InviteeId { get; set; }
         public Guid FrolfGroupId { get; set; }
         public Guid CreatedBy { get; set; }
-        public InviteState status { get; set; }
+        public InviteState Status { get; set; }
 
 
-        public virtual AppUser AppUser { get; set; }
+        public virtual AppUser Invitee { get; set; }
         public virtual AppUser Inviter { get; set; }
         public virtual FrolfGroup FrolfGroup { get; set; }
     }

@@ -36,6 +36,7 @@ namespace Frolf.Api.IoC
             // ModelDataControllers
             For<IAppUserModelDataController>().Use<AppUserModelDataController>();
             For<IFrolfGroupModelDataController>().Use<FrolfGroupModelDataController>();
+            For<IFrolfGroupInviteModelDataController>().Use<FrolfGroupInviteModelDataController>();
         }
     }
 }
