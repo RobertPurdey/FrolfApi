@@ -1,4 +1,5 @@
 ﻿using Domain.Commands.Contracts;
+using System;
 
 namespace Domain.Commands
 {
@@ -10,12 +11,20 @@ namespace Domain.Commands
         {
 
         }
+ 
+        public abstract void OnPreHandleCommand(TCommand command);
 
         public void PreHandle(TCommand command)
         {
             OnPreHandleCommand(command);
         }
 
-        public abstract void OnPreHandleCommand(TCommand command);
+        protected void Assert(bool condition, string message)
+        {
+            if ( !condition )
+            {
+                throw new Exception(message);
+            }
+        }
     }
 }
