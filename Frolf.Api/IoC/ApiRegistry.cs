@@ -27,11 +27,17 @@ namespace Frolf.Api.IoC
                 s.AddAllTypesOf(typeof(IReadWriteEntityMapper<,>));
                 s.AddAllTypesOf(typeof(IModelDataController<,>));
                 s.AddAllTypesOf(typeof(IQueryService<>));
+                s.AddAllTypesOf(typeof(ICommandHandler<>));
+                s.AddAllTypesOf(typeof(ICommandPostHandler<>));
+                s.AddAllTypesOf(typeof(ICommandPreHandler<>));
+                s.AddAllTypesOf(typeof(IEntityValidator<>));
             });
 
             For<IEntityDbContext>().Use(() => new EntityDbContext());
             For<IWorkUnit>().Use<WorkUnit>();
             For<ISecurityKeyProvider>().Use<SecurityKeyProvider>();
+            For<ICommandExecutor>().Use<CommandExecutor>();
+            For<ICommandLocator>().Use<ICommandLocator>();
 
             // ModelDataControllers
             For<IAppUserModelDataController>().Use<AppUserModelDataController>();

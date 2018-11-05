@@ -271,6 +271,7 @@
     <Compile Include="IoC\ApiRegistry.cs" />
     <Compile Include="IoC\StructureMapResolver.cs" />
     <Compile Include="IoC\StructureMapScope.cs" />
+    <Compile Include="Locators\CommandLocator.cs" />
     <Compile Include="Mappers\FrolfGroups\FrolfGroupInviteMapper.cs" />
     <Compile Include="Mappers\FrolfGroups\FrolfGroupMapper.cs" />
     <Compile Include="Mappers\IReadOnlyEntityMapper.cs" />

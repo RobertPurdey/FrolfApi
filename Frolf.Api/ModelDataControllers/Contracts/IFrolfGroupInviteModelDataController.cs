@@ -5,5 +5,6 @@ namespace Frolf.Api.ModelDataControllers.Contracts
     public interface IFrolfGroupInviteModelDataController
         : IModelDataController<FrolfGroupInviteModel, FrolfGroupInviteFilterModel>
     {
+
     }
 }
