@@ -40,15 +40,31 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="FrolfGroupInvites\Commands\AcceptInviteCommand.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="AppUsers\" />
-    <Folder Include="FrolfGroupInvites\" />
+    <Folder Include="FrolfGroupInvites\Conditions\" />
+    <Folder Include="FrolfGroupInvites\Validators\" />
     <Folder Include="FrolfGroups\Commands\" />
-    <Folder Include="FrolfGroups\Condition\" />
+    <Folder Include="FrolfGroups\Conditions\" />
     <Folder Include="FrolfGroups\Validators\" />
     <Folder Include="Players\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Domain.Commands.Contracts\Domain.Commands.Contracts.csproj">
+      <Project>{ed1973a1-18bc-4620-9e1b-7a80278f9e4e}</Project>
+      <Name>Domain.Commands.Contracts</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Domain.Commands\Domain.Commands.csproj">
+      <Project>{e67f9506-4f5a-4c6c-afe9-05e82a9b72e7}</Project>
+      <Name>Domain.Commands</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Domain.Entities\Domain.Entities.csproj">
+      <Project>{ab73659a-9e59-411f-be6b-2c8cca48a107}</Project>
+      <Name>Domain.Entities</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

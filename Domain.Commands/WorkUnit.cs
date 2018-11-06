@@ -37,6 +37,7 @@ namespace Domain.Commands
             catch (DbValidationException ex)
             {
                 RollbackDbContext();
+
                 throw new DbValidationException(
                     "Commit was unsuccessful. Check the inner exception for details",
                     ex);

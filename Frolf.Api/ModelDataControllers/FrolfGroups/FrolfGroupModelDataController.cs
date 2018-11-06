@@ -33,7 +33,7 @@ namespace Frolf.Api.ModelDataControllers.FrolfGroups
 
         public IEnumerable<FrolfGroupModel> GetAll()
         {
-            var currUserGuid = UserExtensions.GetCurrentUserGuid();
+            var currUserGuid = UserExtensions.GetCurrentUserId();
 
             foreach ( var entity in frolfGroupQueryService.GetAll() )
             {

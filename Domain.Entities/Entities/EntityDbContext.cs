@@ -46,7 +46,7 @@ namespace Domain.Entities.Entities
 
         public void CommitChanges()
         {
-            if (!ChangeTracker.HasChanges())
+            if ( !ChangeTracker.HasChanges() )
             {
                 return;
             }

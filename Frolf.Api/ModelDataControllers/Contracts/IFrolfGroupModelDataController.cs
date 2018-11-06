@@ -2,7 +2,8 @@
 
 namespace Frolf.Api.ModelDataControllers.Contracts
 {
-    public interface IFrolfGroupModelDataController : IModelDataController<FrolfGroupModel, FrolfGroupFilterModel>
+    public interface IFrolfGroupModelDataController
+        : IModelDataController<FrolfGroupModel, FrolfGroupFilterModel>
     {
     }
 }

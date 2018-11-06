@@ -398,6 +398,10 @@
     <Content Include="Scripts\jquery-3.3.1.min.map" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Application.Command\Application.Command.csproj">
+      <Project>{fd6c6f49-32e2-422a-b12f-7fcdd83c57b9}</Project>
+      <Name>Application.Command</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Application.Query\Application.Query.csproj">
       <Project>{e4ae69a4-5e31-4cd2-9200-1fdf9bd69ce8}</Project>
       <Name>Application.Query</Name>

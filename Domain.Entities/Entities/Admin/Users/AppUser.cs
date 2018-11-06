@@ -37,7 +37,7 @@ namespace Domain.Entities
 
         public virtual bool IsCurrentUser()
         { 
-            return UserExtensions.GetCurrentUserGuid() == EntityKey;
+            return UserExtensions.GetCurrentUserId() == EntityKey;
         }
     }
 }

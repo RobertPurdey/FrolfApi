@@ -20,7 +20,7 @@ namespace Domain.Entities
             return user;
         }
 
-        public static Guid GetCurrentUserGuid()
+        public static Guid GetCurrentUserId()
         {
             var claimsPrincipal = Thread.CurrentPrincipal as ClaimsPrincipal;
             var userGuidClaim   = claimsPrincipal.FindFirst(ClaimTypes.NameIdentifier);
