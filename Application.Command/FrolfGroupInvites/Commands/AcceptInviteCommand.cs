@@ -14,9 +14,9 @@ namespace Application.Command.FrolfGroupInvites.Commands
         public AcceptInviteCommand(FrolfGroupInvite invite)
         {
             if ( invite            == null ) throw new ArgumentNullException("invite");
-            if ( invite.Invitee    == null ) throw new ArgumentNullException("invite");
-            if ( invite.Inviter    == null ) throw new ArgumentNullException("invite");
-            if ( invite.FrolfGroup == null ) throw new ArgumentNullException("invite");
+            if ( invite.Invitee    == null ) throw new ArgumentNullException("invitee");
+            if ( invite.Inviter    == null ) throw new ArgumentNullException("inviter");
+            if ( invite.FrolfGroup == null ) throw new ArgumentNullException("frolfgroup");
 
             Invite = invite;
         }

@@ -22,10 +22,7 @@ namespace Domain.Entities
 
         public static Guid GetCurrentUserId()
         {
-            var claimsPrincipal = Thread.CurrentPrincipal as ClaimsPrincipal;
-            var userGuidClaim   = claimsPrincipal.FindFirst(ClaimTypes.NameIdentifier);
-
-            return Guid.Parse(userGuidClaim.Value);
+            return GetCurrentUser().EntityKey;
         }
 
         public static void SetCurrentUser(IAppUser user)

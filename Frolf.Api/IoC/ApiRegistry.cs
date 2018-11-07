@@ -3,6 +3,7 @@ using Domain.Commands.Contracts;
 using Domain.Entities.Contracts;
 using Domain.Entities.Entities;
 using Domain.Query.Contracts;
+using Frolf.Api.Locators;
 using Frolf.Api.Mappers;
 using Frolf.Api.ModelDataControllers.Contracts;
 using Frolf.Api.ModelDataControllers.FrolfGroups;
@@ -37,7 +38,7 @@ namespace Frolf.Api.IoC
             For<IWorkUnit>().Use<WorkUnit>();
             For<ISecurityKeyProvider>().Use<SecurityKeyProvider>();
             For<ICommandExecutor>().Use<CommandExecutor>();
-            For<ICommandLocator>().Use<ICommandLocator>();
+            For<ICommandLocator>().Use<CommandLocator>();
 
             // ModelDataControllers
             For<IAppUserModelDataController>().Use<AppUserModelDataController>();
