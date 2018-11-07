@@ -40,17 +40,19 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AppUsers\Conditions\AppUserExistsCondition.cs" />
     <Compile Include="FrolfGroupInvites\Commands\AcceptInviteCommand.cs" />
+    <Compile Include="FrolfGroupInvites\Conditions\IsInviteeCurrentUserCondition.cs" />
+    <Compile Include="FrolfGroupInvites\Conditions\IsInvitePendingCondition.cs" />
+    <Compile Include="FrolfGroupInvites\Conditions\CanInviterInviteCondition.cs" />
+    <Compile Include="FrolfGroups\Conditions\FrolfGroupExistsCondition.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="AppUsers\" />
-    <Folder Include="FrolfGroupInvites\Conditions\" />
     <Folder Include="FrolfGroupInvites\Validators\" />
     <Folder Include="FrolfGroups\Commands\" />
-    <Folder Include="FrolfGroups\Conditions\" />
     <Folder Include="FrolfGroups\Validators\" />
-    <Folder Include="Players\" />
+    <Folder Include="Players\Conditions\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Domain.Commands.Contracts\Domain.Commands.Contracts.csproj">
@@ -64,6 +66,14 @@
     <ProjectReference Include="..\Domain.Entities\Domain.Entities.csproj">
       <Project>{ab73659a-9e59-411f-be6b-2c8cca48a107}</Project>
       <Name>Domain.Entities</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Domain.Query.Contracts\Domain.Query.Contracts.csproj">
+      <Project>{af643ad4-e199-4692-9eb2-18e459e10538}</Project>
+      <Name>Domain.Query.Contracts</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Domain.Query\Domain.Query.csproj">
+      <Project>{d4934841-2c26-4b81-b2a5-09892ffe1017}</Project>
+      <Name>Domain.Query</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

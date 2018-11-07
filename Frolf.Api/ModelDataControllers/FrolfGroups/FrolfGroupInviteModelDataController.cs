@@ -8,13 +8,12 @@ using Frolf.Api.ModelDataControllers.Contracts;
 using Frolf.Api.Models.FrolfGroups;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Web.Http;
 
 namespace Frolf.Api.ModelDataControllers.FrolfGroups
 {
-    public class FrolfGroupInviteModelDataController : IFrolfGroupInviteModelDataController
+    public class FrolfGroupInviteModelDataController :
+        ModelDataController<FrolfGroupInviteModel, FrolfGroupInviteFilterModel>,
+        IFrolfGroupInviteModelDataController
     {
         private readonly IReadWriteEntityMapper<FrolfGroupInviteModel, FrolfGroupInvite> frolfGroupInviteMapper;
         private readonly IQueryService<FrolfGroupInvite> frolfGroupInviteQueryService;
@@ -30,12 +29,12 @@ namespace Frolf.Api.ModelDataControllers.FrolfGroups
             commandExecutor                = cmdExecutor;
         }
 
-        public void Delete(FrolfGroupInviteModel modelToDelete)
+        public override void Delete(FrolfGroupInviteModel modelToDelete)
         {
             throw new NotImplementedException();
         }
 
-        public IEnumerable<FrolfGroupInviteModel> GetAll()
+        public override IEnumerable<FrolfGroupInviteModel> GetAll()
         {
             var currUserGuid = UserExtensions.GetCurrentUserId();
 
@@ -53,7 +52,7 @@ namespace Frolf.Api.ModelDataControllers.FrolfGroups
             }       
         }
     
-        public IEnumerable<FrolfGroupInviteModel> GetWithFilter(FrolfGroupInviteFilterModel filter)
+        public override IEnumerable<FrolfGroupInviteModel> GetWithFilter(FrolfGroupInviteFilterModel filter)
         {
             var queryArg         = ConvertToQueryArg(filter);
             var filteredInvites  = frolfGroupInviteQueryService.GetWithQueryArg(queryArg);
@@ -67,9 +66,9 @@ namespace Frolf.Api.ModelDataControllers.FrolfGroups
             }  
         }
 
-        public FrolfGroupInviteModel GetById(Guid id)
+        public override FrolfGroupInviteModel GetById(Guid id)
         {
-            var entity = FindFrolfGroupInvite(id);
+            var entity = FindEntity(id, frolfGroupInviteQueryService);
             var model  = new FrolfGroupInviteModel();
 
             frolfGroupInviteMapper.MapToApiModel(model, entity);
@@ -77,41 +76,25 @@ namespace Frolf.Api.ModelDataControllers.FrolfGroups
             return model;
         }
 
-        public void Insert(FrolfGroupInviteModel newModel)
+        public override void Insert(FrolfGroupInviteModel newModel)
         {
             throw new NotImplementedException();
         }
 
-        public void Update(FrolfGroupInviteModel modelToUpdate)
+        public override void Update(FrolfGroupInviteModel modelToUpdate)
         {
             throw new NotImplementedException();
         }
 
         public void Accept(Guid id)
         {
-            commandExecutor.Execute(new AcceptInviteCommand
-            { 
-                Invite = FindFrolfGroupInvite(id)
-            });           
+            var inviteEntity = FindEntity(id, frolfGroupInviteQueryService);
+            commandExecutor.Execute( new AcceptInviteCommand(inviteEntity) );           
         }
 
         public void Decline(Guid id)
         {
             throw new NotImplementedException();
-        }
-
-        private FrolfGroupInvite FindFrolfGroupInvite(Guid entityKey)
-        {
-            var entity = frolfGroupInviteQueryService
-                .GetAll()
-                .SingleOrDefault(u => u.EntityKey == entityKey);
-
-            if (entity == null)
-            {
-                throw new HttpResponseException(HttpStatusCode.NotFound);
-            }
-
-            return entity;
         }
 
         private static FrolfGroupInviteQueryArg ConvertToQueryArg(FrolfGroupInviteFilterModel filter)
