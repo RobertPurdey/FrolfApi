@@ -89,6 +89,7 @@ namespace Frolf.Api.ModelDataControllers.FrolfGroups
         public void Accept(Guid id)
         {
             var inviteEntity = FindEntity(id, frolfGroupInviteQueryService);
+
             commandExecutor.Execute( new AcceptInviteCommand(inviteEntity) );           
         }
 

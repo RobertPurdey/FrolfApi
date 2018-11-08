@@ -20,13 +20,13 @@ namespace Application.Command.FrolfGroupInvites.Conditions
 
         public override bool Validate(FrolfGroupInvite entity)
         {
-            var group = frolfGroupService
+            var groupInvitedTo = frolfGroupService
                 .GetAll()
                 .SingleOrDefault(g => g.EntityKey == entity.FrolfGroupId);
 
-            if ( group == null ) return false;
+            if ( groupInvitedTo == null ) return false;
 
-            return IsInviterGroupAdmin(entity.Inviter.EntityKey, group);
+            return IsInviterGroupAdmin(entity.Inviter.EntityKey, groupInvitedTo);
         }
 
         private bool IsInviterGroupAdmin(Guid inviterId, FrolfGroup group)
