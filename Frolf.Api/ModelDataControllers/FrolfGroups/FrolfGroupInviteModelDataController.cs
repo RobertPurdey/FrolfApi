@@ -95,7 +95,9 @@ namespace Frolf.Api.ModelDataControllers.FrolfGroups
 
         public void Decline(Guid id)
         {
-            throw new NotImplementedException();
+            var inviteEntity = FindEntity(id, frolfGroupInviteQueryService);
+
+            commandExecutor.Execute( new DeclineInviteCommand(inviteEntity) );   
         }
 
         private static FrolfGroupInviteQueryArg ConvertToQueryArg(FrolfGroupInviteFilterModel filter)
