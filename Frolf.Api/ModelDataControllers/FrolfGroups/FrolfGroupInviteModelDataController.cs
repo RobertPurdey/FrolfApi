@@ -97,7 +97,7 @@ namespace Frolf.Api.ModelDataControllers.FrolfGroups
         {
             var inviteEntity = FindEntity(id, frolfGroupInviteQueryService);
 
-            commandExecutor.Execute( new DeclineInviteCommand(inviteEntity) );   
+            commandExecutor.Execute( new DeleteInviteCommand(inviteEntity) );   
         }
 
         private static FrolfGroupInviteQueryArg ConvertToQueryArg(FrolfGroupInviteFilterModel filter)

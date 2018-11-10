@@ -2,20 +2,15 @@
 using Domain.Commands;
 using Domain.Commands.Contracts;
 using Domain.Entities;
-using Domain.Query.Contracts;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Application.Command.FrolfGroupInvites.Commands
 {
-    public class DeclineInviteCommand : ICommand
+    public class DeleteInviteCommand : ICommand
     {
         public FrolfGroupInvite Invite { get; private set; }
 
-        public DeclineInviteCommand(FrolfGroupInvite invite)
+        public DeleteInviteCommand(FrolfGroupInvite invite)
         {
             if ( invite            == null ) throw new ArgumentNullException("invite");
             if ( invite.Invitee    == null ) throw new ArgumentNullException("invitee");
@@ -26,15 +21,15 @@ namespace Application.Command.FrolfGroupInvites.Commands
         }
     }
 
-    public class DeleteInviteCommand : CommandPreHandler<AcceptInviteCommand>
+    public class DeleteInviteCommandValidation : CommandPreHandler<DeleteInviteCommand>
     { 
-        public DeleteInviteCommand(IWorkUnit workUnit)
+        public DeleteInviteCommandValidation(IWorkUnit workUnit)
             : base (workUnit)
         {
 
         }
 
-        public override void OnPreHandleCommand(AcceptInviteCommand command)
+        public override void OnPreHandleCommand(DeleteInviteCommand command)
         {
             Assert(
                 new IsInviteeCurrentUserCondition().Validate(command.Invite),
@@ -42,15 +37,15 @@ namespace Application.Command.FrolfGroupInvites.Commands
         }
     }
 
-    public class DeclineInviteCommandHandler : CommandHandler<AcceptInviteCommand>
+    public class DeleteInviteCommandHandler : CommandHandler<DeleteInviteCommand>
     {
-        public DeclineInviteCommandHandler(IWorkUnit workUnit)
+        public DeleteInviteCommandHandler(IWorkUnit workUnit)
             : base (workUnit)
         {
 
         }
 
-        protected override void OnHandleCommand(AcceptInviteCommand command)
+        protected override void OnHandleCommand(DeleteInviteCommand command)
         {
             GetRepository<FrolfGroupInvite>().Remove(command.Invite);
         }
