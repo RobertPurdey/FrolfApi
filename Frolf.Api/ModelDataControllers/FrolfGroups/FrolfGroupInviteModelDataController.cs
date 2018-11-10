@@ -31,7 +31,9 @@ namespace Frolf.Api.ModelDataControllers.FrolfGroups
 
         public override void Delete(FrolfGroupInviteModel modelToDelete)
         {
-            throw new NotImplementedException();
+            var inviteEntity = FindEntity(modelToDelete.IdKey, frolfGroupInviteQueryService);
+
+            commandExecutor.Execute( new DeleteInviteCommand(inviteEntity) );   
         }
 
         public override IEnumerable<FrolfGroupInviteModel> GetAll()
@@ -91,13 +93,6 @@ namespace Frolf.Api.ModelDataControllers.FrolfGroups
             var inviteEntity = FindEntity(id, frolfGroupInviteQueryService);
 
             commandExecutor.Execute( new AcceptInviteCommand(inviteEntity) );           
-        }
-
-        public void Decline(Guid id)
-        {
-            var inviteEntity = FindEntity(id, frolfGroupInviteQueryService);
-
-            commandExecutor.Execute( new DeleteInviteCommand(inviteEntity) );   
         }
 
         private static FrolfGroupInviteQueryArg ConvertToQueryArg(FrolfGroupInviteFilterModel filter)
