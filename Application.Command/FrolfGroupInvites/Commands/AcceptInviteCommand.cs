@@ -24,20 +24,10 @@ namespace Application.Command.FrolfGroupInvites.Commands
 
     public class AcceptInviteCommandValidation : CommandPreHandler<AcceptInviteCommand>
     { 
-        private readonly IQueryService<FrolfGroupInvite> groupInviteService;
-        private readonly IQueryService<FrolfGroup> groupService;
-        private readonly IQueryService<AppUser> appUserService;
-
-        public AcceptInviteCommandValidation(
-            IWorkUnit workUnit,
-            IQueryService<FrolfGroupInvite> groupQueryInviteService,
-            IQueryService<FrolfGroup> groupQueryService,
-            IQueryService<AppUser> appUserQueryService)
+        public AcceptInviteCommandValidation(IWorkUnit workUnit)
             : base (workUnit)
         {
-            groupInviteService  = groupQueryInviteService;
-            groupService        = groupQueryService;
-            appUserService      = appUserQueryService;
+
         }
 
         public override void OnPreHandleCommand(AcceptInviteCommand command)
@@ -45,14 +35,6 @@ namespace Application.Command.FrolfGroupInvites.Commands
             Assert(
                 new IsInviteeCurrentUserCondition().Validate(command.Invite),
                 "Users can only accept their own invites.");
-
-            Assert(
-                new IsInvitePendingCondition(groupInviteService).Validate(command.Invite),
-                "Invite has already been processed.");
-
-            Assert(
-                new CanInviterInviteCondition(groupService).Validate(command.Invite),
-                "Inviter's group role is too low to invite.");
         }
     }
 
@@ -76,10 +58,8 @@ namespace Application.Command.FrolfGroupInvites.Commands
                 FrolfGroup   = command.Invite.FrolfGroup
             };
 
-            command.Invite.Status = InviteState.Accepted;
-
             GetRepository<Player>().Add(newPlayer);
-            GetRepository<FrolfGroupInvite>().Update(command.Invite);
+            GetRepository<FrolfGroupInvite>().Remove(command.Invite);
         }
     }
 }

@@ -54,7 +54,6 @@
     <Compile Include="Entities\EntityDbContext.cs" />
     <Compile Include="Entities\FrolfGroups\FrolfGroupInvite.cs" />
     <Compile Include="Entities\FrolfGroups\FrolfGroupInviteMap.cs" />
-    <Compile Include="Entities\FrolfGroups\InviteState.cs" />
     <Compile Include="Entities\Players\PlayerMap.cs" />
     <Compile Include="Entities\Players\Player.cs" />
     <Compile Include="Entities\Players\GroupRole.cs" />

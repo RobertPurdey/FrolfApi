@@ -42,9 +42,8 @@
   <ItemGroup>
     <Compile Include="AppUsers\Conditions\AppUserExistsCondition.cs" />
     <Compile Include="FrolfGroupInvites\Commands\AcceptInviteCommand.cs" />
-    <Compile Include="FrolfGroupInvites\Commands\DeclineInviteCommand.cs" />
+    <Compile Include="FrolfGroupInvites\Commands\DeleteInviteCommand.cs" />
     <Compile Include="FrolfGroupInvites\Conditions\IsInviteeCurrentUserCondition.cs" />
-    <Compile Include="FrolfGroupInvites\Conditions\IsInvitePendingCondition.cs" />
     <Compile Include="FrolfGroupInvites\Conditions\CanInviterInviteCondition.cs" />
     <Compile Include="FrolfGroups\Conditions\FrolfGroupExistsCondition.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

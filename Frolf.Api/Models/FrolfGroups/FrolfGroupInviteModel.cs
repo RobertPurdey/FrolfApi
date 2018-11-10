@@ -13,6 +13,6 @@ namespace Frolf.Api.Models.FrolfGroups
 
     public class FrolfGroupInviteFilterModel : IFilterModel
     {
-        public InviteState? InviteStatus { get; set; }
+
     }
 }

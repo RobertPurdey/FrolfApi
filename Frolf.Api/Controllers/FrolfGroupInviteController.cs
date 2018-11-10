@@ -48,7 +48,9 @@ namespace Frolf.Api.Controllers
 
         protected override Task Remove([FromUri] Guid id)
         {
-            throw new NotImplementedException();
+            frolfGroupInviteModelDataController.Delete(new FrolfGroupInviteModel { IdKey = id });
+
+            return Task.FromResult(1);
         }
 
         protected override Task Update([FromBody] FrolfGroupInviteModel newDetails)
@@ -61,13 +63,6 @@ namespace Frolf.Api.Controllers
         public void Accept(Guid id)
         {
             frolfGroupInviteModelDataController.Accept(id);
-        }
-
-        [HttpPost]
-        [Route("{id:guid}/decline")]
-        public void Decline(Guid id)
-        {
-            frolfGroupInviteModelDataController.Decline(id);
         }
     }
 }

@@ -104,8 +104,7 @@ namespace Frolf.Api.ModelDataControllers.FrolfGroups
         {
             return new FrolfGroupInviteQueryArg
             {
-                CurrentUserGuid = UserExtensions.GetCurrentUserId(),
-                InviteStatus    = filter.InviteStatus
+                CurrentUserGuid = UserExtensions.GetCurrentUserId()
             };
         }
     }

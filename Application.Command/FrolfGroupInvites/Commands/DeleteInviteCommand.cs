@@ -26,16 +26,12 @@ namespace Application.Command.FrolfGroupInvites.Commands
         }
     }
 
-    public class DeclineInviteCommandValidation : CommandPreHandler<AcceptInviteCommand>
+    public class DeleteInviteCommand : CommandPreHandler<AcceptInviteCommand>
     { 
-        private readonly IQueryService<FrolfGroupInvite> groupInviteService;
-
-        public DeclineInviteCommandValidation(
-            IWorkUnit workUnit,
-            IQueryService<FrolfGroupInvite> groupQueryInviteService)
+        public DeleteInviteCommand(IWorkUnit workUnit)
             : base (workUnit)
         {
-            groupInviteService  = groupQueryInviteService;
+
         }
 
         public override void OnPreHandleCommand(AcceptInviteCommand command)
@@ -43,10 +39,6 @@ namespace Application.Command.FrolfGroupInvites.Commands
             Assert(
                 new IsInviteeCurrentUserCondition().Validate(command.Invite),
                 "Users can only accept their own invites.");
-
-            Assert(
-                new IsInvitePendingCondition(groupInviteService).Validate(command.Invite),
-                "Invite has already been processed.");
         }
     }
 
@@ -60,9 +52,7 @@ namespace Application.Command.FrolfGroupInvites.Commands
 
         protected override void OnHandleCommand(AcceptInviteCommand command)
         {
-            command.Invite.Status = InviteState.Declined;
-
-            GetRepository<FrolfGroupInvite>().Update(command.Invite);
+            GetRepository<FrolfGroupInvite>().Remove(command.Invite);
         }
     }
 }

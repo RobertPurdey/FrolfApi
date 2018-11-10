@@ -27,10 +27,6 @@ namespace Domain.Entities
                 .IsRequired()
                 .HasColumnName("inviter_id");
 
-            Property(e => e.Status)
-                .IsRequired()
-                .HasColumnName("status");
-
             // Relationships
             HasRequired(p => p.Invitee)
                 .WithMany(u => u.GroupInvites)

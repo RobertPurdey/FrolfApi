@@ -17,7 +17,6 @@ namespace Domain.Entities
         public Guid InviteeId { get; set; }
         public Guid FrolfGroupId { get; set; }
         public Guid CreatedBy { get; set; }
-        public InviteState Status { get; set; }
 
 
         public virtual AppUser Invitee { get; set; }

@@ -8,25 +8,16 @@ namespace Application.Query.Services.FrolfGroups
     public class FrolfGroupInviteQueryArg : GuidEntityQueryArg<FrolfGroupInvite>
     {
         public Guid CurrentUserGuid { get; set; }
-        public InviteState? InviteStatus { get; set; }
 
         protected override Expression<Func<FrolfGroupInvite, bool>> ConstructFilter()
         {
             return ForCurrentUser()
-                .And(HasInviteState())
                 ;
         }
 
         private Expression<Func<FrolfGroupInvite, bool>> ForCurrentUser()
         {
             return inv => inv.InviteeId == CurrentUserGuid;
-        }
-
-        private Expression<Func<FrolfGroupInvite, bool>> HasInviteState()
-        {
-            return InviteStatus.HasValue 
-                ? inv => inv.Status == InviteStatus
-                : True;
         }
     }
 }
