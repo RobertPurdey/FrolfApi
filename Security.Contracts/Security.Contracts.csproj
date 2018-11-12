@@ -78,6 +78,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="IEncryptionManager.cs" />
+    <Compile Include="IRefreshToken.cs" />
     <Compile Include="ISecurityKeyProvider.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

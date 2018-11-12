@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Security.Contracts
+﻿namespace Security.Contracts
 {
     /// <summary>
     /// Defines capabilities for encrypting, decrypting and hashing strings.

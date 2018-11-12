@@ -9,6 +9,7 @@ using Frolf.Api.ModelDataControllers.Contracts;
 using Frolf.Api.ModelDataControllers.FrolfGroups;
 using Frolf.Api.ModelDataControllers.Users;
 using Security.Contracts;
+using Security.Encryption;
 using Security.OAuth;
 using StructureMap;
 using System.Web.Http;
@@ -39,6 +40,7 @@ namespace Frolf.Api.IoC
             For<ISecurityKeyProvider>().Use<SecurityKeyProvider>();
             For<ICommandExecutor>().Use<CommandExecutor>();
             For<ICommandLocator>().Use<CommandLocator>();
+            For<IEncryptionManager>().Use<EncryptionManager>();
 
             // ModelDataControllers
             For<IAppUserModelDataController>().Use<AppUserModelDataController>();

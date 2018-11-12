@@ -1,4 +1,5 @@
-﻿using Frolf.Api.OAuth;
+﻿using Domain.Commands.Contracts;
+using Frolf.Api.OAuth;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.Owin;
 using Microsoft.Owin.Cors;
@@ -42,14 +43,20 @@ namespace Frolf.Api.App_Start
             HttpConfiguration config,
             ISecurityKeyProvider keyProvider)
         {
+            var resolver = config.DependencyResolver;
+
             var OAuthServerOptions = new OAuthAuthorizationServerOptions()
             {
                 // todo: allow insecure for initial testing then change to https to deploy. better way for it to happen?
                 AllowInsecureHttp           = true,
                 TokenEndpointPath           = new PathString("/oauth2/token"),
-                AccessTokenExpireTimeSpan   = TimeSpan.FromMinutes(30), // todo: switch to 1 hour?
+                AccessTokenExpireTimeSpan   = TimeSpan.FromMinutes(1), // todo: switch to 1 hour?
+                AccessTokenFormat           = new JwtTokenFormat(keyProvider),
                 Provider                    = new AppUserAuthorizationServerProvider(config.DependencyResolver),
-                AccessTokenFormat           = new JwtTokenFormat(keyProvider)
+                RefreshTokenProvider        = new AppUserRefreshTokenProvider(
+                    (ICommandExecutor)resolver.GetService(typeof(ICommandExecutor)), 
+                    (ICommandLocator)resolver.GetService(typeof(ICommandLocator)),
+                    (IEncryptionManager)resolver.GetService(typeof(IEncryptionManager)) )
             };
 
             app.UseOAuthAuthorizationServer(OAuthServerOptions);

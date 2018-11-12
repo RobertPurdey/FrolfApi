@@ -84,4 +84,18 @@
     <Property Name="ParentElementType" Value="SqlTable" />
     <Property Name="NewName" Value="inviter_id" />
   </Operation>
+  <Operation Name="Rename Refactor" Key="75946e54-8fd8-48cf-8f7f-1ac7215c4a77" ChangeDateTime="11/11/2018 22:58:00">
+    <Property Name="ElementName" Value="[dbo].[app_user_refresh_token].[Id]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[app_user_refresh_token]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="id" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="a6369ba8-0682-419a-a09f-ec6226450b7d" ChangeDateTime="11/11/2018 22:58:40">
+    <Property Name="ElementName" Value="[dbo].[app_user_refresh_token].[token]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[app_user_refresh_token]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="user_id" />
+  </Operation>
 </Operations>

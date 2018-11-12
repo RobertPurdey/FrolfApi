@@ -15,5 +15,7 @@ namespace Domain.Commands.Contracts
 
         IEnumerable<IEntityValidator<TEntity>> GetEntityValidators<TEntity>()
             where TEntity : class;
+
+        IWorkUnit GetWorkUnit();
     }
 }

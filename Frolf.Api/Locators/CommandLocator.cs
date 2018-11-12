@@ -45,5 +45,10 @@ namespace Frolf.Api.Locators
                 .GetServices(typeof(IEntityValidator<TEntity>))
                 .Cast<IEntityValidator<TEntity>>();
         }
+
+        public IWorkUnit GetWorkUnit()
+        {
+            return (IWorkUnit) dependencyContainer.GetService(typeof(IWorkUnit));
+        }
     }
 }

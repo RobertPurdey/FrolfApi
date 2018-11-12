@@ -45,6 +45,7 @@ namespace Frolf.Api.OAuth
                 return;
             }
 
+            identity.AddClaim(new Claim(ClaimTypes.Name, user.LoginName));
             identity.AddClaim(new Claim(ClaimTypes.NameIdentifier, user.EntityKey.ToString()));
             identity.AddClaim(new Claim(ClaimTypes.Role, "appuser"));
         }

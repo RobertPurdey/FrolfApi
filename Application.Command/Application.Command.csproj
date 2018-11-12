@@ -40,6 +40,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AppUsers\Commands\AddAppUserRefreshTokenCommand.cs" />
+    <Compile Include="AppUsers\Commands\DeleteAppUserRefreshTokenCommand.cs" />
     <Compile Include="AppUsers\Conditions\AppUserExistsCondition.cs" />
     <Compile Include="FrolfGroupInvites\Commands\AcceptInviteCommand.cs" />
     <Compile Include="FrolfGroupInvites\Commands\DeleteInviteCommand.cs" />
@@ -74,6 +76,10 @@
     <ProjectReference Include="..\Domain.Query\Domain.Query.csproj">
       <Project>{d4934841-2c26-4b81-b2a5-09892ffe1017}</Project>
       <Name>Domain.Query</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Security.Contracts\Security.Contracts.csproj">
+      <Project>{a411714e-95cd-46a1-81bb-54e9ba0e9ddf}</Project>
+      <Name>Security.Contracts</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

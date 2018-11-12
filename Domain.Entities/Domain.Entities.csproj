@@ -51,6 +51,8 @@
     <Compile Include="Entities\Admin\UserExtensions.cs" />
     <Compile Include="Entities\Admin\Users\AppUserMap.cs" />
     <Compile Include="Entities\Admin\Users\AppUser.cs" />
+    <Compile Include="Entities\Admin\Users\AppUserRefreshToken.cs" />
+    <Compile Include="Entities\Admin\Users\AppUserRefreshTokenMap.cs" />
     <Compile Include="Entities\EntityDbContext.cs" />
     <Compile Include="Entities\FrolfGroups\FrolfGroupInvite.cs" />
     <Compile Include="Entities\FrolfGroups\FrolfGroupInviteMap.cs" />
@@ -65,6 +67,10 @@
     <ProjectReference Include="..\Domain.Entities.Contracts\Domain.Entities.Contracts.csproj">
       <Project>{a40f6b28-8975-40c3-b6b6-05b28ea1402b}</Project>
       <Name>Domain.Entities.Contracts</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Security.Contracts\Security.Contracts.csproj">
+      <Project>{a411714e-95cd-46a1-81bb-54e9ba0e9ddf}</Project>
+      <Name>Security.Contracts</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
