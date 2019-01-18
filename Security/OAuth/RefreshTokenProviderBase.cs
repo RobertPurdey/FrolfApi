@@ -57,6 +57,7 @@ namespace Security.OAuth
 
             OnDeleteToken(refreshToken);
         }
+
         protected abstract void OnCreateToken(TRefreshToken token);
         protected abstract void OnDeleteToken(TRefreshToken token);
         protected abstract IRepository<TRefreshToken> GetRefreshTokenRepository();

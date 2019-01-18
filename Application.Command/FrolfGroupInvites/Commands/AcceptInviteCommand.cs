@@ -2,7 +2,6 @@
 using Domain.Commands;
 using Domain.Commands.Contracts;
 using Domain.Entities;
-using Domain.Query.Contracts;
 using System;
 
 namespace Application.Command.FrolfGroupInvites.Commands

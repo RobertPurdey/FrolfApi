@@ -9,6 +9,9 @@ namespace Security.OAuth
 {
     public abstract class AuthorizationServerProviderBase : OAuthAuthorizationServerProvider
     {
+        protected abstract bool IsValidClient(OAuthValidateClientAuthenticationContext context);
+        protected abstract bool IsValidUser(OAuthGrantResourceOwnerCredentialsContext context);
+
         public override Task ValidateClientAuthentication(OAuthValidateClientAuthenticationContext context)
         {
             if ( !IsValidClient(context) )
@@ -65,9 +68,6 @@ namespace Security.OAuth
 
             return Task.FromResult<object>(null);
         }
-
-        protected abstract bool IsValidClient(OAuthValidateClientAuthenticationContext context);
-        protected abstract bool IsValidUser(OAuthGrantResourceOwnerCredentialsContext context);
 
         protected virtual void OnNewTokenCreatedWithRefreshToken(AuthenticationTicket newTicket)
         {

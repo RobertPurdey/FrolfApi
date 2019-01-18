@@ -10,7 +10,6 @@ namespace Frolf.Api.OAuth
     {
         private readonly ICommandExecutor commandExecutor;
         private readonly ICommandLocator commandLocator;
-        private IWorkUnit workUnit;
 
         public AppUserRefreshTokenProvider(
             ICommandExecutor executor,

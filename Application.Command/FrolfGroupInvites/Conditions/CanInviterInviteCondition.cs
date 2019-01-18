@@ -11,6 +11,7 @@ namespace Application.Command.FrolfGroupInvites.Conditions
     /// </summary>
     public class CanInviterInviteCondition : Condition<FrolfGroupInvite>
     {
+        // todo: remove query service from conditions where possible
         private readonly IQueryService<FrolfGroup> frolfGroupService;
 
         public CanInviterInviteCondition(IQueryService<FrolfGroup> frolfGroupQueryService)
