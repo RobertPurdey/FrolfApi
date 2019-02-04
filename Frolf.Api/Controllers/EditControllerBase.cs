@@ -38,7 +38,7 @@ namespace Frolf.Api.Controllers
         public abstract Task<TApiModel> GetById([FromUri] Guid id);
 
         [HttpPost]
-        [Route("")]
+        [Route("insert")]
         public async Task<TApiModel> Post([FromBody] TApiModel newEntity)
         {
             var result = await Create(newEntity);

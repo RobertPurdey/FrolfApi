@@ -1,5 +1,8 @@
-﻿using Application.Query.Services.FrolfGroups;
+﻿using Application.Command.FrolfGroups.Commands;
+using Application.Query.Services.FrolfGroups;
+using Domain.Commands.Contracts;
 using Domain.Entities;
+using Domain.Entities.Contracts;
 using Domain.Query.Contracts;
 using Frolf.Api.Mappers;
 using Frolf.Api.ModelDataControllers.Contracts;
@@ -16,14 +19,19 @@ namespace Frolf.Api.ModelDataControllers.FrolfGroups
     {
         private readonly IReadWriteEntityMapper<FrolfGroupModel, FrolfGroup> frolfGroupMapper;
         private readonly IQueryService<FrolfGroup> frolfGroupQueryService;
+        private readonly IQueryService<AppUser> appUserQueryService;
+        private readonly ICommandExecutor commandExecutor;
 
         public FrolfGroupModelDataController(
             IReadWriteEntityMapper<FrolfGroupModel, FrolfGroup> frolfGroupMapping,
-            IQueryService<FrolfGroup> frolfGroupService
-            )
+            IQueryService<FrolfGroup> frolfGroupService,
+            IQueryService<AppUser> appUserService,
+            ICommandExecutor cmdExecutor)
         {
             frolfGroupMapper         = frolfGroupMapping;
             frolfGroupQueryService   = frolfGroupService;
+            appUserQueryService      = appUserService;
+            commandExecutor          = cmdExecutor;
         }
 
         public void Delete(FrolfGroupModel modelToDelete)
@@ -67,12 +75,48 @@ namespace Frolf.Api.ModelDataControllers.FrolfGroups
 
         public void Insert(FrolfGroupModel newModel)
         {
-            throw new NotImplementedException();
+            var entity = new FrolfGroup();
+
+            frolfGroupMapper.MapToEntity(newModel, entity);
+
+            // Add current user to the group
+            entity.Members.Add( CreateInitialGroupMember() );
+
+            commandExecutor.Execute( new AddFrolfGroupCommand{ newEntity = entity } );
+        }
+
+        private Player CreateInitialGroupMember()
+        {
+            var currUser     = UserExtensions.GetCurrentUser();
+            var currAppUser  = FindEntity(appUserQueryService, currUser.EntityKey);
+
+            return new Player
+            {
+                EntityKey = Guid.NewGuid(),
+                AppUserId = currAppUser.EntityKey,
+                GroupRole = GroupRole.Administrator,
+                Handle    = currAppUser.Handle
+            };
         }
 
         public void Update(FrolfGroupModel modelToUpdate)
         {
             throw new NotImplementedException();
+        }
+
+        private T FindEntity<T>(IQueryService<T> queryService, Guid key)
+            where T : class, IGuidEntity
+        {
+            var entity = queryService
+                .GetAll()
+                .SingleOrDefault(u => u.EntityKey == key);
+
+            if (entity == null)
+            {
+                throw new HttpResponseException(HttpStatusCode.NotFound);
+            }
+
+            return entity;
         }
 
         private FrolfGroup FindFrolfGroup(Guid entityKey)

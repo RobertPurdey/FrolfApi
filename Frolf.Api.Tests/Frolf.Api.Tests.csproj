@@ -104,12 +104,6 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Frolf.Api\Frolf.Api.csproj">
-      <Project>{DF08D53B-EE44-4E69-95CA-C4F69103A5D6}</Project>
-      <Name>Frolf.Api</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <Folder Include="Controllers\" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />

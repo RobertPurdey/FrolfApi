@@ -1,4 +1,5 @@
 ﻿using Domain.Commands.Contracts;
+using Domain.Entities;
 using Domain.Entities.Contracts;
 using System;
 using System.Collections.Generic;
@@ -29,6 +30,11 @@ namespace Domain.Commands
             if (newEntity is IGuidEntity guidEntity)
             {
                 guidEntity.EntityKey = Guid.NewGuid();
+            }
+
+            if (newEntity is IOwnable ownableEntity)
+            {
+                ownableEntity.CreatedBy = UserExtensions.GetCurrentUserId();
             }
 
             return entityContext.Add(newEntity);
