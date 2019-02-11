@@ -23,7 +23,7 @@ namespace Domain.Entities
                 .IsRequired()
                 .HasColumnName("frolf_group_id");
 
-            Property(e => e.CreatedBy)
+            Property(e => e.InviterId)
                 .IsRequired()
                 .HasColumnName("inviter_id");
 
@@ -34,7 +34,7 @@ namespace Domain.Entities
 
             HasRequired(p => p.Inviter)
                 .WithMany(u => u.SentInvites)
-                .HasForeignKey(p => p.CreatedBy);
+                .HasForeignKey(p => p.InviterId);
 
             HasRequired(p => p.FrolfGroup)
                 .WithMany(fg => fg.Invites)

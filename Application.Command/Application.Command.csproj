@@ -47,12 +47,15 @@
     <Compile Include="FrolfGroupInvites\Commands\AddInviteCommand.cs" />
     <Compile Include="FrolfGroupInvites\Commands\DeleteInviteCommand.cs" />
     <Compile Include="FrolfGroupInvites\Conditions\IsInviteeCurrentUserCondition.cs" />
-    <Compile Include="FrolfGroupInvites\Conditions\CanInviterInviteCondition.cs" />
+    <Compile Include="FrolfGroups\Conditions\CanUserInviteCondition.cs" />
+    <Compile Include="FrolfGroupInvites\Conditions\IsInviterCurrentUserCondition.cs" />
+    <Compile Include="FrolfGroupInvites\Conditions\InviteExistsCondition.cs" />
     <Compile Include="FrolfGroups\Commands\AddFrolfGroupCommand.cs" />
     <Compile Include="FrolfGroups\Commands\UpdateFrolfGroupCommand.cs" />
     <Compile Include="FrolfGroups\Conditions\FrolfGroupExistsCondition.cs" />
     <Compile Include="FrolfGroups\Conditions\FrolfGroupHasInvitesCondition.cs" />
     <Compile Include="FrolfGroups\Conditions\FrolfGroupOnlyContainsCurrentUser.cs" />
+    <Compile Include="FrolfGroups\Conditions\IsUserAGroupMemberCondition.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

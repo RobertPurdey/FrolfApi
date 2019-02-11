@@ -8,6 +8,7 @@ namespace Frolf.Api.Models.Users
     {
         public Guid IdKey { get; set; }
         public string Handle { get; set; }
+        public string FriendCode { get; set; }
 
         [JsonIgnore]
         public string Password { get; set; }

@@ -2,7 +2,6 @@
 using Application.Query.Services.FrolfGroups;
 using Domain.Commands.Contracts;
 using Domain.Entities;
-using Domain.Entities.Contracts;
 using Domain.Query.Contracts;
 using Frolf.Api.Mappers;
 using Frolf.Api.ModelDataControllers.Contracts;
@@ -15,7 +14,9 @@ using System.Web.Http;
 
 namespace Frolf.Api.ModelDataControllers.FrolfGroups
 {
-    public class FrolfGroupModelDataController : IFrolfGroupModelDataController
+    public class FrolfGroupModelDataController :
+        ModelDataController<FrolfGroupModel, FrolfGroupFilterModel>,
+        IFrolfGroupModelDataController
     {
         private readonly IReadWriteEntityMapper<FrolfGroupModel, FrolfGroup> frolfGroupMapper;
         private readonly IQueryService<FrolfGroup> frolfGroupQueryService;
@@ -34,12 +35,12 @@ namespace Frolf.Api.ModelDataControllers.FrolfGroups
             commandExecutor          = cmdExecutor;
         }
 
-        public void Delete(FrolfGroupModel modelToDelete)
+        public override void Delete(FrolfGroupModel modelToDelete)
         {
             throw new NotImplementedException();
         }
 
-        public IEnumerable<FrolfGroupModel> GetAll()
+        public override IEnumerable<FrolfGroupModel> GetAll()
         {
             var currUserGuid = UserExtensions.GetCurrentUserId();
 
@@ -58,14 +59,14 @@ namespace Frolf.Api.ModelDataControllers.FrolfGroups
             }       
         }
 
-        public IEnumerable<FrolfGroupModel> GetWithFilter(FrolfGroupFilterModel filter)
+        public override IEnumerable<FrolfGroupModel> GetWithFilter(FrolfGroupFilterModel filter)
         {
             throw new NotImplementedException();
         }
 
-        public FrolfGroupModel GetById(Guid id)
+        public override FrolfGroupModel GetById(Guid id)
         {
-            var entity = FindFrolfGroup(id);
+            var entity = FindEntity(id, frolfGroupQueryService);
             var model  = new FrolfGroupModel();
 
             frolfGroupMapper.MapToApiModel(model, entity);
@@ -73,7 +74,7 @@ namespace Frolf.Api.ModelDataControllers.FrolfGroups
             return model;
         }
 
-        public void Insert(FrolfGroupModel newModel)
+        public override void Insert(FrolfGroupModel newModel)
         {
             var entity = new FrolfGroup();
 
@@ -85,10 +86,15 @@ namespace Frolf.Api.ModelDataControllers.FrolfGroups
             commandExecutor.Execute( new AddFrolfGroupCommand{ newEntity = entity } );
         }
 
+        public override void Update(FrolfGroupModel modelToUpdate)
+        {
+            throw new NotImplementedException();
+        }
+
         private Player CreateInitialGroupMember()
         {
             var currUser     = UserExtensions.GetCurrentUser();
-            var currAppUser  = FindEntity(appUserQueryService, currUser.EntityKey);
+            var currAppUser  = FindEntity(currUser.EntityKey, appUserQueryService);
 
             return new Player
             {
@@ -97,40 +103,6 @@ namespace Frolf.Api.ModelDataControllers.FrolfGroups
                 GroupRole = GroupRole.Administrator,
                 Handle    = currAppUser.Handle
             };
-        }
-
-        public void Update(FrolfGroupModel modelToUpdate)
-        {
-            throw new NotImplementedException();
-        }
-
-        private T FindEntity<T>(IQueryService<T> queryService, Guid key)
-            where T : class, IGuidEntity
-        {
-            var entity = queryService
-                .GetAll()
-                .SingleOrDefault(u => u.EntityKey == key);
-
-            if (entity == null)
-            {
-                throw new HttpResponseException(HttpStatusCode.NotFound);
-            }
-
-            return entity;
-        }
-
-        private FrolfGroup FindFrolfGroup(Guid entityKey)
-        {
-            var entity = frolfGroupQueryService
-                .GetAll()
-                .SingleOrDefault(u => u.EntityKey == entityKey);
-
-            if (entity == null)
-            {
-                throw new HttpResponseException(HttpStatusCode.NotFound);
-            }
-
-            return entity;
         }
 
         private static FrolfGroupQueryArg ConvertToQueryArg(FrolfGroupFilterModel filter)

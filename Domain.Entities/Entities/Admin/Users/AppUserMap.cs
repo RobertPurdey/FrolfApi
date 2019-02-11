@@ -34,6 +34,10 @@ namespace Domain.Entities
                 .IsRequired()
                 .HasColumnName("handle");
 
+            Property(u => u.FriendCode)
+                .IsRequired()
+                .HasColumnName("friend_code");
+
             // Ignore Identity properties
             Ignore(t => t.Name);
             Ignore(t => t.Identity);

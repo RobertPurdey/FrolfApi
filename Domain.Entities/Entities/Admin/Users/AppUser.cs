@@ -19,6 +19,7 @@ namespace Domain.Entities
         public string Password { get; set; }
         public string Email { get; set; }
         public string Handle { get; set; }
+        public string FriendCode { get; set; }
 
         public string AuthenticationType { get; set; }
         public string Name => EntityKey.ToString();

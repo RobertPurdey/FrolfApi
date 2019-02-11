@@ -7,5 +7,6 @@ namespace Frolf.Api.ModelDataControllers.Contracts
         : IModelDataController<FrolfGroupInviteModel, FrolfGroupInviteFilterModel>
     {
         void Accept(Guid id);
+        void Send(InviteCreationModel friendCode);
     }
 }

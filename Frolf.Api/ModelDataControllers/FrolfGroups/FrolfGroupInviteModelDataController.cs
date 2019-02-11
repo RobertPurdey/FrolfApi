@@ -8,6 +8,7 @@ using Frolf.Api.ModelDataControllers.Contracts;
 using Frolf.Api.Models.FrolfGroups;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Frolf.Api.ModelDataControllers.FrolfGroups
 {
@@ -17,15 +18,21 @@ namespace Frolf.Api.ModelDataControllers.FrolfGroups
     {
         private readonly IReadWriteEntityMapper<FrolfGroupInviteModel, FrolfGroupInvite> frolfGroupInviteMapper;
         private readonly IQueryService<FrolfGroupInvite> frolfGroupInviteQueryService;
+        private readonly IQueryService<AppUser> appUserQueryService;
+        private readonly IQueryService<FrolfGroup> frolfGroupQueryService;
         private readonly ICommandExecutor commandExecutor;
 
         public FrolfGroupInviteModelDataController(
             IReadWriteEntityMapper<FrolfGroupInviteModel, FrolfGroupInvite> frolfGroupInviteMapping,
             IQueryService<FrolfGroupInvite> frolfGroupInviteService,
+            IQueryService<AppUser> appUserService,
+            IQueryService<FrolfGroup> frolfGroupService,
             ICommandExecutor cmdExecutor)
         {
             frolfGroupInviteMapper         = frolfGroupInviteMapping;
             frolfGroupInviteQueryService   = frolfGroupInviteService;
+            appUserQueryService            = appUserService;
+            frolfGroupQueryService         = frolfGroupService;
             commandExecutor                = cmdExecutor;
         }
 
@@ -93,6 +100,29 @@ namespace Frolf.Api.ModelDataControllers.FrolfGroups
             var inviteEntity = FindEntity(id, frolfGroupInviteQueryService);
 
             commandExecutor.Execute( new AcceptInviteCommand(inviteEntity) );           
+        }
+
+        public void Send(InviteCreationModel creationModel)
+        {
+            var invitee = appUserQueryService
+                .GetAll()
+                .Where(u => u.FriendCode == creationModel.FriendCode)
+                .SingleOrDefault();
+
+            if ( invitee == null )
+            {
+                // Vague on purpose as to not give info away as to why
+                throw new Exception("Send invite failed.");
+            }
+
+            var newInvite = new FrolfGroupInvite
+            {
+                InviteeId    = invitee.EntityKey,
+                InviterId    = UserExtensions.GetCurrentUserId(),
+                FrolfGroupId = creationModel.FrolfGroupId
+            };
+
+            commandExecutor.Execute( new AddInviteCommand(newInvite) );
         }
 
         private static FrolfGroupInviteQueryArg ConvertToQueryArg(FrolfGroupInviteFilterModel filter)

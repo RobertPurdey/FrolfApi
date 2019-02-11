@@ -1,0 +1,16 @@
+﻿using Domain.Commands;
+using Domain.Entities;
+
+namespace Application.Command.FrolfGroupInvites.Conditions
+{
+    /// <summary>
+    /// Determines if the current logged in user id matches the user inviting.
+    /// </summary>
+    public class IsInviterCurrentUserCondition : Condition<FrolfGroupInvite>
+    {
+        public override bool Validate(FrolfGroupInvite entity)
+        {
+            return UserExtensions.GetCurrentUserId() == entity.InviterId;
+        }
+    }
+}

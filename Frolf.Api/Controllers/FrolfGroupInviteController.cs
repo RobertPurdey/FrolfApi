@@ -64,5 +64,12 @@ namespace Frolf.Api.Controllers
         {
             frolfGroupInviteModelDataController.Accept(id);
         }
+
+        [HttpPost]
+        [Route("send")]
+        public void Send(InviteCreationModel creationModel)
+        {
+            frolfGroupInviteModelDataController.Send(creationModel);
+        }
     }
 }
