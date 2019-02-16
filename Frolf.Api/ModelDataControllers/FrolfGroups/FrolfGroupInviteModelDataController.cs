@@ -119,7 +119,7 @@ namespace Frolf.Api.ModelDataControllers.FrolfGroups
             {
                 InviteeId    = invitee.EntityKey,
                 InviterId    = UserExtensions.GetCurrentUserId(),
-                FrolfGroupId = creationModel.FrolfGroupId
+                FrolfGroupId = creationModel.GroupId
             };
 
             commandExecutor.Execute( new AddInviteCommand(newInvite) );

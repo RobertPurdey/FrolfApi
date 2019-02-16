@@ -16,7 +16,7 @@ namespace Application.Command.FrolfGroups.Conditions
 
         public override bool Validate(FrolfGroup entity)
         {
-            return entity.Members.Any(m => m.EntityKey == userId);
+            return entity.Members.Any(m => m.AppUserId == userId);
         }
     }
 }

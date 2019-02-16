@@ -67,7 +67,7 @@ namespace Application.Command.FrolfGroupInvites.Commands
 
         private void AssertInviteeIsntInGroup(FrolfGroup frolfGroup, Guid InviteeId)
         {
-            var isValid = new IsUserAGroupMemberCondition(InviteeId).Validate(frolfGroup);
+            var isValid = !new IsUserAGroupMemberCondition(InviteeId).Validate(frolfGroup);
 
             Assert(isValid, "User being invited is already in the group.");
 
@@ -88,7 +88,7 @@ namespace Application.Command.FrolfGroupInvites.Commands
                          &&  fg.InviteeId    == invite.InviteeId)
                 .SingleOrDefault();
 
-            var isValid = new InviteExistsCondition().Validate(frolfGroupInvite);
+            var isValid = !new InviteExistsCondition().Validate(frolfGroupInvite);
 
             Assert(isValid, "Invite has already been sent to the user.");
         }
