@@ -1,0 +1,7 @@
+﻿CREATE TABLE [dbo].[hole]
+(
+	[id] UNIQUEIDENTIFIER NOT NULL PRIMARY KEY, 
+    [course_id] UNIQUEIDENTIFIER NOT NULL, 
+    [order] INT NOT NULL, 
+    [par] INT NOT NULL
+)

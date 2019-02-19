@@ -10,6 +10,7 @@ namespace Domain.Entities
         {
             Members  = new HashSet<Player>();
             Invites  = new HashSet<FrolfGroupInvite>();
+            Games    = new HashSet<Game>();
         }
 
         public Guid EntityKey { get; set; }
@@ -18,5 +19,6 @@ namespace Domain.Entities
 
         public virtual ICollection<Player> Members { get; set; }
         public virtual ICollection<FrolfGroupInvite> Invites { get; set; }
+        public virtual ICollection<Game> Games { get; set; }
     }
 }

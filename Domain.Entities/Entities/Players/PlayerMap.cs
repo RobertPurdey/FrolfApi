@@ -32,13 +32,17 @@ namespace Domain.Entities
                 .HasColumnName("handle");
 
             // Relationships
+            // - Link to app user
             HasRequired(p => p.AppUser)
                 .WithMany(u => u.Players)
                 .HasForeignKey(p => p.AppUserId);
 
+            // - Link to frolf group
             HasRequired(p => p.FrolfGroup)
                 .WithMany(fg => fg.Members)
                 .HasForeignKey(p => p.FrolfGroupId);
+
+
 
             // todo: keep this as reference to auto associative table
             //HasMany(player => player.FrolfGroups)

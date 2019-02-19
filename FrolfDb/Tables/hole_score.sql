@@ -1,0 +1,8 @@
+﻿CREATE TABLE [dbo].[hole_score]
+(
+	[id] UNIQUEIDENTIFIER NOT NULL PRIMARY KEY, 
+    [player_id] UNIQUEIDENTIFIER NOT NULL, 
+    [round_id] UNIQUEIDENTIFIER NOT NULL, 
+    [hole_id] UNIQUEIDENTIFIER NOT NULL, 
+    [score] INT NOT NULL
+)

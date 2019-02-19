@@ -65,6 +65,11 @@
     <Build Include="Tables\player.sql" />
     <Build Include="Tables\frolf_group_invite.sql" />
     <Build Include="Tables\app_user_refresh_token.sql" />
+    <Build Include="Tables\course.sql" />
+    <Build Include="Tables\hole.sql" />
+    <Build Include="Tables\round.sql" />
+    <Build Include="Tables\hole_score.sql" />
+    <Build Include="Tables\Game.sql" />
   </ItemGroup>
   <ItemGroup>
     <RefactorLog Include="FrolfDb.refactorlog" />

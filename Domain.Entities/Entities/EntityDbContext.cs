@@ -79,6 +79,14 @@ namespace Domain.Entities.Entities
             modelBuilder.Configurations.Add(new FrolfGroupMap());
             modelBuilder.Configurations.Add(new FrolfGroupInviteMap());
             modelBuilder.Configurations.Add(new AppUserRefreshTokenMap());
+            modelBuilder.Configurations.Add(new CourseMap());
+            modelBuilder.Configurations.Add(new HoleMap());
+            modelBuilder.Configurations.Add(new HoleScoreMap());
+            modelBuilder.Configurations.Add(new RoundMap());
+            modelBuilder.Configurations.Add(new GameMap());
+
+            
+            
         }
     }
 }

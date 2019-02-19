@@ -1,0 +1,5 @@
+﻿CREATE TABLE [dbo].[course]
+(
+	[id] UNIQUEIDENTIFIER NOT NULL PRIMARY KEY, 
+    [name] VARCHAR(50) NOT NULL
+)

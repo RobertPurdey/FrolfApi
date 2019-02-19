@@ -19,5 +19,8 @@ namespace Domain.Entities
 
         public virtual AppUser AppUser { get; set; }
         public virtual FrolfGroup FrolfGroup { get; set; }
+
+        public virtual ICollection<Round> Rounds { get; set; }
+        public virtual ICollection<HoleScore> HoleScores { get; set; }
     }
 }

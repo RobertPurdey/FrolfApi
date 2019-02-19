@@ -9,8 +9,6 @@ using Frolf.Api.Models.FrolfGroups;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Net;
-using System.Web.Http;
 
 namespace Frolf.Api.ModelDataControllers.FrolfGroups
 {
@@ -89,6 +87,18 @@ namespace Frolf.Api.ModelDataControllers.FrolfGroups
         public override void Update(FrolfGroupModel modelToUpdate)
         {
             throw new NotImplementedException();
+        }
+
+        public IEnumerable<PlayerModel> GetGroupMembers(Guid groupId)
+        {
+            return new List<PlayerModel>()
+            {
+                new PlayerModel()
+                {
+                    IdKey = Guid.NewGuid(),
+                    Handle = "SUccess"
+                }
+            };
         }
 
         private Player CreateInitialGroupMember()
