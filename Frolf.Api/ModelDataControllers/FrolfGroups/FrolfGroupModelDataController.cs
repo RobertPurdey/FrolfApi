@@ -9,6 +9,7 @@ using Frolf.Api.Models.FrolfGroups;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 
 namespace Frolf.Api.ModelDataControllers.FrolfGroups
 {
@@ -17,17 +18,22 @@ namespace Frolf.Api.ModelDataControllers.FrolfGroups
         IFrolfGroupModelDataController
     {
         private readonly IReadWriteEntityMapper<FrolfGroupModel, FrolfGroup> frolfGroupMapper;
+        private readonly IReadWriteEntityMapper<PlayerModel, Player> playerMapper;
+
         private readonly IQueryService<FrolfGroup> frolfGroupQueryService;
         private readonly IQueryService<AppUser> appUserQueryService;
-        private readonly ICommandExecutor commandExecutor;
 
+        private readonly ICommandExecutor commandExecutor;
+        
         public FrolfGroupModelDataController(
             IReadWriteEntityMapper<FrolfGroupModel, FrolfGroup> frolfGroupMapping,
+            IReadWriteEntityMapper<PlayerModel, Player> playerMapping,
             IQueryService<FrolfGroup> frolfGroupService,
             IQueryService<AppUser> appUserService,
             ICommandExecutor cmdExecutor)
         {
             frolfGroupMapper         = frolfGroupMapping;
+            playerMapper             = playerMapping;
             frolfGroupQueryService   = frolfGroupService;
             appUserQueryService      = appUserService;
             commandExecutor          = cmdExecutor;
@@ -91,14 +97,25 @@ namespace Frolf.Api.ModelDataControllers.FrolfGroups
 
         public IEnumerable<PlayerModel> GetGroupMembers(Guid groupId)
         {
-            return new List<PlayerModel>()
+            var group = FindEntity(groupId, frolfGroupQueryService);
+
+            var isCurrUserInGroup = group.Members
+                .Any(p => p.AppUserId == UserExtensions.GetCurrentUserId() );
+
+            if ( !isCurrUserInGroup )
             {
-                new PlayerModel()
-                {
-                    IdKey = Guid.NewGuid(),
-                    Handle = "SUccess"
-                }
-            };
+                ThrowHttpResponseException(
+                    "You can't access groups you don't belong in.",
+                    HttpStatusCode.Unauthorized);
+            }
+
+            foreach ( var player in group.Members )
+            {
+                var model = new PlayerModel();
+                playerMapper.MapToApiModel(model, player);
+
+                yield return model;
+            }
         }
 
         private Player CreateInitialGroupMember()

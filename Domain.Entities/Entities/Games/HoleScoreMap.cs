@@ -6,7 +6,7 @@ namespace Domain.Entities
     {
         public HoleScoreMap()
         {
-            ToTable("hole");
+            ToTable("hole_score");
 
             // Primary key
             HasKey(hs => hs.EntityKey);

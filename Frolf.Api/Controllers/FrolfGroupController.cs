@@ -48,9 +48,19 @@ namespace Frolf.Api.Controllers
         {
             throw new NotImplementedException();
         }
+
         public override Task<IEnumerable<FrolfGroupModel>> GetWithFilter([FromBody] FrolfGroupFilterModel filter)
         {
             throw new NotImplementedException();
+        }
+
+        [HttpGet]
+        [Route("groupmembers/{id:guid}")]
+        public Task<IEnumerable<PlayerModel>> GetFrolfGroupMembers([FromUri] Guid id)
+        {
+            var groupMembers = frolfGroupModelDataController.GetGroupMembers(id);
+            
+            return Task.FromResult(groupMembers);
         }
     }
 }

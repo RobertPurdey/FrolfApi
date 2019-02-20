@@ -32,14 +32,21 @@ namespace Frolf.Api.ModelDataControllers
 
             if (entity == null)
             {
-                throw new HttpResponseException(new HttpResponseMessage()
-                {
-                    Content    = new StringContent($"Entity type: {typeof(TEntity)} was not found using the following key: {entityKey}"),
-                    StatusCode = HttpStatusCode.NotFound
-                });
+                ThrowHttpResponseException(
+                    $"Entity type: {typeof(TEntity)} was not found using the following key: {entityKey}",
+                    HttpStatusCode.NotFound);
             }
 
             return entity;
+        }
+
+        protected void ThrowHttpResponseException(string errorMessgage, HttpStatusCode code)
+        {
+            throw new HttpResponseException(new HttpResponseMessage()
+            {
+                Content    = new StringContent(errorMessgage),
+                StatusCode = code
+            });
         }
     }
 }
