@@ -87,7 +87,10 @@ namespace Frolf.Api.ModelDataControllers.FrolfGroups
             // Add current user to the group
             entity.Members.Add( CreateInitialGroupMember() );
 
-            commandExecutor.Execute( new AddFrolfGroupCommand{ newEntity = entity } );
+            var addCommand  = new AddFrolfGroupCommand { newEntity = entity };
+            commandExecutor.Execute(addCommand);
+
+            newModel.IdKey = addCommand.newEntity.EntityKey;
         }
 
         public override void Update(FrolfGroupModel modelToUpdate)
