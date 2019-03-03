@@ -6,6 +6,7 @@ using Domain.Query.Contracts;
 using Frolf.Api.Locators;
 using Frolf.Api.Mappers;
 using Frolf.Api.ModelDataControllers.Contracts;
+using Frolf.Api.ModelDataControllers.Courses;
 using Frolf.Api.ModelDataControllers.FrolfGroups;
 using Frolf.Api.ModelDataControllers.Users;
 using Security.Contracts;
@@ -42,10 +43,11 @@ namespace Frolf.Api.IoC
             For<ICommandLocator>().Use<CommandLocator>();
             For<IEncryptionManager>().Use<EncryptionManager>();
 
-            // ModelDataControllers
+            // Model-data controllers
             For<IAppUserModelDataController>().Use<AppUserModelDataController>();
             For<IFrolfGroupModelDataController>().Use<FrolfGroupModelDataController>();
             For<IFrolfGroupInviteModelDataController>().Use<FrolfGroupInviteModelDataController>();
+            For<ICourseModelDataController>().Use<CourseModelDataController>();
         }
     }
 }

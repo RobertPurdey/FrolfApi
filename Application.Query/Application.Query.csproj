@@ -41,6 +41,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\Courses\CourseQueryArg.cs" />
+    <Compile Include="Services\Courses\CourseQueryService.cs" />
     <Compile Include="Services\FrolfGroups\FrolfGroupInviteQueryArg.cs" />
     <Compile Include="Services\FrolfGroups\FrolfGroupInviteQueryService.cs" />
     <Compile Include="Services\FrolfGroups\FrolfGroupQueryArg.cs" />
