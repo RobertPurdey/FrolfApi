@@ -1,5 +1,6 @@
 ﻿using Frolf.Api.ModelDataControllers.Contracts;
 using Frolf.Api.Models.FrolfGroups;
+using Frolf.Api.Models.Games;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -61,6 +62,15 @@ namespace Frolf.Api.Controllers
             var groupMembers = frolfGroupModelDataController.GetGroupMembers(id);
             
             return Task.FromResult(groupMembers);
+        }
+
+        [HttpPost]
+        [Route("creategame")]
+        public Task CreateGame([FromBody] GameCreationModel model)
+        {
+            frolfGroupModelDataController.CreateGame(model);
+
+            return Task.FromResult(1);
         }
     }
 }

@@ -1,5 +1,5 @@
-﻿using Domain.Entities;
-using Frolf.Api.Models.FrolfGroups;
+﻿using Frolf.Api.Models.FrolfGroups;
+using Frolf.Api.Models.Games;
 using System;
 using System.Collections.Generic;
 
@@ -9,5 +9,6 @@ namespace Frolf.Api.ModelDataControllers.Contracts
         : IModelDataController<FrolfGroupModel, FrolfGroupFilterModel>
     {
         IEnumerable<PlayerModel> GetGroupMembers(Guid groupId);
+        void CreateGame(GameCreationModel groupId);
     }
 }

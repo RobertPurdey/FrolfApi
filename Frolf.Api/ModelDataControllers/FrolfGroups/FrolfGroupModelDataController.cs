@@ -6,6 +6,7 @@ using Domain.Query.Contracts;
 using Frolf.Api.Mappers;
 using Frolf.Api.ModelDataControllers.Contracts;
 using Frolf.Api.Models.FrolfGroups;
+using Frolf.Api.Models.Games;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -119,6 +120,11 @@ namespace Frolf.Api.ModelDataControllers.FrolfGroups
 
                 yield return model;
             }
+        }
+
+        public void CreateGame(GameCreationModel model)
+        {
+
         }
 
         private Player CreateInitialGroupMember()

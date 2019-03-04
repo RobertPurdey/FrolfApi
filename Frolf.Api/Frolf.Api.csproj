@@ -276,6 +276,7 @@
     <Compile Include="Mappers\Courses\CourseMapper.cs" />
     <Compile Include="Mappers\FrolfGroups\FrolfGroupInviteMapper.cs" />
     <Compile Include="Mappers\FrolfGroups\FrolfGroupMapper.cs" />
+    <Compile Include="Mappers\Games\GameMapper.cs" />
     <Compile Include="Mappers\IReadOnlyEntityMapper.cs" />
     <Compile Include="Mappers\IReadWriteEntityMap.cs" />
     <Compile Include="Mappers\Players\PlayerMapper.cs" />
@@ -297,6 +298,8 @@
     <Compile Include="Models\FrolfGroups\FrolfGroupModel.cs" />
     <Compile Include="Models\Contracts\IApiDataModel.cs" />
     <Compile Include="Models\FrolfGroups\InviteCreationModel.cs" />
+    <Compile Include="Models\Games\GameCreationModel.cs" />
+    <Compile Include="Models\Games\GameModel.cs" />
     <Compile Include="Models\Players\PlayerModel.cs" />
     <Compile Include="Models\Users\AppUserModel.cs" />
     <Compile Include="OAuth\AppUserAuthorizationServerProvider.cs" />
