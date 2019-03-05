@@ -47,21 +47,20 @@ namespace Frolf.Api.Composers.Games
             FrolfGroup group,
             IEnumerable<Player> players)
         {
-            var rounds = new List<Round>();
+            var newGame = new Game
+            {
+                Name        = creationModel.Name,
+                Course      = course,
+                FrolfGroup  = group,
+                Rounds      = new List<Round>()
+            };
 
             foreach ( var player in players )
             {
-                rounds.Add( CreateRound(player, course) );
+                newGame.Rounds.Add( CreateRound(player, course) );
             }
 
-            return new Game
-            {
-                Name          = creationModel.Name,
-                Course        = course,
-                FrolfGroup    = group,
-                CreatedBy     = UserExtensions.GetCurrentUserId(),
-                Rounds        = rounds
-            };
+            return newGame;
         }
 
         private Round CreateRound(Player player, Course course)
