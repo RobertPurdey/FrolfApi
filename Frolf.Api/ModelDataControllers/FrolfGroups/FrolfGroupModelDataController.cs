@@ -1,8 +1,10 @@
 ﻿using Application.Command.FrolfGroups.Commands;
+using Application.Command.Games;
 using Application.Query.Services.FrolfGroups;
 using Domain.Commands.Contracts;
 using Domain.Entities;
 using Domain.Query.Contracts;
+using Frolf.Api.Composers.Games;
 using Frolf.Api.Mappers;
 using Frolf.Api.ModelDataControllers.Contracts;
 using Frolf.Api.Models.FrolfGroups;
@@ -25,19 +27,22 @@ namespace Frolf.Api.ModelDataControllers.FrolfGroups
         private readonly IQueryService<AppUser> appUserQueryService;
 
         private readonly ICommandExecutor commandExecutor;
-        
+        private readonly IGameComposer gameComposer;
+
         public FrolfGroupModelDataController(
             IReadWriteEntityMapper<FrolfGroupModel, FrolfGroup> frolfGroupMapping,
             IReadWriteEntityMapper<PlayerModel, Player> playerMapping,
             IQueryService<FrolfGroup> frolfGroupService,
             IQueryService<AppUser> appUserService,
-            ICommandExecutor cmdExecutor)
+            ICommandExecutor cmdExecutor,
+            IGameComposer gameComp) // todo: move this to gamecontroller most likely
         {
             frolfGroupMapper         = frolfGroupMapping;
             playerMapper             = playerMapping;
             frolfGroupQueryService   = frolfGroupService;
             appUserQueryService      = appUserService;
             commandExecutor          = cmdExecutor;
+            gameComposer             = gameComp;
         }
 
         public override void Delete(FrolfGroupModel modelToDelete)
@@ -124,7 +129,10 @@ namespace Frolf.Api.ModelDataControllers.FrolfGroups
 
         public void CreateGame(GameCreationModel model)
         {
+            var game       = gameComposer.NewGame(model);
+            var addCommand = new AddGameCommand { NewGame = game };
 
+            commandExecutor.Execute(addCommand);
         }
 
         private Player CreateInitialGroupMember()

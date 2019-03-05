@@ -69,7 +69,7 @@
     <Build Include="Tables\hole.sql" />
     <Build Include="Tables\round.sql" />
     <Build Include="Tables\hole_score.sql" />
-    <Build Include="Tables\Game.sql" />
+    <Build Include="Tables\game.sql" />
   </ItemGroup>
   <ItemGroup>
     <RefactorLog Include="FrolfDb.refactorlog" />

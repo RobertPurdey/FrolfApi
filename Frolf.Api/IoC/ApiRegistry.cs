@@ -3,6 +3,7 @@ using Domain.Commands.Contracts;
 using Domain.Entities.Contracts;
 using Domain.Entities.Entities;
 using Domain.Query.Contracts;
+using Frolf.Api.Composers.Games;
 using Frolf.Api.Locators;
 using Frolf.Api.Mappers;
 using Frolf.Api.ModelDataControllers.Contracts;
@@ -48,6 +49,9 @@ namespace Frolf.Api.IoC
             For<IFrolfGroupModelDataController>().Use<FrolfGroupModelDataController>();
             For<IFrolfGroupInviteModelDataController>().Use<FrolfGroupInviteModelDataController>();
             For<ICourseModelDataController>().Use<CourseModelDataController>();
+
+            // Composers
+            For<IGameComposer>().Use<GameComposer>();
         }
     }
 }
