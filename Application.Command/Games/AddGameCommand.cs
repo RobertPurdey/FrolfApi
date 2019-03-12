@@ -1,4 +1,6 @@
-﻿using Domain.Commands;
+﻿using Application.Command.FrolfGroups.Conditions;
+using Application.Command.Games.Conditions;
+using Domain.Commands;
 using Domain.Commands.Contracts;
 using Domain.Entities;
 using Domain.Query.Contracts;
@@ -24,9 +26,23 @@ namespace Application.Command.Games
 
         public override void OnPreHandleCommand(AddGameCommand command)
         {
-            // Asserts
-            // - Current user is in the group
-            // - All players are in the group
+            AssertCurrentUserInGroup(command);
+            AssertAllPlayersAreGroupMembers(command);
+        }
+
+        private void AssertCurrentUserInGroup(AddGameCommand command)
+        {
+            var isValid = new IsUserAGroupMemberCondition( UserExtensions.GetCurrentUserId() )
+                .Validate( command.NewGame.FrolfGroup );
+
+            Assert(isValid, "Cannot create a game for a group you are not a part of");
+        }
+
+        private void AssertAllPlayersAreGroupMembers(AddGameCommand command)
+        {
+            var isValid = !new GameOnlyContainsGroupMembers().Validate(command.NewGame);
+
+            Assert(isValid, "Cannot create a game when some members are not in the group");
         }
     }
 
