@@ -63,7 +63,7 @@ namespace Frolf.Api.ModelDataControllers.FrolfGroups
     
         public override IEnumerable<FrolfGroupInviteModel> GetWithFilter(FrolfGroupInviteFilterModel filter)
         {
-            var queryArg         = ConvertToQueryArg(filter);
+            var queryArg         = ConvertToQueryArg(filter); 
             var filteredInvites  = frolfGroupInviteQueryService.GetWithQueryArg(queryArg);
 
             foreach ( var entity in filteredInvites )

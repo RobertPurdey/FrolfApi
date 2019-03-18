@@ -1,9 +1,5 @@
 ﻿using Domain.Entities;
 using Frolf.Api.Models.Games;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 
 namespace Frolf.Api.Mappers.Games
 {
@@ -19,6 +15,7 @@ namespace Frolf.Api.Mappers.Games
             apiModel.IdKey    = entity.EntityKey;
             apiModel.GroupId  = entity.FrolfGroupId;
             apiModel.CourseId = entity.CourseId;
+            apiModel.Name     = entity.Name;
         }
 
         public void MapToEntity(GameModel apiModel, Game entity)

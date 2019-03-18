@@ -265,6 +265,7 @@
     <Compile Include="Controllers\EditControllerBase.cs" />
     <Compile Include="Controllers\FrolfGroupController.cs" />
     <Compile Include="Controllers\FrolfGroupInviteController.cs" />
+    <Compile Include="Controllers\GameController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ValuesController.cs" />
     <Compile Include="Global.asax.cs">
@@ -287,10 +288,12 @@
     <Compile Include="ModelDataControllers\Contracts\ICourseModelDataController.cs" />
     <Compile Include="ModelDataControllers\Contracts\IFrolfGroupInviteModelDataController.cs" />
     <Compile Include="ModelDataControllers\Contracts\IFrolfGroupModelDataController.cs" />
+    <Compile Include="ModelDataControllers\Contracts\IGameModelDataController.cs" />
     <Compile Include="ModelDataControllers\Contracts\IModelDataController.cs" />
     <Compile Include="ModelDataControllers\Courses\CourseModelDataController.cs" />
     <Compile Include="ModelDataControllers\FrolfGroups\FrolfGroupInviteModelDataController.cs" />
     <Compile Include="ModelDataControllers\FrolfGroups\FrolfGroupModelDataController.cs" />
+    <Compile Include="ModelDataControllers\Games\GameModelDataController.cs" />
     <Compile Include="ModelDataControllers\ModelDataController.cs" />
     <Compile Include="ModelDataControllers\Users\AppUserModelDataController.cs" />
     <Compile Include="Models\Contracts\IFilterModel.cs" />

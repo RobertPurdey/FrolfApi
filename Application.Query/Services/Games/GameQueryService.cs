@@ -1,0 +1,25 @@
+﻿using Domain.Entities;
+using Domain.Entities.Contracts;
+using Domain.Query;
+using System.Linq;
+
+namespace Application.Query.Services.Games
+{
+    public class GameQueryService : QueryService<Game>
+    {
+        public GameQueryService(IEntityDbContext context)
+            : base(context)
+        {
+
+        }
+
+        public override IQueryable<Game> GetAll()
+        {
+            var query         = base.GetAll();
+            var currUserGuid  = UserExtensions.GetCurrentUserId();
+
+            return query.Where(
+                g => g.Rounds.Any( r => r.Player.AppUserId == currUserGuid) );
+        }
+    }
+}

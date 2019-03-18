@@ -47,6 +47,8 @@
     <Compile Include="Services\FrolfGroups\FrolfGroupInviteQueryService.cs" />
     <Compile Include="Services\FrolfGroups\FrolfGroupQueryArg.cs" />
     <Compile Include="Services\FrolfGroups\FrolfGroupQueryService.cs" />
+    <Compile Include="Services\Games\GameQueryArg.cs" />
+    <Compile Include="Services\Games\GameQueryService.cs" />
     <Compile Include="Services\Players\PlayerQueryArg.cs" />
     <Compile Include="Services\Players\PlayerQueryService.cs" />
     <Compile Include="Services\Users\AppUserQueryArg.cs" />
