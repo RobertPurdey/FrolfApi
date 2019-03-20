@@ -266,6 +266,7 @@
     <Compile Include="Controllers\FrolfGroupController.cs" />
     <Compile Include="Controllers\FrolfGroupInviteController.cs" />
     <Compile Include="Controllers\GameController.cs" />
+    <Compile Include="Controllers\HoleScoreController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ValuesController.cs" />
     <Compile Include="Global.asax.cs">
@@ -279,6 +280,7 @@
     <Compile Include="Mappers\FrolfGroups\FrolfGroupInviteMapper.cs" />
     <Compile Include="Mappers\FrolfGroups\FrolfGroupMapper.cs" />
     <Compile Include="Mappers\Games\GameMapper.cs" />
+    <Compile Include="Mappers\HoleScores\HoleScoreMapper.cs" />
     <Compile Include="Mappers\IReadOnlyEntityMapper.cs" />
     <Compile Include="Mappers\IReadWriteEntityMap.cs" />
     <Compile Include="Mappers\Players\PlayerMapper.cs" />
@@ -289,11 +291,13 @@
     <Compile Include="ModelDataControllers\Contracts\IFrolfGroupInviteModelDataController.cs" />
     <Compile Include="ModelDataControllers\Contracts\IFrolfGroupModelDataController.cs" />
     <Compile Include="ModelDataControllers\Contracts\IGameModelDataController.cs" />
+    <Compile Include="ModelDataControllers\Contracts\IHoleScoreModelDataController.cs" />
     <Compile Include="ModelDataControllers\Contracts\IModelDataController.cs" />
     <Compile Include="ModelDataControllers\Courses\CourseModelDataController.cs" />
     <Compile Include="ModelDataControllers\FrolfGroups\FrolfGroupInviteModelDataController.cs" />
     <Compile Include="ModelDataControllers\FrolfGroups\FrolfGroupModelDataController.cs" />
     <Compile Include="ModelDataControllers\Games\GameModelDataController.cs" />
+    <Compile Include="ModelDataControllers\HoleScores\HoleScoreModelDataController.cs" />
     <Compile Include="ModelDataControllers\ModelDataController.cs" />
     <Compile Include="ModelDataControllers\Users\AppUserModelDataController.cs" />
     <Compile Include="Models\Contracts\IFilterModel.cs" />
@@ -304,6 +308,7 @@
     <Compile Include="Models\FrolfGroups\InviteCreationModel.cs" />
     <Compile Include="Models\Games\GameCreationModel.cs" />
     <Compile Include="Models\Games\GameModel.cs" />
+    <Compile Include="Models\HoleScores\HoleScoreModel.cs" />
     <Compile Include="Models\Players\PlayerModel.cs" />
     <Compile Include="Models\Users\AppUserModel.cs" />
     <Compile Include="OAuth\AppUserAuthorizationServerProvider.cs" />

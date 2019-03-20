@@ -45,6 +45,7 @@ namespace Frolf.Api.ModelDataControllers.FrolfGroups
 
         public override IEnumerable<FrolfGroupInviteModel> GetAll()
         {
+            // todo: lock this down on the query service?
             var currUserGuid = UserExtensions.GetCurrentUserId();
 
             foreach ( var entity in frolfGroupInviteQueryService.GetAll() )
@@ -111,7 +112,7 @@ namespace Frolf.Api.ModelDataControllers.FrolfGroups
 
             if ( invitee == null )
             {
-                // Vague on purpose as to not give info away as to why
+                // Vague on purpose as to not give info away as to why sending the invite was unsuccessful
                 throw new Exception("Send invite failed.");
             }
 

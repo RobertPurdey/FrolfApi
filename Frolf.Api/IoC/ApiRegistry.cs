@@ -10,6 +10,7 @@ using Frolf.Api.ModelDataControllers.Contracts;
 using Frolf.Api.ModelDataControllers.Courses;
 using Frolf.Api.ModelDataControllers.FrolfGroups;
 using Frolf.Api.ModelDataControllers.Games;
+using Frolf.Api.ModelDataControllers.HoleScores;
 using Frolf.Api.ModelDataControllers.Users;
 using Security.Contracts;
 using Security.Encryption;
@@ -51,6 +52,7 @@ namespace Frolf.Api.IoC
             For<IFrolfGroupInviteModelDataController>().Use<FrolfGroupInviteModelDataController>();
             For<ICourseModelDataController>().Use<CourseModelDataController>();
             For<IGameModelDataController>().Use<GameModelDataController>();
+            For<IHoleScoreModelDataController>().Use<HoleScoreModelDataController>();
 
             // Composers
             For<IGameComposer>().Use<GameComposer>();

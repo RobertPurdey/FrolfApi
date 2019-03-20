@@ -49,6 +49,8 @@
     <Compile Include="Services\FrolfGroups\FrolfGroupQueryService.cs" />
     <Compile Include="Services\Games\GameQueryArg.cs" />
     <Compile Include="Services\Games\GameQueryService.cs" />
+    <Compile Include="Services\HoleScores\HoleScoreQueryArg.cs" />
+    <Compile Include="Services\HoleScores\HoleScoreQueryService.cs" />
     <Compile Include="Services\Players\PlayerQueryArg.cs" />
     <Compile Include="Services\Players\PlayerQueryService.cs" />
     <Compile Include="Services\Users\AppUserQueryArg.cs" />
@@ -78,5 +80,6 @@
       <Name>Security.Contracts</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
