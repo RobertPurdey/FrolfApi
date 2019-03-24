@@ -1,5 +1,6 @@
 ﻿using Frolf.Api.ModelDataControllers.Contracts;
 using Frolf.Api.Models.Games;
+using Frolf.Api.Models.HoleScores;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -10,24 +11,24 @@ namespace Frolf.Api.Controllers
     [RoutePrefix("api/games")]
     public class GameController : EditControllerBase<GameModel, GameFilterModel>
     {
-        private readonly IGameModelDataController groupGroupDataController;
+        private readonly IGameModelDataController gameDataController;
 
         public GameController(
-            IGameModelDataController groupGroupDataController)
+            IGameModelDataController gameDataController)
         {
-            this.groupGroupDataController = groupGroupDataController;
+            this.gameDataController = gameDataController;
         }
 
         public override Task<IEnumerable<GameModel>> GetAll()
         {
-            var foundGames = groupGroupDataController.GetAll();
+            var foundGames = gameDataController.GetAll();
 
             return Task.FromResult(foundGames);
         }
 
         public override Task<GameModel> GetById([FromUri] Guid id)
         {
-            var foundFrolfGroup = groupGroupDataController.GetById(id);
+            var foundFrolfGroup = gameDataController.GetById(id);
 
             return Task.FromResult(foundFrolfGroup);
         }
@@ -50,6 +51,15 @@ namespace Frolf.Api.Controllers
         public override Task<IEnumerable<GameModel>> GetWithFilter([FromBody] GameFilterModel filter)
         {
             throw new NotImplementedException();
+        }
+
+        [HttpPost]
+        [Route("holeScores")]
+        public Task UpdateGameHoles([FromBody] HoleScoreSetUpdateModel updateModel)
+        {
+            gameDataController.SaveHoleScoreSet(updateModel);
+
+            return Task.FromResult(1);
         }
     }
 }

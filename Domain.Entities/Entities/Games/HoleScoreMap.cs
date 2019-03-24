@@ -27,6 +27,10 @@ namespace Domain.Entities
                 .IsRequired()
                 .HasColumnName("round_id");
 
+            Property(hs => hs.GameId)
+                .IsRequired()
+                .HasColumnName("game_id");
+
             Property(hs => hs.Score)
                 .IsRequired()
                 .HasColumnName("score");
@@ -46,6 +50,11 @@ namespace Domain.Entities
             HasRequired(hs => hs.Round)
                 .WithMany(r => r.HoleScores)
                 .HasForeignKey(hs => hs.RoundId);
+
+            // - Link to Game
+            HasRequired(hs => hs.Game)
+                .WithMany(r => r.HoleScores)
+                .HasForeignKey(hs => hs.GameId);
         }
     }
 }

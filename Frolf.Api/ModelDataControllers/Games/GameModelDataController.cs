@@ -1,12 +1,15 @@
-﻿using Application.Query.Services.Games;
+﻿using Application.Command.HoleScores;
+using Application.Query.Services.Games;
 using Domain.Commands.Contracts;
 using Domain.Entities;
 using Domain.Query.Contracts;
 using Frolf.Api.Mappers;
 using Frolf.Api.ModelDataControllers.Contracts;
 using Frolf.Api.Models.Games;
+using Frolf.Api.Models.HoleScores;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Frolf.Api.ModelDataControllers.Games
 {
@@ -67,6 +70,30 @@ namespace Frolf.Api.ModelDataControllers.Games
         public override void Update(GameModel modelToUpdate)
         {
             throw new NotImplementedException();
+        }
+
+        public void SaveHoleScoreSet(HoleScoreSetUpdateModel updateRequest)
+        {
+            var gameId          = updateRequest.GameId;
+            var newHoleScores   = updateRequest.HoleScoreUpdates;
+            var game            =  FindEntity(gameId, gameQueryService);
+            
+            // Deny early 
+            if ( game.CreatedBy != UserExtensions.GetCurrentUserId() )
+            {
+                throw new Exception("Cannot score game that wasn't created by you.");
+            }
+
+            var updatedHoleScores = game.HoleScores
+                .Where(hs => newHoleScores.ContainsKey(hs.EntityKey));
+
+            foreach ( var holeScore in updatedHoleScores )
+            {
+                holeScore.Score = newHoleScores[holeScore.EntityKey];
+            }
+
+            var saveCmd = new BatchUpdateHoleScoreCommand(gameId, updatedHoleScores);
+            commandExecutor.Execute(saveCmd);
         }
 
         private static GameQueryArg ConvertToQueryArg(GameFilterModel filter)

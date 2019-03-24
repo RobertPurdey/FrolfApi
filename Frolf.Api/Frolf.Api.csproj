@@ -309,6 +309,7 @@
     <Compile Include="Models\Games\GameCreationModel.cs" />
     <Compile Include="Models\Games\GameModel.cs" />
     <Compile Include="Models\HoleScores\HoleScoreModel.cs" />
+    <Compile Include="Models\HoleScores\HoleScoreSetUpdateModel.cs" />
     <Compile Include="Models\Players\PlayerModel.cs" />
     <Compile Include="Models\Users\AppUserModel.cs" />
     <Compile Include="OAuth\AppUserAuthorizationServerProvider.cs" />
