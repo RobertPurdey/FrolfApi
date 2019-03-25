@@ -76,7 +76,7 @@ namespace Frolf.Api.ModelDataControllers.Games
         {
             var gameId          = updateRequest.GameId;
             var newHoleScores   = updateRequest.HoleScoreUpdates;
-            var game            =  FindEntity(gameId, gameQueryService);
+            var game            = FindEntity(gameId, gameQueryService);
             
             // Deny early 
             if ( game.CreatedBy != UserExtensions.GetCurrentUserId() )

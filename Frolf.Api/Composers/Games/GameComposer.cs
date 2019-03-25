@@ -52,18 +52,19 @@ namespace Frolf.Api.Composers.Games
                 Name        = creationModel.Name,
                 Course      = course,
                 FrolfGroup  = group,
-                Rounds      = new List<Round>()
+                Rounds      = new List<Round>(),
+                HoleScores  = new List<HoleScore>()
             };
 
             foreach ( var player in players )
             {
-                newGame.Rounds.Add( CreateRound(player, course) );
+                newGame.Rounds.Add( CreateRound(player, course, newGame) );
             }
 
             return newGame;
         }
 
-        private Round CreateRound(Player player, Course course)
+        private Round CreateRound(Player player, Course course, Game game)
         {
             var newRound = new Round
             {
@@ -74,13 +75,16 @@ namespace Frolf.Api.Composers.Games
 
             foreach ( var hole in course.Holes )
             {
-                newRound.HoleScores.Add(new HoleScore
+                var newHoleScore = new HoleScore
                 {
-                    EntityKey  = Guid.NewGuid(),
-                    Hole       = hole,
-                    Player     = player,
-                    Score      = hole.Par
-                });
+                    EntityKey = Guid.NewGuid(),
+                    Hole = hole,
+                    Player = player,
+                    Score = hole.Par
+                };
+
+                newRound.HoleScores.Add(newHoleScore);
+                game.HoleScores.Add(newHoleScore);
             }
 
             return newRound;
