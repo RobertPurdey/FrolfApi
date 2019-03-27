@@ -9,6 +9,7 @@ namespace Frolf.Api.Models.Games
         public Guid IdKey { get; set; }
         public Guid GroupId { get; set; }
         public Guid CourseId { get; set; }
+        public Guid CreatorId { get; set; }
 
         public string Name { get; set; }
 

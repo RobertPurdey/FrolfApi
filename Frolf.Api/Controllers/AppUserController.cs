@@ -29,12 +29,12 @@ namespace Frolf.Api.Controllers
         }
 
         [HttpGet]
-        [Route("friends")]
-        public Task<IEnumerable<AppUserModel>> GetAppUsers()
+        [Route("info")]
+        public Task<AppUserModel> GetCurrentUserInfo()
         {
-            var allUsers = appUserModelDataController.GetAll();
+            var foundAppUser = appUserModelDataController.GetById(UserExtensions.GetCurrentUserId());
 
-            return Task.FromResult(allUsers);
+            return Task.FromResult(foundAppUser);
         }
 
         protected override Task<AppUserModel> Create([FromBody] AppUserModel newItem)
