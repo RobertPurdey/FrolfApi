@@ -280,6 +280,8 @@
     <Compile Include="Mappers\FrolfGroups\FrolfGroupInviteMapper.cs" />
     <Compile Include="Mappers\FrolfGroups\FrolfGroupMapper.cs" />
     <Compile Include="Mappers\Games\GameMapper.cs" />
+    <Compile Include="Mappers\Games\IReadEntityMapper.cs" />
+    <Compile Include="Mappers\Games\PlayerGameResultMapper.cs" />
     <Compile Include="Mappers\HoleScores\HoleScoreMapper.cs" />
     <Compile Include="Mappers\IReadOnlyEntityMapper.cs" />
     <Compile Include="Mappers\IReadWriteEntityMap.cs" />
@@ -308,6 +310,7 @@
     <Compile Include="Models\FrolfGroups\InviteCreationModel.cs" />
     <Compile Include="Models\Games\GameCreationModel.cs" />
     <Compile Include="Models\Games\GameModel.cs" />
+    <Compile Include="Models\Games\PlayerGameResultModel.cs" />
     <Compile Include="Models\HoleScores\HoleScoreModel.cs" />
     <Compile Include="Models\HoleScores\HoleScoreSetUpdateModel.cs" />
     <Compile Include="Models\Players\PlayerModel.cs" />

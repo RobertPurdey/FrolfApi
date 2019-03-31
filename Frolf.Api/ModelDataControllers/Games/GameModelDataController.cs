@@ -18,17 +18,20 @@ namespace Frolf.Api.ModelDataControllers.Games
         IGameModelDataController
     {
         private readonly IReadOnlyEntityMapper<GameModel, Game> gameMapper;
+        private readonly IReadOnlyEntityMapper<PlayerGameResultModel, Round> playerResultMapper;
         private readonly IQueryService<Game> gameQueryService;
         private readonly ICommandExecutor commandExecutor;
 
         public GameModelDataController(
             IReadOnlyEntityMapper<GameModel, Game> gameMapping,
+            IReadOnlyEntityMapper<PlayerGameResultModel, Round> playerResultMapping,
             IQueryService<Game> gameService,
             ICommandExecutor cmdExecutor)
         {
-            gameMapper       = gameMapping;
-            gameQueryService = gameService;
-            commandExecutor  = cmdExecutor;
+            gameMapper          = gameMapping;
+            playerResultMapper  = playerResultMapping;
+            gameQueryService    = gameService;
+            commandExecutor     = cmdExecutor;
         }
 
         public override void Delete(GameModel modelToDelete)
@@ -94,6 +97,20 @@ namespace Frolf.Api.ModelDataControllers.Games
 
             var saveCmd = new BatchUpdateHoleScoreCommand(gameId, updatedHoleScores);
             commandExecutor.Execute(saveCmd);
+        }
+
+        public IEnumerable<PlayerGameResultModel> GetPlayerResults(Guid gameId)
+        {
+            // todo: deny results when not part of the group the game results are being retrieved for
+            var game = FindEntity(gameId, gameQueryService);
+
+            foreach (var entity in game.Rounds)
+            {
+                var model = new PlayerGameResultModel();
+                playerResultMapper.MapToApiModel(model, entity);
+
+                yield return model;
+            }
         }
 
         private static GameQueryArg ConvertToQueryArg(GameFilterModel filter)
