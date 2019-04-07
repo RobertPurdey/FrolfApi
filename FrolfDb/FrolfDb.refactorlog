@@ -182,4 +182,11 @@
     <Property Name="ParentElementType" Value="SqlTable" />
     <Property Name="NewName" Value="frolf_group_id" />
   </Operation>
+  <Operation Name="Rename Refactor" Key="2af4020a-eade-49a6-97a7-7219dd3c5305" ChangeDateTime="04/06/2019 22:47:11">
+    <Property Name="ElementName" Value="[dbo].[hole_score].[score]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[hole_score]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="strokes" />
+  </Operation>
 </Operations>

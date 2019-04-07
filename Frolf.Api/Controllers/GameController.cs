@@ -63,12 +63,12 @@ namespace Frolf.Api.Controllers
         }
 
         [HttpGet]
-        [Route("{id:guid}/playerresults")]
-        public Task<IEnumerable<PlayerGameResultModel>>  GetPlayerResults([FromUri] Guid id)
+        [Route("{id:guid}/results")]
+        public Task<GameResultModel>  GetGameResults([FromUri] Guid id)
         {
-            var playerResults = gameDataController.GetPlayerResults(id);
+            var gameResults = gameDataController.GetGameResults(id);
 
-            return Task.FromResult(playerResults);
+            return Task.FromResult(gameResults);
         }
     }
 }

@@ -18,7 +18,9 @@ namespace Frolf.Api.Mappers.HoleScores
             apiModel.RoundId          = entity.RoundId;
 
             apiModel.PlayerHandle     = entity.Player.Handle;
-            apiModel.Score            = entity.Score;
+            apiModel.Strokes          = entity.Strokes;
+            apiModel.Score            = entity.Strokes - entity.Hole.Par;
+            apiModel.HolePar          = entity.Hole.Par;
         }
 
         public void MapToEntity(HoleScoreModel apiModel, HoleScore entity)

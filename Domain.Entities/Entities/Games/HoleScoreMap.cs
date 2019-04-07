@@ -31,9 +31,9 @@ namespace Domain.Entities
                 .IsRequired()
                 .HasColumnName("game_id");
 
-            Property(hs => hs.Score)
+            Property(hs => hs.Strokes)
                 .IsRequired()
-                .HasColumnName("score");
+                .HasColumnName("strokes");
 
             // Relationships
             // - Link to Hole

@@ -80,7 +80,7 @@ namespace Frolf.Api.Composers.Games
                     EntityKey = Guid.NewGuid(),
                     Hole = hole,
                     Player = player,
-                    Score = hole.Par
+                    Strokes = hole.Par
                 };
 
                 newRound.HoleScores.Add(newHoleScore);

@@ -16,6 +16,7 @@ namespace Frolf.Api.Models.Games
         public IEnumerable<Guid> RoundIds { get; set; }
         public IEnumerable<Guid> PlayerIds { get; set; }
         public IEnumerable<Guid> HoleIds { get; set; }
+        public IDictionary<int,int> HolePars { get; set; }
     }
 
     public class GameFilterModel : IFilterModel

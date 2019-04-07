@@ -14,9 +14,10 @@ namespace Frolf.Api.Mappers.Games
         public void MapToApiModel(PlayerGameResultModel apiModel, Round entity)
         {
             apiModel.PlayerName     = entity.Player.Handle;
-            apiModel.Strokes        = entity.HoleScores.Sum(hs => hs.Score);
-            apiModel.TotalScore     = entity.HoleScores.Sum(hs => hs.Score - hs.Hole.Par);
-            apiModel.Scores         = entity.HoleScores.ToDictionary(hs => hs.Hole.Order, hs => hs.Score);
+            apiModel.TotalStrokes   = entity.HoleScores.Sum(hs => hs.Strokes);
+            apiModel.TotalScore     = entity.HoleScores.Sum(hs => hs.Strokes - hs.Hole.Par);
+            apiModel.Scores         = entity.HoleScores.ToDictionary(hs => hs.Hole.Order, hs => hs.Strokes - hs.Hole.Par);
+            apiModel.Strokes        = entity.HoleScores.ToDictionary(hs => hs.Hole.Order, hs => hs.Strokes);
         }
     }
 }

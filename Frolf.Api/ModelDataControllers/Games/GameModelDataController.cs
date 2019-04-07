@@ -18,18 +18,18 @@ namespace Frolf.Api.ModelDataControllers.Games
         IGameModelDataController
     {
         private readonly IReadOnlyEntityMapper<GameModel, Game> gameMapper;
-        private readonly IReadOnlyEntityMapper<PlayerGameResultModel, Round> playerResultMapper;
+        private readonly IReadOnlyEntityMapper<GameResultModel, Game> gameResultMapper;
         private readonly IQueryService<Game> gameQueryService;
         private readonly ICommandExecutor commandExecutor;
 
         public GameModelDataController(
             IReadOnlyEntityMapper<GameModel, Game> gameMapping,
-            IReadOnlyEntityMapper<PlayerGameResultModel, Round> playerResultMapping,
+            IReadOnlyEntityMapper<GameResultModel, Game> gameResultMapping,
             IQueryService<Game> gameService,
             ICommandExecutor cmdExecutor)
         {
             gameMapper          = gameMapping;
-            playerResultMapper  = playerResultMapping;
+            gameResultMapper    = gameResultMapping;
             gameQueryService    = gameService;
             commandExecutor     = cmdExecutor;
         }
@@ -92,25 +92,22 @@ namespace Frolf.Api.ModelDataControllers.Games
 
             foreach ( var holeScore in updatedHoleScores )
             {
-                holeScore.Score = newHoleScores[holeScore.EntityKey];
+                holeScore.Strokes = newHoleScores[holeScore.EntityKey];
             }
 
             var saveCmd = new BatchUpdateHoleScoreCommand(gameId, updatedHoleScores);
             commandExecutor.Execute(saveCmd);
         }
 
-        public IEnumerable<PlayerGameResultModel> GetPlayerResults(Guid gameId)
+        public GameResultModel GetGameResults(Guid gameId)
         {
-            // todo: deny results when not part of the group the game results are being retrieved for
-            var game = FindEntity(gameId, gameQueryService);
+            // todo: deny when requester is not part of the group the game is for
+            var game         = FindEntity(gameId, gameQueryService);
+            var gameResult   = new GameResultModel();
 
-            foreach (var entity in game.Rounds)
-            {
-                var model = new PlayerGameResultModel();
-                playerResultMapper.MapToApiModel(model, entity);
+            gameResultMapper.MapToApiModel(gameResult, game);
 
-                yield return model;
-            }
+            return gameResult;
         }
 
         private static GameQueryArg ConvertToQueryArg(GameFilterModel filter)

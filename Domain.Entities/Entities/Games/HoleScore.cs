@@ -10,7 +10,8 @@ namespace Domain.Entities
         public Guid PlayerId { get; set; }
         public Guid RoundId { get; set; }
         public Guid GameId { get; set; }
-        public int Score { get; set; }
+        // todo: rename this to strokes (score is the differnce between strokes and par of the hole)
+        public int Strokes { get; set; }
 
         public virtual Hole Hole { get; set; }
         public virtual Player Player { get; set; }

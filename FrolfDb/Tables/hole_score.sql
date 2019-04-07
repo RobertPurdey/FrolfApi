@@ -5,5 +5,5 @@
     [round_id] UNIQUEIDENTIFIER NOT NULL,
     [hole_id] UNIQUEIDENTIFIER NOT NULL,
 	[game_id] UNIQUEIDENTIFIER NOT NULL,
-    [score] INT NOT NULL
+    [strokes] INT NOT NULL
 )
