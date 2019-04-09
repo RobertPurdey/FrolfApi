@@ -66,11 +66,11 @@ namespace Frolf.Api.Controllers
 
         [HttpPost]
         [Route("creategame")]
-        public Task CreateGame([FromBody] GameCreationModel model)
+        public Task<GameModel> CreateGame([FromBody] GameCreationModel model)
         {
-            frolfGroupModelDataController.CreateGame(model);
+            var createdGame = frolfGroupModelDataController.CreateGame(model);
 
-            return Task.FromResult(1);
+            return Task.FromResult(createdGame);
         }
     }
 }

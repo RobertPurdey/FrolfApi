@@ -22,6 +22,7 @@ namespace Frolf.Api.ModelDataControllers.FrolfGroups
     {
         private readonly IReadWriteEntityMapper<FrolfGroupModel, FrolfGroup> frolfGroupMapper;
         private readonly IReadWriteEntityMapper<PlayerModel, Player> playerMapper;
+        private readonly IReadWriteEntityMapper<GameModel, Game> gameMapper;
 
         private readonly IQueryService<FrolfGroup> frolfGroupQueryService;
         private readonly IQueryService<AppUser> appUserQueryService;
@@ -32,6 +33,7 @@ namespace Frolf.Api.ModelDataControllers.FrolfGroups
         public FrolfGroupModelDataController(
             IReadWriteEntityMapper<FrolfGroupModel, FrolfGroup> frolfGroupMapping,
             IReadWriteEntityMapper<PlayerModel, Player> playerMapping,
+            IReadWriteEntityMapper<GameModel, Game> gameMapping,
             IQueryService<FrolfGroup> frolfGroupService,
             IQueryService<AppUser> appUserService,
             ICommandExecutor cmdExecutor,
@@ -39,6 +41,7 @@ namespace Frolf.Api.ModelDataControllers.FrolfGroups
         {
             frolfGroupMapper         = frolfGroupMapping;
             playerMapper             = playerMapping;
+            gameMapper               = gameMapping;
             frolfGroupQueryService   = frolfGroupService;
             appUserQueryService      = appUserService;
             commandExecutor          = cmdExecutor;
@@ -127,12 +130,17 @@ namespace Frolf.Api.ModelDataControllers.FrolfGroups
             }
         }
 
-        public void CreateGame(GameCreationModel model)
+        public GameModel CreateGame(GameCreationModel model)
         {
             var game       = gameComposer.NewGame(model);
             var addCommand = new AddGameCommand { NewGame = game };
 
             commandExecutor.Execute(addCommand);
+
+            var newGameModel = new GameModel();
+            gameMapper.MapToApiModel(newGameModel, game);
+
+            return newGameModel;
         }
 
         private Player CreateInitialGroupMember()
