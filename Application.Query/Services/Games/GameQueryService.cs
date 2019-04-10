@@ -19,7 +19,7 @@ namespace Application.Query.Services.Games
             var currUserGuid  = UserExtensions.GetCurrentUserId();
 
             return query.Where(
-                g => g.Rounds.Any( r => r.Player.AppUserId == currUserGuid) );
+                g => g.FrolfGroup.Members.Any( m => m.AppUserId == currUserGuid) );
         }
     }
 }
