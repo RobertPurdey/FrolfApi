@@ -17,7 +17,10 @@ namespace Frolf.Api.Mappers.Games
             apiModel.GroupId    = entity.FrolfGroupId;
             apiModel.CourseId   = entity.CourseId;
             apiModel.CreatorId  = entity.CreatedBy;
+            
             apiModel.Name       = entity.Name;
+            apiModel.CourseName = entity.Course.Name;
+
             apiModel.HoleIds    = entity.Course.Holes.Select(h => h.EntityKey);
             apiModel.HolePars   = entity.Course.Holes.ToDictionary(h => h.Order, h => h.Par);
         }
