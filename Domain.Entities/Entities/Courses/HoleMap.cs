@@ -19,9 +19,10 @@ namespace Domain.Entities
             .IsRequired()
             .HasColumnName("course_id");
 
+            // todo: begin renaming order -> tee
             Property(h => h.Order)
                 .IsRequired()
-                .HasColumnName("order");
+                .HasColumnName("tee");
 
             Property(h => h.Par)
                 .IsRequired()

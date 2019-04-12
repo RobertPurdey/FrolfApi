@@ -1,4 +1,4 @@
-﻿CREATE TABLE [dbo].[Game]
+﻿CREATE TABLE [dbo].[game]
 (
 	[id] UNIQUEIDENTIFIER NOT NULL PRIMARY KEY, 
     [course_id] UNIQUEIDENTIFIER NOT NULL, 
