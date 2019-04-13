@@ -13,16 +13,18 @@ namespace Frolf.Api.Mappers.Games
 
         public void MapToApiModel(GameModel apiModel, Game entity)
         {
-            apiModel.IdKey      = entity.EntityKey;
-            apiModel.GroupId    = entity.FrolfGroupId;
-            apiModel.CourseId   = entity.CourseId;
-            apiModel.CreatorId  = entity.CreatedBy;
+            apiModel.IdKey          = entity.EntityKey;
+            apiModel.GroupId        = entity.FrolfGroupId;
+            apiModel.CourseId       = entity.CourseId;
+            apiModel.CreatorId      = entity.CreatedBy;
             
-            apiModel.Name       = entity.Name;
-            apiModel.CourseName = entity.Course.Name;
+            apiModel.CreatedDate    = entity.CreatedDate;
 
-            apiModel.HoleIds    = entity.Course.Holes.Select(h => h.EntityKey);
-            apiModel.HolePars   = entity.Course.Holes.ToDictionary(h => h.Order, h => h.Par);
+            apiModel.Name           = entity.Name;
+            apiModel.CourseName     = entity.Course.Name;
+
+            apiModel.HoleIds        = entity.Course.Holes.Select(h => h.EntityKey);
+            apiModel.HolePars       = entity.Course.Holes.ToDictionary(h => h.Order, h => h.Par);
         }
 
         public void MapToEntity(GameModel apiModel, Game entity)

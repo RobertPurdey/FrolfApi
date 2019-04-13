@@ -4,5 +4,6 @@
     [course_id] UNIQUEIDENTIFIER NOT NULL, 
     [frolf_group_id] UNIQUEIDENTIFIER NOT NULL, 
     [created_by] UNIQUEIDENTIFIER NOT NULL, 
-    [name] VARCHAR(50) NOT NULL
+    [name] VARCHAR(50) NOT NULL, 
+    [created_date] DATETIME2 NULL
 )

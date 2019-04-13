@@ -32,6 +32,10 @@ namespace Domain.Entities
                 .HasMaxLength(50)
                 .HasColumnName("name");
 
+
+            Property(g => g.CreatedDate)
+                .HasColumnName("created_date");
+
             // Relationships
             // - Link to Course
             HasRequired(g => g.Course)

@@ -12,8 +12,9 @@ namespace Frolf.Api.Mappers.FrolfGroups
 
         public void MapToApiModel(FrolfGroupModel apiModel, FrolfGroup entity)
         {
-            apiModel.IdKey   = entity.EntityKey;
-            apiModel.Name    = entity.Name;
+            apiModel.IdKey          = entity.EntityKey;
+            apiModel.Name           = entity.Name;
+            apiModel.CreatedDate    = entity.CreatedDate;
         }
 
         public void MapToEntity(FrolfGroupModel apiModel, FrolfGroup entity)

@@ -15,6 +15,7 @@ namespace Frolf.Api
             IocConfig.Configure(config);
             WebApiConfig.Configure(config);
             OAuthConfig.Configure(app, config);
+            JsonConfig.Configure(config);
 
             app.UseWebApi(config);
         }

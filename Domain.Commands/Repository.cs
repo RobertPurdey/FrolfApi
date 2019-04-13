@@ -34,7 +34,8 @@ namespace Domain.Commands
 
             if (newEntity is IOwnable ownableEntity)
             {
-                ownableEntity.CreatedBy = UserExtensions.GetCurrentUserId();
+                ownableEntity.CreatedBy   = UserExtensions.GetCurrentUserId();
+                ownableEntity.CreatedDate = DateTime.UtcNow;
             }
 
             return entityContext.Add(newEntity);

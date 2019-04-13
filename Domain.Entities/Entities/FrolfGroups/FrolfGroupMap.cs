@@ -23,6 +23,9 @@ namespace Domain.Entities
             Property(fg => fg.CreatedBy)
                 .IsRequired()
                 .HasColumnName("created_by");
+
+            Property(fg => fg.CreatedDate)
+                .HasColumnName("created_date");
         }
     }
 }

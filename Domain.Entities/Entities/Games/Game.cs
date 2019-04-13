@@ -11,6 +11,8 @@ namespace Domain.Entities
         public Guid FrolfGroupId { get; set; }
         public Guid CreatedBy { get; set; }
 
+        public DateTime CreatedDate { get; set; }
+
         public string Name { get; set; }
 
         public virtual Course Course { get; set; }

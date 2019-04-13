@@ -11,6 +11,8 @@ namespace Frolf.Api.Models.Games
         public Guid CourseId { get; set; }
         public Guid CreatorId { get; set; }
 
+        public DateTime CreatedDate { get; set; }
+
         public string Name { get; set; }
         public string CourseName { get; set; }
 
