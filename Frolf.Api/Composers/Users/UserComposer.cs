@@ -3,6 +3,7 @@ using Frolf.Api.Models.Users;
 using Security.Contracts;
 using System;
 using System.Linq;
+using System.Security.Cryptography;
 
 namespace Frolf.Api.Composers.Users
 {
@@ -48,11 +49,22 @@ namespace Frolf.Api.Composers.Users
 
         private void GenerateHashPassword(AppUser newUser, string userPassword)
         {
-            var salt            = encryption.Hash(DateTime.Now.ToString("yyyy'-'MM'-'dd'T'HH':'mm':'ss.fffffffK"));
+            var salt            = GenerateSalt();
             var saltyPassword   = userPassword + salt;
 
             newUser.Password = encryption.Hash(saltyPassword);
             newUser.Salt     = salt;
+        }
+
+        private string GenerateSalt()
+        {
+            using (RandomNumberGenerator rng = new RNGCryptoServiceProvider())
+            {
+                byte[] tokenData = new byte[32];
+                rng.GetBytes(tokenData);
+
+                return Convert.ToBase64String(tokenData);
+            }
         }
 
         private string GenerateFriendCode()
