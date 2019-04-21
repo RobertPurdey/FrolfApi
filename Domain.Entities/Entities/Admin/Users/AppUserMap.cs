@@ -38,6 +38,10 @@ namespace Domain.Entities
                 .IsRequired()
                 .HasColumnName("friend_code");
 
+            Property(u => u.Salt)
+                .IsRequired()
+                .HasColumnName("salt");
+
             // Ignore Identity properties
             Ignore(t => t.Name);
             Ignore(t => t.Identity);

@@ -37,6 +37,16 @@ namespace Frolf.Api.Controllers
             return Task.FromResult(foundAppUser);
         }
 
+        [HttpPost]
+        [AllowAnonymous]
+        [Route("create/account")]
+        public Task CreateAccount([FromBody] AppUserCreationModel newUserRequest)
+        {
+            appUserModelDataController.CreateAccount(newUserRequest);
+
+            return Task.FromResult(1);
+        }
+
         protected override Task<AppUserModel> Create([FromBody] AppUserModel newItem)
         {
             throw new NotImplementedException();

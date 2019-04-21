@@ -1,6 +1,7 @@
 ﻿using Domain.Entities;
 using Domain.Query.Contracts;
 using Microsoft.Owin.Security.OAuth;
+using Security.Contracts;
 using Security.OAuth;
 using System;
 using System.Linq;
@@ -57,8 +58,12 @@ namespace Frolf.Api.OAuth
             try
             {
                 var foundUser = appUserRepo.GetAll().SingleOrDefault(
-                    u => u.LoginName == context.UserName
-                      && u.Password  == context.Password);
+                    u => u.LoginName == context.UserName);
+
+                var encryption     = (IEncryptionManager)serviceLocator.GetService(typeof(IEncryptionManager));
+                var hashedPassword = encryption.Hash(context.Password + foundUser.Salt);
+
+                if (foundUser.Password != hashedPassword) throw new Exception();
 
                 return foundUser;
             }

@@ -5,5 +5,6 @@
     [password] VARCHAR(100) NOT NULL, 
     [email] VARCHAR(100) NOT NULL, 
     [handle] VARCHAR(15) NOT NULL, 
-    [friend_code] VARCHAR(10) NOT NULL
+    [friend_code] VARCHAR(10) NOT NULL,
+	[salt] VARCHAR(100) NULL
 )

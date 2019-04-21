@@ -40,9 +40,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AppUsers\Commands\AddAppUserCommand.cs" />
     <Compile Include="AppUsers\Commands\AddAppUserRefreshTokenCommand.cs" />
     <Compile Include="AppUsers\Commands\DeleteAppUserRefreshTokenCommand.cs" />
     <Compile Include="AppUsers\Conditions\AppUserExistsCondition.cs" />
+    <Compile Include="AppUsers\Conditions\FriendCodeExistsCondition.cs" />
+    <Compile Include="AppUsers\Conditions\LoginNameExistsCondition.cs" />
     <Compile Include="FrolfGroupInvites\Commands\AcceptInviteCommand.cs" />
     <Compile Include="FrolfGroupInvites\Commands\AddInviteCommand.cs" />
     <Compile Include="FrolfGroupInvites\Commands\DeleteInviteCommand.cs" />

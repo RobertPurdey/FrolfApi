@@ -1,5 +1,8 @@
-﻿using Domain.Entities;
+﻿using Application.Command.AppUsers.Commands;
+using Domain.Commands.Contracts;
+using Domain.Entities;
 using Domain.Query.Contracts;
+using Frolf.Api.Composers.Users;
 using Frolf.Api.Mappers;
 using Frolf.Api.ModelDataControllers.Contracts;
 using Frolf.Api.Models.Users;
@@ -16,14 +19,20 @@ namespace Frolf.Api.ModelDataControllers.Users
     {
         private readonly IReadWriteEntityMapper<AppUserModel, AppUser> appUserMapper;
         private readonly IQueryService<AppUser> appUserQueryService;
+        private readonly IUserComposer appUserComposer;
+        private readonly ICommandExecutor commandExecutor;
 
         public AppUserModelDataController(
             IReadWriteEntityMapper<AppUserModel, AppUser> appUserMapping,
-            IQueryService<AppUser> appUserService
+            IQueryService<AppUser> appUserService,
+            IUserComposer userComposer,
+            ICommandExecutor cmdExecutor
             )
         {
             appUserMapper                 = appUserMapping;
             appUserQueryService           = appUserService;
+            appUserComposer               = userComposer;
+            commandExecutor               = cmdExecutor;
         }
 
         public void Delete(AppUserModel modelToDelete)
@@ -66,6 +75,18 @@ namespace Frolf.Api.ModelDataControllers.Users
         {
             throw new NotImplementedException();
         }
+
+        public AppUser CreateAccount(AppUserCreationModel creationRequest)
+        {
+            var newUser         = appUserComposer.NewAppUser(creationRequest);
+            var newUserModel    = new AppUserModel();
+
+            commandExecutor.Execute( new AddAppUserCommand { NewUser = newUser } );
+            appUserMapper.MapToApiModel(newUserModel, newUser);
+
+            return newUser;
+        }
+
 
         private AppUser FindAppUser(Guid entityKey)
         {
