@@ -1,5 +1,7 @@
-﻿using Frolf.Api.ModelDataControllers.Contracts;
+﻿using Frolf.Api.Hubs;
+using Frolf.Api.ModelDataControllers.Contracts;
 using Frolf.Api.Models.Courses;
+using Microsoft.AspNet.SignalR;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -23,6 +25,10 @@ namespace Frolf.Api.Controllers
         public override Task<IEnumerable<CourseModel>> GetAll()
         {
             var foundCourses = courseGroupDataController.GetAll();
+
+            // todo: use this method after project is done
+            //var watchHub = GlobalHost.ConnectionManager.GetHubContext<WatchGameHub>();
+            //watchHub.Clients.All.hello();
 
             return Task.FromResult(foundCourses);
         }

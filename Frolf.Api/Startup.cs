@@ -18,6 +18,7 @@ namespace Frolf.Api
             JsonConfig.Configure(config);
 
             app.UseWebApi(config);
+            app.MapSignalR();       
         }
     }
 }
