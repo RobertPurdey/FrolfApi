@@ -47,6 +47,14 @@ namespace Frolf.Api.Controllers
             return Task.FromResult(1);
         }
 
+        [HttpGet]
+        [Route("allowedBroadcastAccess")]
+        public Task<bool> AllowedBroadcastAccess()
+        {
+            // todo: more strict rules to come
+            return Task.FromResult(true);
+        }
+
         protected override Task<AppUserModel> Create([FromBody] AppUserModel newItem)
         {
             throw new NotImplementedException();

@@ -1,4 +1,6 @@
-﻿using Application.Command.HoleScores;
+﻿using Application.Command.FrolfGroups.Conditions;
+using Application.Command.Games.Conditions;
+using Application.Command.HoleScores;
 using Application.Query.Services.Games;
 using Domain.Commands.Contracts;
 using Domain.Entities;
@@ -20,17 +22,20 @@ namespace Frolf.Api.ModelDataControllers.Games
         private readonly IReadOnlyEntityMapper<GameModel, Game> gameMapper;
         private readonly IReadOnlyEntityMapper<GameResultModel, Game> gameResultMapper;
         private readonly IQueryService<Game> gameQueryService;
+        private readonly IQueryService<AppUser> userQueryService;
         private readonly ICommandExecutor commandExecutor;
 
         public GameModelDataController(
             IReadOnlyEntityMapper<GameModel, Game> gameMapping,
             IReadOnlyEntityMapper<GameResultModel, Game> gameResultMapping,
             IQueryService<Game> gameService,
+            IQueryService<AppUser> userService,
             ICommandExecutor cmdExecutor)
         {
             gameMapper          = gameMapping;
             gameResultMapper    = gameResultMapping;
             gameQueryService    = gameService;
+            userQueryService    = userService;
             commandExecutor     = cmdExecutor;
         }
 
@@ -116,6 +121,25 @@ namespace Frolf.Api.ModelDataControllers.Games
             {
                 // todo: mappings filter => query arg
             };
+        }
+
+        public bool CanAnnounceGame(Guid gameId)
+        {
+            var currentUserId   = UserExtensions.GetCurrentUserId();
+            var game            = FindEntity(gameId, gameQueryService);           
+            var canAnnounce     = new IsGameCreatedByCurrentUserCondition().Validate(game);
+
+            return canAnnounce;
+        }
+
+        public bool CanSpectateGame(Guid gameId)
+        {
+            var currentUserId   = UserExtensions.GetCurrentUserId();
+            var game            = FindEntity(gameId, gameQueryService);
+            var user            = FindEntity(currentUserId, userQueryService);
+            var canSpectate     = new IsUserAGroupMemberCondition(user.EntityKey).Validate(game.FrolfGroup);
+
+            return canSpectate;
         }
     }
 }

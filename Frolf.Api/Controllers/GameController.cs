@@ -64,11 +64,29 @@ namespace Frolf.Api.Controllers
 
         [HttpGet]
         [Route("{id:guid}/results")]
-        public Task<GameResultModel>  GetGameResults([FromUri] Guid id)
+        public Task<GameResultModel> GetGameResults([FromUri] Guid id)
         {
             var gameResults = gameDataController.GetGameResults(id);
 
             return Task.FromResult(gameResults);
+        }
+
+        [HttpGet]
+        [Route("{id:guid}/spectate")]
+        public Task<bool> CanSpectateGame([FromUri] Guid id)
+        {
+            var result = gameDataController.CanSpectateGame(id);
+
+            return Task.FromResult(result);
+        }
+
+        [HttpGet]
+        [Route("{id:guid}/announce")]
+        public Task<bool> CanAnnounceGame([FromUri] Guid id)
+        {
+            var result = gameDataController.CanAnnounceGame(id);
+
+            return Task.FromResult(result);
         }
     }
 }

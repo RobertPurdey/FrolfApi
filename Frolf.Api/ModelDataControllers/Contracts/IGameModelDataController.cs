@@ -9,5 +9,7 @@ namespace Frolf.Api.ModelDataControllers.Contracts
     {
         void SaveHoleScoreSet(HoleScoreSetUpdateModel updateRequest);
         GameResultModel GetGameResults(Guid gameId);
+        bool CanAnnounceGame(Guid gameId);
+        bool CanSpectateGame(Guid gameId);
     }
 }
