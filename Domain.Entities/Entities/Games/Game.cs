@@ -1,4 +1,5 @@
 ﻿using Domain.Entities.Contracts;
+using Domain.Entities.Entities.Games;
 using System;
 using System.Collections.Generic;
 
@@ -14,6 +15,8 @@ namespace Domain.Entities
         public DateTime CreatedDate { get; set; }
 
         public string Name { get; set; }
+
+        public GameState State { get; set; }
 
         public virtual Course Course { get; set; }
         public virtual FrolfGroup FrolfGroup { get; set; }

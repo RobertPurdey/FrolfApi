@@ -32,6 +32,9 @@ namespace Domain.Entities
                 .HasMaxLength(50)
                 .HasColumnName("name");
 
+            Property(g => g.State)
+                .IsRequired()
+                .HasColumnName("state");
 
             Property(g => g.CreatedDate)
                 .HasColumnName("created_date");

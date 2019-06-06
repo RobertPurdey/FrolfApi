@@ -62,6 +62,7 @@
     <Compile Include="Entities\FrolfGroups\FrolfGroupInviteMap.cs" />
     <Compile Include="Entities\Games\Game.cs" />
     <Compile Include="Entities\Games\GameMap.cs" />
+    <Compile Include="Entities\Games\GameState.cs" />
     <Compile Include="Entities\Games\HoleScoreMap.cs" />
     <Compile Include="Entities\Games\Round.cs" />
     <Compile Include="Entities\Games\HoleScore.cs" />

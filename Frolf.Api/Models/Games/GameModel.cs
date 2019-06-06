@@ -1,4 +1,5 @@
-﻿using Frolf.Api.Models.Contracts;
+﻿using Domain.Entities.Entities.Games;
+using Frolf.Api.Models.Contracts;
 using System;
 using System.Collections.Generic;
 
@@ -15,6 +16,8 @@ namespace Frolf.Api.Models.Games
 
         public string Name { get; set; }
         public string CourseName { get; set; }
+        
+        public GameState State { get; set; }
 
         public IEnumerable<Guid> RoundIds { get; set; }
         public IEnumerable<Guid> PlayerIds { get; set; }

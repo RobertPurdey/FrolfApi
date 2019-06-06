@@ -23,6 +23,8 @@ namespace Frolf.Api.Mappers.Games
             apiModel.Name           = entity.Name;
             apiModel.CourseName     = entity.Course.Name;
 
+            apiModel.State          = entity.State;
+
             apiModel.HoleIds        = entity.Course.Holes.Select(h => h.EntityKey);
             apiModel.HolePars       = entity.Course.Holes.ToDictionary(h => h.Order, h => h.Par);
         }
@@ -30,7 +32,6 @@ namespace Frolf.Api.Mappers.Games
         public void MapToEntity(GameModel apiModel, Game entity)
         {
             entity.EntityKey = apiModel.IdKey;
-
         }
     }
 }
