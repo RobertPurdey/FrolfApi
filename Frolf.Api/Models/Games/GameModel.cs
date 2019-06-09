@@ -24,9 +24,4 @@ namespace Frolf.Api.Models.Games
         public IEnumerable<Guid> HoleIds { get; set; }
         public IDictionary<int,int> HolePars { get; set; }
     }
-
-    public class GameFilterModel : IFilterModel
-    {
-
-    }
 }

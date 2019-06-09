@@ -321,6 +321,7 @@
     <Compile Include="Models\Contracts\IApiDataModel.cs" />
     <Compile Include="Models\FrolfGroups\InviteCreationModel.cs" />
     <Compile Include="Models\Games\GameCreationModel.cs" />
+    <Compile Include="Models\Games\GameFilter.cs" />
     <Compile Include="Models\Games\GameModel.cs" />
     <Compile Include="Models\Games\GameResultModel.cs" />
     <Compile Include="Models\Games\PlayerGameResultModel.cs" />

@@ -1,4 +1,5 @@
 ﻿using Application.Command.FrolfGroups.Conditions;
+using Application.Command.Games;
 using Application.Command.Games.Conditions;
 using Application.Command.HoleScores;
 using Application.Query.Services.Games;
@@ -16,7 +17,7 @@ using System.Linq;
 namespace Frolf.Api.ModelDataControllers.Games
 {
     public class GameModelDataController :
-        ModelDataController<GameModel, GameFilterModel>,
+        ModelDataController<GameModel, GameFilter>,
         IGameModelDataController
     {
         private readonly IReadOnlyEntityMapper<GameModel, Game> gameMapper;
@@ -55,9 +56,17 @@ namespace Frolf.Api.ModelDataControllers.Games
             }
         }
 
-        public override IEnumerable<GameModel> GetWithFilter(GameFilterModel filter)
+        public override IEnumerable<GameModel> GetWithFilter(GameFilter filter)
         {
-            throw new NotImplementedException();
+            var queryArg = ConvertToQueryArg(filter);
+
+            foreach (var entity in gameQueryService.GetWithQueryArg(queryArg))
+            {
+                var model = new GameModel();
+                gameMapper.MapToApiModel(model, entity);
+
+                yield return model;
+            }
         }
 
         public override GameModel GetById(Guid id)
@@ -115,11 +124,11 @@ namespace Frolf.Api.ModelDataControllers.Games
             return gameResult;
         }
 
-        private static GameQueryArg ConvertToQueryArg(GameFilterModel filter)
+        private static GameQueryArg ConvertToQueryArg(GameFilter filter)
         {
             return new GameQueryArg
-            {
-                // todo: mappings filter => query arg
+            { 
+                State = filter.State
             };
         }
 
@@ -140,6 +149,13 @@ namespace Frolf.Api.ModelDataControllers.Games
             var canSpectate     = new IsUserAGroupMemberCondition(user.EntityKey).Validate(game.FrolfGroup);
 
             return canSpectate;
+        }
+
+        public void CompleteGame(Guid gameId)
+        {
+            var game = FindEntity(gameId, gameQueryService);
+
+            commandExecutor.Execute(new CompleteGameCommand { Game = game });
         }
     }
 }

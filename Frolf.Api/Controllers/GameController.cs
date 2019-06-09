@@ -9,7 +9,7 @@ using System.Web.Http;
 namespace Frolf.Api.Controllers
 {
     [RoutePrefix("api/games")]
-    public class GameController : EditControllerBase<GameModel, GameFilterModel>
+    public class GameController : EditControllerBase<GameModel, GameFilter>
     {
         private readonly IGameModelDataController gameDataController;
 
@@ -48,9 +48,11 @@ namespace Frolf.Api.Controllers
             throw new NotImplementedException();
         }
 
-        public override Task<IEnumerable<GameModel>> GetWithFilter([FromBody] GameFilterModel filter)
+        public override Task<IEnumerable<GameModel>> GetWithFilter([FromBody] GameFilter filter)
         {
-            throw new NotImplementedException();
+            var results = gameDataController.GetWithFilter(filter);
+
+            return Task.FromResult(results);
         }
 
         [HttpPost]
@@ -87,6 +89,15 @@ namespace Frolf.Api.Controllers
             var result = gameDataController.CanAnnounceGame(id);
 
             return Task.FromResult(result);
+        }
+
+        [HttpPatch]
+        [Route("{id:guid}/complete")]
+        public Task CompleteGame([FromUri] Guid id)
+        {
+            gameDataController.CompleteGame(id);
+
+            return Task.FromResult(1);
         }
     }
 }

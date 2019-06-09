@@ -60,8 +60,10 @@
     <Compile Include="FrolfGroups\Conditions\FrolfGroupOnlyContainsCurrentUser.cs" />
     <Compile Include="FrolfGroups\Conditions\IsUserAGroupMemberCondition.cs" />
     <Compile Include="Games\AddGameCommand.cs" />
+    <Compile Include="Games\CompleteGameCommand.cs" />
     <Compile Include="Games\Conditions\GameOnlyContainsGroupMembers.cs" />
     <Compile Include="Games\Conditions\IsGameCreatedByCurrentUserCondition.cs" />
+    <Compile Include="Games\Conditions\IsGameInProgress.cs" />
     <Compile Include="HoleScores\BatchUpdateHoleScoreCommand.cs" />
     <Compile Include="HoleScores\Conditions\AreHoleScoresForSameGameCondition.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

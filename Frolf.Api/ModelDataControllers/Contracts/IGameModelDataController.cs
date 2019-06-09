@@ -5,11 +5,12 @@ using System;
 namespace Frolf.Api.ModelDataControllers.Contracts
 {
     public interface IGameModelDataController
-        : IModelDataController<GameModel, GameFilterModel>
+        : IModelDataController<GameModel, GameFilter>
     {
         void SaveHoleScoreSet(HoleScoreSetUpdateModel updateRequest);
         GameResultModel GetGameResults(Guid gameId);
         bool CanAnnounceGame(Guid gameId);
         bool CanSpectateGame(Guid gameId);
+        void CompleteGame(Guid gameId);
     }
 }
