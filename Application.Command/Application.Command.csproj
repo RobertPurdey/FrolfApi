@@ -43,8 +43,10 @@
     <Compile Include="AppUsers\Commands\AddAppUserCommand.cs" />
     <Compile Include="AppUsers\Commands\AddAppUserRefreshTokenCommand.cs" />
     <Compile Include="AppUsers\Commands\DeleteAppUserRefreshTokenCommand.cs" />
+    <Compile Include="AppUsers\Commands\UpdateAppUserCommand.cs" />
     <Compile Include="AppUsers\Conditions\AppUserExistsCondition.cs" />
     <Compile Include="AppUsers\Conditions\FriendCodeExistsCondition.cs" />
+    <Compile Include="AppUsers\Conditions\IsAppUserCurrentUser.cs" />
     <Compile Include="AppUsers\Conditions\LoginNameExistsCondition.cs" />
     <Compile Include="FrolfGroupInvites\Commands\AcceptInviteCommand.cs" />
     <Compile Include="FrolfGroupInvites\Commands\AddInviteCommand.cs" />

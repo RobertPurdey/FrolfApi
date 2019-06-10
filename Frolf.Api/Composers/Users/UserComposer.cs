@@ -2,7 +2,6 @@
 using Frolf.Api.Models.Users;
 using Security.Contracts;
 using System;
-using System.Linq;
 using System.Security.Cryptography;
 
 namespace Frolf.Api.Composers.Users
@@ -41,7 +40,7 @@ namespace Frolf.Api.Composers.Users
 
             GenerateHashPassword(newUser, creationRequest.Password);
 
-            // todo: deal with storing emails ? perhaps use phone numbers
+            // todo: remove emails
             newUser.Email       = "r@p.com";
 
             return newUser;

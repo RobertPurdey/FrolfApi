@@ -7,12 +7,14 @@ namespace Frolf.Api.Models.Users
     public class AppUserModel : IApiDataModel
     {
         public Guid IdKey { get; set; }
+        public string LoginName { get; set; }
         public string Handle { get; set; }
         public string FriendCode { get; set; }
 
         [JsonIgnore]
         public string Password { get; set; }
 
+        //todo: this email will be removed
         [JsonIgnore]
         public string Email { get; set; }
     }

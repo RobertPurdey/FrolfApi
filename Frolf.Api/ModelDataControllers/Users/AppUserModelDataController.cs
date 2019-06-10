@@ -87,6 +87,15 @@ namespace Frolf.Api.ModelDataControllers.Users
             return newUser;
         }
 
+        public void UpdateAccount(AppUserUpdateModel updateModel)
+        {
+            var entity = FindAppUser(updateModel.IdKey);
+
+            entity.LoginName    = updateModel.LoginName;
+            entity.Handle       = updateModel.Handle;
+
+            commandExecutor.Execute( new UpdateAppUserCommand { User = entity } );
+        }
 
         private AppUser FindAppUser(Guid entityKey)
         {

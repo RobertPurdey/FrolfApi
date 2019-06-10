@@ -47,6 +47,17 @@ namespace Frolf.Api.Controllers
             return Task.FromResult(1);
         }
 
+        [HttpPost]
+        [Route("update/account")]
+        public Task UpdateAccount([FromBody] AppUserUpdateModel newUserRequest)
+        {
+            appUserModelDataController.UpdateAccount(newUserRequest);
+
+            return Task.FromResult(1);
+        }
+
+        // todo: this is to be removed
+        // game controller now has canAnnounce and canSpectate
         [HttpGet]
         [Route("allowedBroadcastAccess")]
         public Task<bool> AllowedBroadcastAccess()
