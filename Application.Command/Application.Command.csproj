@@ -48,6 +48,7 @@
     <Compile Include="AppUsers\Conditions\FriendCodeExistsCondition.cs" />
     <Compile Include="AppUsers\Conditions\IsAppUserCurrentUser.cs" />
     <Compile Include="AppUsers\Conditions\LoginNameExistsCondition.cs" />
+    <Compile Include="Courses\Commands\AddCourseCommand.cs" />
     <Compile Include="FrolfGroupInvites\Commands\AcceptInviteCommand.cs" />
     <Compile Include="FrolfGroupInvites\Commands\AddInviteCommand.cs" />
     <Compile Include="FrolfGroupInvites\Commands\DeleteInviteCommand.cs" />
@@ -71,6 +72,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Courses\Conditions\" />
     <Folder Include="FrolfGroupInvites\Validators\" />
     <Folder Include="FrolfGroups\Validators\" />
     <Folder Include="Players\Conditions\" />

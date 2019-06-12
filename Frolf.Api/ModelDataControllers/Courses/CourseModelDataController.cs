@@ -1,10 +1,12 @@
-﻿using Application.Query.Services.Courses;
+﻿using Application.Command.Courses.Commands;
+using Application.Query.Services.Courses;
 using Domain.Commands.Contracts;
 using Domain.Entities;
 using Domain.Query.Contracts;
 using Frolf.Api.Mappers;
 using Frolf.Api.ModelDataControllers.Contracts;
 using Frolf.Api.Models.Courses;
+using Frolf.Api.Models.Holes;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,20 +18,26 @@ namespace Frolf.Api.ModelDataControllers.Courses
         ModelDataController<CourseModel, CourseFilterModel>,
         ICourseModelDataController
     {
-        private readonly IReadOnlyEntityMapper<CourseModel, Course> CourseMapper;
+        private readonly IReadWriteEntityMapper<CourseModel, Course> courseMapper;
+        private readonly IReadWriteEntityMapper<HoleModel, Hole> holeMapper;
 
+        private readonly IQueryService<Hole> holeQueryService;
         private readonly IQueryService<Course> CourseQueryService;
 
         private readonly ICommandExecutor commandExecutor;
         
         public CourseModelDataController(
-            IReadOnlyEntityMapper<CourseModel, Course> CourseMapping,
+            IReadWriteEntityMapper<CourseModel, Course> courseMapping,
+            IReadWriteEntityMapper<HoleModel, Hole> holeMapping,
             IQueryService<Course> CourseService,
+            IQueryService<Hole> holeQueryService,
             ICommandExecutor cmdExecutor)
         {
-            CourseMapper         = CourseMapping;
-            CourseQueryService   = CourseService;
-            commandExecutor      = cmdExecutor;
+            courseMapper            = courseMapping;
+            holeMapper              = holeMapping;
+            CourseQueryService      = CourseService;
+            this.holeQueryService   = holeQueryService;
+            commandExecutor         = cmdExecutor;
         }
 
         public override void Delete(CourseModel modelToDelete)
@@ -41,10 +49,11 @@ namespace Frolf.Api.ModelDataControllers.Courses
         {
             var currUserGuid = UserExtensions.GetCurrentUserId();
 
+            // todo: make sure its one from the group they are in
             foreach ( var entity in CourseQueryService.GetAll() )
             {
                 var model = new CourseModel();
-                CourseMapper.MapToApiModel(model, entity);
+                courseMapper.MapToApiModel(model, entity);
 
                 yield return model;
             }       
@@ -60,18 +69,69 @@ namespace Frolf.Api.ModelDataControllers.Courses
             var entity = FindEntity(id, CourseQueryService);
             var model  = new CourseModel();
 
-            CourseMapper.MapToApiModel(model, entity);
+            courseMapper.MapToApiModel(model, entity);
+            MapCourseHolesToModels(model, entity);
 
             return model;
         }
 
+        /// <summary>
+        /// Maps course holes to the course model holes
+        /// </summary>
+        /// <param name="model"></param>
+        /// <param name="course"></param>
+        private void MapCourseHolesToModels(CourseModel model, Course course)
+        {
+            var mappedHoles = new List<HoleModel>();
+            var holeIds     = course.Holes.Select(h => h.EntityKey);
+
+            var courseHoles = holeQueryService.GetAll().Where(
+                h => holeIds.Contains(h.EntityKey));
+
+            foreach (var hole in courseHoles)
+            {
+                var holeModel = new HoleModel();
+
+                holeMapper.MapToApiModel(holeModel, hole);
+                mappedHoles.Add(holeModel);
+            }
+
+            model.Holes = mappedHoles;
+        }
+
+        /// <summary>
+        /// Maps course holes to the course model holes
+        /// </summary>
+        /// <param name="model"></param>
+        /// <param name="course"></param>
+        private void MapCourseHoleModels(CourseModel model, Course course)
+        {
+            var mappedHoles = new List<Hole>();
+
+            foreach (var holeModel in model.Holes)
+            {
+                var hole = new Hole();
+
+                holeMapper.MapToEntity(holeModel, hole);
+                mappedHoles.Add(hole);
+            }
+
+            course.Holes = mappedHoles;
+        }
+
         public override void Insert(CourseModel newModel)
         {
-            throw new NotImplementedException();
+            var newEntity = new Course();
+
+            courseMapper.MapToEntity(newModel, newEntity);
+            MapCourseHoleModels(newModel, newEntity);
+
+            commandExecutor.Execute(new AddCourseCommand { newEntity = newEntity } );
         }
 
         public override void Update(CourseModel modelToUpdate)
         {
+            // todo dont let model override frolf group or course ids
             throw new NotImplementedException();
         }
 

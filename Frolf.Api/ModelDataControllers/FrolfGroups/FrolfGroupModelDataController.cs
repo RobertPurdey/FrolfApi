@@ -132,6 +132,7 @@ namespace Frolf.Api.ModelDataControllers.FrolfGroups
 
         public GameModel CreateGame(GameCreationModel model)
         {
+            // todo: game must use a course that is attached to the frolf group the game is for
             var game       = gameComposer.NewGame(model);
             var addCommand = new AddGameCommand { NewGame = game };
 

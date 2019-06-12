@@ -4,20 +4,29 @@ using System.Linq;
 
 namespace Frolf.Api.Mappers.Courses
 {
-    public class CourseMapper : IReadOnlyEntityMapper<CourseModel, Course>
+    public class CourseMapper : IReadWriteEntityMapper<CourseModel, Course>
     {
         public CourseMapper()
         {
-
+            
         }
 
-        // todo: map more for invite/decline invite
+        public void MapToEntity(CourseModel apiModel, Course entity)
+        {
+            entity.EntityKey        = apiModel.IdKey;
+            entity.FrolfGroupId     = apiModel.FrolfGroupId;
+            entity.Name             = apiModel.Name;
+        }
+
+        // todo: this comment should be deleted, investigate -> map more for invite/decline invite
         public void MapToApiModel(CourseModel apiModel, Course entity)
         {
             apiModel.IdKey           = entity.EntityKey;
             apiModel.Name            = entity.Name;
             apiModel.Par             = entity.Holes.Sum( h => h.Par );
             apiModel.HoleCount       = entity.Holes.Count();
+            apiModel.FrolfGroupId    = entity.FrolfGroupId;
+            apiModel.HoleIds         = entity.Holes.Select(h => h.EntityKey);
         }
     }
 }

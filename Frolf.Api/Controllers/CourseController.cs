@@ -26,10 +26,6 @@ namespace Frolf.Api.Controllers
         {
             var foundCourses = courseGroupDataController.GetAll();
 
-            // todo: use this method after project is done
-            //var watchHub = GlobalHost.ConnectionManager.GetHubContext<WatchGameHub>();
-            //watchHub.Clients.All.hello();
-
             return Task.FromResult(foundCourses);
         }
 

@@ -294,6 +294,7 @@
     <Compile Include="Mappers\Games\IReadEntityMapper.cs" />
     <Compile Include="Mappers\Games\PlayerGameResultMapper.cs" />
     <Compile Include="Mappers\HoleScores\HoleScoreMapper.cs" />
+    <Compile Include="Mappers\Holes\HoleMapper.cs" />
     <Compile Include="Mappers\IReadOnlyEntityMapper.cs" />
     <Compile Include="Mappers\IReadWriteEntityMap.cs" />
     <Compile Include="Mappers\MapperExtensions.cs" />
@@ -327,6 +328,7 @@
     <Compile Include="Models\Games\PlayerGameResultModel.cs" />
     <Compile Include="Models\HoleScores\HoleScoreModel.cs" />
     <Compile Include="Models\HoleScores\HoleScoreSetUpdateModel.cs" />
+    <Compile Include="Models\Holes\HoleModel.cs" />
     <Compile Include="Models\Players\PlayerModel.cs" />
     <Compile Include="Models\Users\AppUserCreationModel.cs" />
     <Compile Include="Models\Users\AppUserModel.cs" />
