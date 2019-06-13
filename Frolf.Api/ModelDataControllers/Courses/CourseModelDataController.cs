@@ -10,6 +10,7 @@ using Frolf.Api.Models.Holes;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Web;
 
 namespace Frolf.Api.ModelDataControllers.Courses
@@ -23,6 +24,7 @@ namespace Frolf.Api.ModelDataControllers.Courses
 
         private readonly IQueryService<Hole> holeQueryService;
         private readonly IQueryService<Course> CourseQueryService;
+        private readonly IQueryService<Player> playerQueryService;
 
         private readonly ICommandExecutor commandExecutor;
         
@@ -31,12 +33,14 @@ namespace Frolf.Api.ModelDataControllers.Courses
             IReadWriteEntityMapper<HoleModel, Hole> holeMapping,
             IQueryService<Course> CourseService,
             IQueryService<Hole> holeQueryService,
+            IQueryService<Player> playerQueryService,
             ICommandExecutor cmdExecutor)
         {
             courseMapper            = courseMapping;
             holeMapper              = holeMapping;
             CourseQueryService      = CourseService;
             this.holeQueryService   = holeQueryService;
+            this.playerQueryService = playerQueryService;
             commandExecutor         = cmdExecutor;
         }
 
@@ -61,7 +65,38 @@ namespace Frolf.Api.ModelDataControllers.Courses
 
         public override IEnumerable<CourseModel> GetWithFilter(CourseFilterModel filter)
         {
-            throw new NotImplementedException();
+            AssertCanMakeFilterCall(filter);
+
+            var queryArg = ConvertToQueryArg(filter);
+
+            foreach ( var entity in CourseQueryService.GetWithQueryArg(queryArg) )
+            {
+                var model = new CourseModel();
+                courseMapper.MapToApiModel(model, entity);
+
+                yield return model;
+            }
+        }
+        
+        /// <summary>
+        /// Can make filter call if the guid being used is not null
+        /// </summary>
+        /// <param name="frolfGroupId"></param>
+        private void AssertCanMakeFilterCall(CourseFilterModel filter)
+        {
+            if ( !filter.FrolfGroupId.HasValue ) throw new Exception("Cannot make filter call with null frolf group id");
+            
+            var isCurrentUserInGroup = playerQueryService.GetAll().Any(
+                p => p.AppUserId     == UserExtensions.GetCurrentUserId()
+                  && p.FrolfGroupId  == filter.FrolfGroupId);
+
+            // Must be in group to make query
+            if ( !isCurrentUserInGroup )
+            { 
+                ThrowHttpResponseException(
+                    "You can't access groups you don't belong in.",
+                     HttpStatusCode.Unauthorized);
+            }
         }
 
         public override CourseModel GetById(Guid id)
@@ -139,7 +174,7 @@ namespace Frolf.Api.ModelDataControllers.Courses
         {
             return new CourseQueryArg
             {
-                // todo: mappings filter => query arg
+                FrolfGroupId = filter.FrolfGroupId
             };
         }
     }

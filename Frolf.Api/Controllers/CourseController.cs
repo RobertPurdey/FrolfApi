@@ -55,7 +55,9 @@ namespace Frolf.Api.Controllers
 
         public override Task<IEnumerable<CourseModel>> GetWithFilter([FromBody] CourseFilterModel filter)
         {
-            throw new NotImplementedException();
+            var results = courseGroupDataController.GetWithFilter(filter);
+
+            return Task.FromResult(results);
         }
     }
 }

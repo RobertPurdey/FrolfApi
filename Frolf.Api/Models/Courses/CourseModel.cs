@@ -21,6 +21,6 @@ namespace Frolf.Api.Models.Courses
 
     public class CourseFilterModel : IFilterModel
     {
-        public Guid FrolfGroupId { get; set; }
+        public Guid? FrolfGroupId { get; set; }
     }
 }
