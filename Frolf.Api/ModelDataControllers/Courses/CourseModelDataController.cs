@@ -85,9 +85,11 @@ namespace Frolf.Api.ModelDataControllers.Courses
         private void AssertCanMakeFilterCall(CourseFilterModel filter)
         {
             if ( !filter.FrolfGroupId.HasValue ) throw new Exception("Cannot make filter call with null frolf group id");
-            
+
+            var currentUserGuid = UserExtensions.GetCurrentUserId();
+
             var isCurrentUserInGroup = playerQueryService.GetAll().Any(
-                p => p.AppUserId     == UserExtensions.GetCurrentUserId()
+                p => p.AppUserId     == currentUserGuid
                   && p.FrolfGroupId  == filter.FrolfGroupId);
 
             // Must be in group to make query

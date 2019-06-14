@@ -1,12 +1,8 @@
-﻿using Frolf.Api.Hubs;
-using Frolf.Api.ModelDataControllers.Contracts;
+﻿using Frolf.Api.ModelDataControllers.Contracts;
 using Frolf.Api.Models.Courses;
-using Microsoft.AspNet.SignalR;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
-using System.Web;
 using System.Web.Http;
 
 namespace Frolf.Api.Controllers
