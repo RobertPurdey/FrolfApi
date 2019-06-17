@@ -65,6 +65,7 @@
     <Compile Include="Games\AddGameCommand.cs" />
     <Compile Include="Games\CompleteGameCommand.cs" />
     <Compile Include="Games\Conditions\GameOnlyContainsGroupMembers.cs" />
+    <Compile Include="Games\Conditions\IsGameCourseInGroup.cs" />
     <Compile Include="Games\Conditions\IsGameCreatedByCurrentUserCondition.cs" />
     <Compile Include="Games\Conditions\IsGameInProgress.cs" />
     <Compile Include="HoleScores\BatchUpdateHoleScoreCommand.cs" />
