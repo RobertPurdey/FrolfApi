@@ -77,10 +77,10 @@ namespace Frolf.Api.Composers.Games
             {
                 var newHoleScore = new HoleScore
                 {
-                    EntityKey = Guid.NewGuid(),
-                    Hole = hole,
-                    Player = player,
-                    Strokes = hole.Par
+                    EntityKey   = Guid.NewGuid(),
+                    Hole        = hole,
+                    Player      = player,
+                    Strokes     = hole.Par
                 };
 
                 newRound.HoleScores.Add(newHoleScore);

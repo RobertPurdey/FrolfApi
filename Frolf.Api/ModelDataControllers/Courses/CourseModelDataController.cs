@@ -125,7 +125,7 @@ namespace Frolf.Api.ModelDataControllers.Courses
             var courseHoles = holeQueryService.GetAll().Where(
                 h => holeIds.Contains(h.EntityKey));
 
-            foreach (var hole in courseHoles)
+            foreach ( var hole in courseHoles.OrderBy(h => h.Order) )
             {
                 var holeModel = new HoleModel();
 
@@ -164,6 +164,8 @@ namespace Frolf.Api.ModelDataControllers.Courses
             MapCourseHoleModels(newModel, newEntity);
 
             commandExecutor.Execute(new AddCourseCommand { newEntity = newEntity } );
+
+            MapCourseHolesToModels(newModel, newEntity);
         }
 
         public override void Update(CourseModel modelToUpdate)
