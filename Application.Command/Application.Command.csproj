@@ -71,6 +71,7 @@
     <Compile Include="Games\Conditions\IsGameInProgress.cs" />
     <Compile Include="HoleScores\BatchUpdateHoleScoreCommand.cs" />
     <Compile Include="HoleScores\Conditions\AreHoleScoresForSameGameCondition.cs" />
+    <Compile Include="Players\Commands\RemovePlayerCommand.cs" />
     <Compile Include="Players\Conditions\IsPlayerCreatorOfGroup.cs" />
     <Compile Include="Players\Conditions\IsPlayerCurrentUser.cs" />
     <Compile Include="Players\Conditions\IsPlayerPartOfGameInProgress.cs" />

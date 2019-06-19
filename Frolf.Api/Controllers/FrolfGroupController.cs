@@ -81,5 +81,14 @@ namespace Frolf.Api.Controllers
 
             return Task.FromResult(1);
         }
+
+        [HttpGet]
+        [Route("{id:guid}/removePlayer/{playerId:guid}")]
+        public Task RemovePlayer([FromUri] Guid id, [FromUri] Guid playerId)
+        {
+            frolfGroupModelDataController.RemovePlayer(id, playerId);
+
+            return Task.FromResult(1);
+        }
     }
 }

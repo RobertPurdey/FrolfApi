@@ -1,5 +1,6 @@
 ﻿using Application.Command.FrolfGroups.Commands;
 using Application.Command.Games;
+using Application.Command.Players.Commands;
 using Application.Query.Services.FrolfGroups;
 using Domain.Commands.Contracts;
 using Domain.Entities;
@@ -164,6 +165,20 @@ namespace Frolf.Api.ModelDataControllers.FrolfGroups
             {
                 FrolfGroup  = groupBeingLeft,
                 Player      = playerLeaving
+            };
+
+            commandExecutor.Execute(command);
+        }
+
+        public void RemovePlayer(Guid id, Guid playerId)
+        {
+            var groupToRemoveFrom   = FindEntity(id, frolfGroupQueryService);
+            var playerToRemove      = FindEntity(playerId, playerQueryService);
+
+            var command = new RemovePlayerCommand
+            {
+                FrolfGroup  = groupToRemoveFrom,
+                Player      = playerToRemove
             };
 
             commandExecutor.Execute(command);

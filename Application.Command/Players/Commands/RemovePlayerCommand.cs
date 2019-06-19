@@ -6,20 +6,19 @@ using Domain.Entities;
 using Domain.Query.Contracts;
 using System.Linq;
 
-namespace Application.Command.FrolfGroups.Commands
+namespace Application.Command.Players.Commands
 {
-
-    public class LeaveFrolfGroupCommand : ICommand
+    public class RemovePlayerCommand : ICommand
     {
         public Player Player;
         public FrolfGroup FrolfGroup;
     }
 
-    public class LeaveFrolfGroupCommandValidation : CommandPreHandler<LeaveFrolfGroupCommand>
+    public class RemovePlayerCommandValidation : CommandPreHandler<RemovePlayerCommand>
     {
         private readonly IQueryService<FrolfGroup> frolfGroupQuery;
 
-        public LeaveFrolfGroupCommandValidation(
+        public RemovePlayerCommandValidation(
             IWorkUnit workUnit,
             IQueryService<FrolfGroup> frolfGroupQuery)
             : base(workUnit)
@@ -27,36 +26,28 @@ namespace Application.Command.FrolfGroups.Commands
             this.frolfGroupQuery = frolfGroupQuery;
         }
 
-        public override void OnPreHandleCommand(LeaveFrolfGroupCommand command)
+        public override void OnPreHandleCommand(RemovePlayerCommand command)
         {
-            AssertPlayerIsCurrentUser(command);
             AssertPlayerIsInGroup(command);
-            AssertPlayerIsNotGroupCreator(command);
+            AssertPlayerIsGroupCreator(command);
             AssertPlayerIsNotPartOfGameInProgress(command);
         }
 
-        private void AssertPlayerIsCurrentUser(LeaveFrolfGroupCommand command)
-        {
-            var isValid = new IsPlayerCurrentUser().Validate(command.Player);
-
-            Assert(isValid, "Player cannot leave the group if its not the user making the call.");
-        }
-
-        private void AssertPlayerIsInGroup(LeaveFrolfGroupCommand command)
+        private void AssertPlayerIsInGroup(RemovePlayerCommand command)
         {
             var isValid = new IsUserAGroupMemberCondition(command.Player.AppUserId).Validate(command.FrolfGroup);
 
-            Assert(isValid, "Player cannot leave the group if its not in the group.");
+            Assert(isValid, "Player cannot be removed if they are not in the group.");
         }
 
-        private void AssertPlayerIsNotGroupCreator(LeaveFrolfGroupCommand command)
+        private void AssertPlayerIsGroupCreator(RemovePlayerCommand command)
         {
-            var isValid = !new IsPlayerCreatorOfGroup().Validate(command.Player);
+            var isValid = new IsPlayerCreatorOfGroup().Validate(command.Player);
 
-            Assert(isValid, "Player cannot leave the group when they are the creator of the group");
+            Assert(isValid, "Player cannot be removed by anyone but creator");
         }
 
-        private void AssertPlayerIsNotPartOfGameInProgress(LeaveFrolfGroupCommand command)
+        private void AssertPlayerIsNotPartOfGameInProgress(RemovePlayerCommand command)
         {
             var isValid = !new IsPlayerPartOfGameInProgress().Validate(command.Player);
 
@@ -64,12 +55,12 @@ namespace Application.Command.FrolfGroups.Commands
         }
     }
 
-    public class LeaveFrolfGroupCommandHandler : CommandHandler<LeaveFrolfGroupCommand>
+    public class RemovePlayerCommandHandler : CommandHandler<RemovePlayerCommand>
     {
         private readonly IQueryService<HoleScore> holeScoreQuery;
         private readonly IQueryService<Round> roundQuery;
 
-        public LeaveFrolfGroupCommandHandler(
+        public RemovePlayerCommandHandler(
             IWorkUnit workUnit,
             IQueryService<HoleScore> holeScoreQuery,
             IQueryService<Round> roundQuery)
@@ -79,7 +70,7 @@ namespace Application.Command.FrolfGroups.Commands
             this.roundQuery     = roundQuery;
         }
 
-        protected override void OnHandleCommand(LeaveFrolfGroupCommand command)
+        protected override void OnHandleCommand(RemovePlayerCommand command)
         {
             // Remove all associations the player has with the frolf group before removing the player
             RemoveHoleScores(command);
@@ -93,13 +84,13 @@ namespace Application.Command.FrolfGroups.Commands
         /// Remove hole scores associated with the player for the group the playe is being removed from.
         /// </summary>
         /// <param name="command"></param>
-        private void RemoveHoleScores(LeaveFrolfGroupCommand command)
+        private void RemoveHoleScores(RemovePlayerCommand command)
         {
             var holeScoreToRemove = holeScoreQuery
                 .GetAll()
                 .Where(
-                    hs => hs.Game.FrolfGroupId == command.FrolfGroup.EntityKey
-                       && hs.PlayerId          == command.Player.EntityKey);
+                    hs => hs.Game.FrolfGroupId  == command.FrolfGroup.EntityKey
+                       && hs.PlayerId           == command.Player.EntityKey);
 
             var holeScoreRepo = GetRepository<HoleScore>();
 
@@ -109,7 +100,7 @@ namespace Application.Command.FrolfGroups.Commands
             }
         }
 
-        private void RemoveRounds(LeaveFrolfGroupCommand command)
+        private void RemoveRounds(RemovePlayerCommand command)
         {
             var roundsToRemove = roundQuery
                 .GetAll()
