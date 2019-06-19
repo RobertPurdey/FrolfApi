@@ -53,6 +53,7 @@
     <Compile Include="FrolfGroupInvites\Commands\AddInviteCommand.cs" />
     <Compile Include="FrolfGroupInvites\Commands\DeleteInviteCommand.cs" />
     <Compile Include="FrolfGroupInvites\Conditions\IsInviteeCurrentUserCondition.cs" />
+    <Compile Include="FrolfGroups\Commands\LeaveFrolfGroupCommand.cs" />
     <Compile Include="FrolfGroups\Conditions\CanUserInviteCondition.cs" />
     <Compile Include="FrolfGroupInvites\Conditions\IsInviterCurrentUserCondition.cs" />
     <Compile Include="FrolfGroupInvites\Conditions\InviteExistsCondition.cs" />
@@ -70,13 +71,15 @@
     <Compile Include="Games\Conditions\IsGameInProgress.cs" />
     <Compile Include="HoleScores\BatchUpdateHoleScoreCommand.cs" />
     <Compile Include="HoleScores\Conditions\AreHoleScoresForSameGameCondition.cs" />
+    <Compile Include="Players\Conditions\IsPlayerCreatorOfGroup.cs" />
+    <Compile Include="Players\Conditions\IsPlayerCurrentUser.cs" />
+    <Compile Include="Players\Conditions\IsPlayerPartOfGameInProgress.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Courses\Conditions\" />
     <Folder Include="FrolfGroupInvites\Validators\" />
     <Folder Include="FrolfGroups\Validators\" />
-    <Folder Include="Players\Conditions\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Domain.Commands.Contracts\Domain.Commands.Contracts.csproj">

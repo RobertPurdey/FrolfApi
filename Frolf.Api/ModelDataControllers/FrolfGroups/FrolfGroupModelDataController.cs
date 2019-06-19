@@ -26,6 +26,7 @@ namespace Frolf.Api.ModelDataControllers.FrolfGroups
 
         private readonly IQueryService<FrolfGroup> frolfGroupQueryService;
         private readonly IQueryService<AppUser> appUserQueryService;
+        private readonly IQueryService<Player> playerQueryService;
 
         private readonly ICommandExecutor commandExecutor;
         private readonly IGameComposer gameComposer;
@@ -36,14 +37,16 @@ namespace Frolf.Api.ModelDataControllers.FrolfGroups
             IReadWriteEntityMapper<GameModel, Game> gameMapping,
             IQueryService<FrolfGroup> frolfGroupService,
             IQueryService<AppUser> appUserService,
+            IQueryService<Player> playerService,
             ICommandExecutor cmdExecutor,
-            IGameComposer gameComp) // todo: move this to gamecontroller most likely
+            IGameComposer gameComp)
         {
             frolfGroupMapper         = frolfGroupMapping;
             playerMapper             = playerMapping;
             gameMapper               = gameMapping;
             frolfGroupQueryService   = frolfGroupService;
             appUserQueryService      = appUserService;
+            playerQueryService       = playerService;
             commandExecutor          = cmdExecutor;
             gameComposer             = gameComp;
         }
@@ -142,6 +145,29 @@ namespace Frolf.Api.ModelDataControllers.FrolfGroups
             gameMapper.MapToApiModel(newGameModel, game);
 
             return newGameModel;
+        }
+
+        public void LeaveGroup(Guid id)
+        {
+            var groupBeingLeft = FindEntity(id, frolfGroupQueryService);
+            var userLeaving    = FindEntity(UserExtensions.GetCurrentUserId(), appUserQueryService);
+
+            var playerId = userLeaving.Players
+                .Where(
+                    p => p.AppUserId    == userLeaving.EntityKey
+                      && p.FrolfGroupId == id)
+                .Select(p => p.EntityKey)
+                .FirstOrDefault();
+
+            var playerLeaving  = FindEntity(playerId, playerQueryService);
+
+            var command = new LeaveFrolfGroupCommand
+            {
+                FrolfGroup  = groupBeingLeft,
+                Player      = playerLeaving
+            };
+
+            commandExecutor.Execute(command);
         }
 
         private Player CreateInitialGroupMember()

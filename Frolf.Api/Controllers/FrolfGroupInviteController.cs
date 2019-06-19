@@ -58,9 +58,9 @@ namespace Frolf.Api.Controllers
             throw new NotImplementedException();
         }
 
-        [HttpPost]
+        [HttpGet]
         [Route("{id:guid}/accept")]
-        public void Accept(Guid id)
+        public void Accept([FromUri] Guid id)
         {
             frolfGroupInviteModelDataController.Accept(id);
         }

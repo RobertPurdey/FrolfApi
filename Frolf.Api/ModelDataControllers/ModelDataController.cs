@@ -26,6 +26,11 @@ namespace Frolf.Api.ModelDataControllers
         protected TEntity FindEntity<TEntity>(Guid entityKey, IQueryService<TEntity> queryService)
             where TEntity : class, IGuidEntity
         {
+            if (entityKey == null)
+            {
+                ThrowHttpResponseException("entity key cannot be null", HttpStatusCode.NotFound);
+            }
+
             var entity = queryService
                 .GetAll()
                 .SingleOrDefault(u => u.EntityKey == entityKey);

@@ -10,5 +10,6 @@ namespace Frolf.Api.ModelDataControllers.Contracts
     {
         IEnumerable<PlayerModel> GetGroupMembers(Guid groupId);
         GameModel CreateGame(GameCreationModel groupId);
+        void LeaveGroup(Guid id);
     }
 }

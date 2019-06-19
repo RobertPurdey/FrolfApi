@@ -56,7 +56,7 @@ namespace Frolf.Api.Controllers
         }
 
         [HttpGet]
-        [Route("groupmembers/{id:guid}")]
+        [Route("{id:guid}/groupmembers")]
         public Task<IEnumerable<PlayerModel>> GetFrolfGroupMembers([FromUri] Guid id)
         {
             var groupMembers = frolfGroupModelDataController.GetGroupMembers(id);
@@ -71,6 +71,15 @@ namespace Frolf.Api.Controllers
             var createdGame = frolfGroupModelDataController.CreateGame(model);
 
             return Task.FromResult(createdGame);
+        }
+
+        [HttpGet]
+        [Route("{id:guid}/leave")]
+        public Task LeaveGroup([FromUri] Guid id)
+        {
+            frolfGroupModelDataController.LeaveGroup(id);
+
+            return Task.FromResult(1);
         }
     }
 }
