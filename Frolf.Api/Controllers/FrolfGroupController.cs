@@ -73,7 +73,7 @@ namespace Frolf.Api.Controllers
             return Task.FromResult(createdGame);
         }
 
-        [HttpGet]
+        [HttpPost]
         [Route("{id:guid}/leave")]
         public Task LeaveGroup([FromUri] Guid id)
         {
@@ -82,7 +82,7 @@ namespace Frolf.Api.Controllers
             return Task.FromResult(1);
         }
 
-        [HttpGet]
+        [HttpPost]
         [Route("{id:guid}/removePlayer/{playerId:guid}")]
         public Task RemovePlayer([FromUri] Guid id, [FromUri] Guid playerId)
         {

@@ -28,9 +28,17 @@ namespace Application.Command.Players.Commands
 
         public override void OnPreHandleCommand(RemovePlayerCommand command)
         {
+            AssertCurrentUserIsGroupCreator(command);
             AssertPlayerIsInGroup(command);
-            AssertPlayerIsGroupCreator(command);
+            AssertPlayerIsNotGroupCreator(command);
             AssertPlayerIsNotPartOfGameInProgress(command);
+        }
+
+        private void AssertCurrentUserIsGroupCreator(RemovePlayerCommand command)
+        {
+            var isValid = new IsCurrentUserGroupCreator().Validate(command.FrolfGroup);
+
+            Assert(isValid, "Only the group creator can remove players.");
         }
 
         private void AssertPlayerIsInGroup(RemovePlayerCommand command)
@@ -40,11 +48,11 @@ namespace Application.Command.Players.Commands
             Assert(isValid, "Player cannot be removed if they are not in the group.");
         }
 
-        private void AssertPlayerIsGroupCreator(RemovePlayerCommand command)
+        private void AssertPlayerIsNotGroupCreator(RemovePlayerCommand command)
         {
-            var isValid = new IsPlayerCreatorOfGroup().Validate(command.Player);
+            var isValid = !new IsPlayerCreatorOfGroup().Validate(command.Player);
 
-            Assert(isValid, "Player cannot be removed by anyone but creator");
+            Assert(isValid, "Group creator cannot be removed");
         }
 
         private void AssertPlayerIsNotPartOfGameInProgress(RemovePlayerCommand command)

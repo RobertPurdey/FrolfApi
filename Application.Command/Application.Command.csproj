@@ -62,6 +62,7 @@
     <Compile Include="FrolfGroups\Conditions\FrolfGroupExistsCondition.cs" />
     <Compile Include="FrolfGroups\Conditions\FrolfGroupHasInvitesCondition.cs" />
     <Compile Include="FrolfGroups\Conditions\FrolfGroupOnlyContainsCurrentUser.cs" />
+    <Compile Include="FrolfGroups\Conditions\IsCurrentUserGroupCreator.cs" />
     <Compile Include="FrolfGroups\Conditions\IsUserAGroupMemberCondition.cs" />
     <Compile Include="Games\AddGameCommand.cs" />
     <Compile Include="Games\CompleteGameCommand.cs" />
