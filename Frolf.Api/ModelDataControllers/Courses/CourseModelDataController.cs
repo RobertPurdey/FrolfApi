@@ -170,8 +170,12 @@ namespace Frolf.Api.ModelDataControllers.Courses
 
         public override void Update(CourseModel modelToUpdate)
         {
-            // todo dont let model override frolf group or course ids
-            throw new NotImplementedException();
+            var entity = FindEntity(modelToUpdate.IdKey, CourseQueryService);
+
+            // only let the name be changed
+            entity.Name = modelToUpdate.Name;
+
+            commandExecutor.Execute(new UpdateCourseCommand {  entity = entity } );
         }
 
         private static CourseQueryArg ConvertToQueryArg(CourseFilterModel filter)

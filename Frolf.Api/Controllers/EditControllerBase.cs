@@ -53,8 +53,8 @@ namespace Frolf.Api.Controllers
             await Remove(id);
         }
 
-        [HttpPut]
-        [Route("")]
+        [HttpPost]
+        [Route("update")]
         public async Task Put([FromBody] TApiModel newDetails)
         {
             await Update(newDetails);

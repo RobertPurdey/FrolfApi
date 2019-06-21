@@ -49,6 +49,7 @@
     <Compile Include="AppUsers\Conditions\IsAppUserCurrentUser.cs" />
     <Compile Include="AppUsers\Conditions\LoginNameExistsCondition.cs" />
     <Compile Include="Courses\Commands\AddCourseCommand.cs" />
+    <Compile Include="Courses\Commands\UpdateCourseCommand.cs" />
     <Compile Include="FrolfGroupInvites\Commands\AcceptInviteCommand.cs" />
     <Compile Include="FrolfGroupInvites\Commands\AddInviteCommand.cs" />
     <Compile Include="FrolfGroupInvites\Commands\DeleteInviteCommand.cs" />

@@ -46,7 +46,9 @@ namespace Frolf.Api.Controllers
 
         protected override Task Update([FromBody] CourseModel newDetails)
         {
-            throw new NotImplementedException();
+            courseGroupDataController.Update(newDetails);
+
+            return Task.FromResult(1);
         }
 
         public override Task<IEnumerable<CourseModel>> GetWithFilter([FromBody] CourseFilterModel filter)
