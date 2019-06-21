@@ -108,7 +108,12 @@ namespace Frolf.Api.ModelDataControllers.FrolfGroups
 
         public override void Update(FrolfGroupModel modelToUpdate)
         {
-            throw new NotImplementedException();
+            var entity = FindEntity(modelToUpdate.IdKey, frolfGroupQueryService);
+
+            // only let the name be changed
+            entity.Name = modelToUpdate.Name;
+
+            commandExecutor.Execute( new UpdateFrolfGroupCommand { entity = entity } );
         }
 
         public IEnumerable<PlayerModel> GetGroupMembers(Guid groupId)

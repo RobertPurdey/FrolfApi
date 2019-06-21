@@ -47,7 +47,9 @@ namespace Frolf.Api.Controllers
 
         protected override Task Update([FromBody] FrolfGroupModel newDetails)
         {
-            throw new NotImplementedException();
+            frolfGroupModelDataController.Update(newDetails);
+
+            return Task.FromResult(1);
         }
 
         public override Task<IEnumerable<FrolfGroupModel>> GetWithFilter([FromBody] FrolfGroupFilterModel filter)
