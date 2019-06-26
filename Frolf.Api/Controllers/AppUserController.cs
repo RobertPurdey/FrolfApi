@@ -62,9 +62,12 @@ namespace Frolf.Api.Controllers
                 rsa.FromXmlString(rsaPrivKeyInfo.GetRsaPrivateKeyXml());
 
                 var decryptedKeyBytes = rsa.Decrypt(aesKey, false);
-                var decryptedKey      = Encoding.UTF8.GetString(decryptedKeyBytes, 0, decryptedKeyBytes.Length);
+                //var decryptedKey      = Encoding.UTF8.GetString(decryptedKeyBytes, 0, decryptedKeyBytes.Length);
 
                 var please = "work";
+
+                var pleasePleaseWork = encryptionMan.Decrypt(decryptedKeyBytes, newUserRequest.EncryptedJson);
+                int x = 1;
             }
 
 

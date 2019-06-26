@@ -25,7 +25,7 @@ namespace Security.Encryption
             return Convert.ToBase64String(outputBytes);
         }
 
-        public string Encrypt(string input, byte[] key)
+        public string Encrypt(byte[] key, string input)
         {
             using (var aes = GetAesProvider(key))
             {
@@ -51,13 +51,13 @@ namespace Security.Encryption
             }
         }
 
-        public string Decrypt(string input, byte[] key)
+        public string Decrypt(byte[] key, string input)
         {
             using (var aes = GetAesProvider(key))
             {
                 var inputBytes = Convert.FromBase64String(input);
 
-                //get first 16 bytes of IV and use it to decrypt
+                //get first 16 bytes (which is the init vector) of the message and use it to decrypt
                 var iv = new byte[16];
                 Array.Copy(inputBytes, 0, iv, 0, iv.Length);
 

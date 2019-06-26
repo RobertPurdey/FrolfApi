@@ -5,8 +5,8 @@
     /// </summary>
     public interface IEncryptionManager
     {
-        string Encrypt(string input, byte[] key);
+        string Encrypt(byte[] key, string input);
         string Hash(string input);
-        string Decrypt(string input, byte[] key);
+        string Decrypt(byte[] key, string input);
     }
 }
