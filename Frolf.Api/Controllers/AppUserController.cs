@@ -1,8 +1,12 @@
 ﻿using Domain.Entities;
 using Frolf.Api.ModelDataControllers.Contracts;
+using Frolf.Api.Models.Encryption;
 using Frolf.Api.Models.Users;
+using Security.Encryption;
 using System;
 using System.Collections.Generic;
+using System.Security.Cryptography;
+using System.Text;
 using System.Threading.Tasks;
 using System.Web.Http;
 
@@ -32,6 +36,10 @@ namespace Frolf.Api.Controllers
         [Route("info")]
         public Task<AppUserModel> GetCurrentUserInfo()
         {
+            var rsa = new RsaEncryptionManager();
+
+            rsa.TestPubKeyDecrypt();
+
             var foundAppUser = appUserModelDataController.GetById(UserExtensions.GetCurrentUserId());
 
             return Task.FromResult(foundAppUser);
@@ -40,9 +48,26 @@ namespace Frolf.Api.Controllers
         [HttpPost]
         [AllowAnonymous]
         [Route("create/account")]
-        public Task CreateAccount([FromBody] AppUserCreationModel newUserRequest)
+        public Task CreateAccount([FromBody] EncryptModel newUserRequest)
         {
-            appUserModelDataController.CreateAccount(newUserRequest);
+            // todo: decrypt the model before sending to data controller
+         //   appUserModelDataController.CreateAccount(newUserRequest);
+            var encryptionMan   = new EncryptionManager();
+            var rsaPrivKeyInfo  = new RsaPrivateKeyInfo();
+
+            byte[] aesKey = Convert.FromBase64String(newUserRequest.EncryptedAesKey);
+
+            using (var rsa = new RSACryptoServiceProvider(2048) )
+            {
+                rsa.FromXmlString(rsaPrivKeyInfo.GetRsaPrivateKeyXml());
+
+                var decryptedKeyBytes = rsa.Decrypt(aesKey, false);
+                var decryptedKey      = Encoding.UTF8.GetString(decryptedKeyBytes, 0, decryptedKeyBytes.Length);
+
+                var please = "work";
+            }
+
+
 
             return Task.FromResult(1);
         }

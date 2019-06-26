@@ -79,6 +79,8 @@
   <ItemGroup>
     <Compile Include="IEncryptionManager.cs" />
     <Compile Include="IRefreshToken.cs" />
+    <Compile Include="IRsaEncryptionManager.cs" />
+    <Compile Include="IRsaPrivateKeyInfo.cs" />
     <Compile Include="ISecurityKeyProvider.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

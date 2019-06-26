@@ -25,17 +25,14 @@ namespace Security.Encryption
             return Convert.ToBase64String(outputBytes);
         }
 
-        public string Encrypt(string input)
+        public string Encrypt(string input, byte[] key)
         {
-            using (var aes = GetAesProvider())
+            using (var aes = GetAesProvider(key))
             {
-                // Initialize the AES crypto provider
                 aes.GenerateIV();
 
-                var iv  = aes.IV;
-                var key = privateKey;
-
-                var inputBytes = Encoding.UTF8.GetBytes(input);
+                var iv          = aes.IV;
+                var inputBytes  = Encoding.UTF8.GetBytes(input);
 
                 using (var encrypter    = aes.CreateEncryptor(key, iv))
                 using (var cipherStream = new MemoryStream())
@@ -54,9 +51,9 @@ namespace Security.Encryption
             }
         }
 
-        public string Decrypt(string input)
+        public string Decrypt(string input, byte[] key)
         {
-            using (var aes = GetAesProvider())
+            using (var aes = GetAesProvider(key))
             {
                 var inputBytes = Convert.FromBase64String(input);
 
@@ -78,11 +75,11 @@ namespace Security.Encryption
             }
         }
 
-        private AesCryptoServiceProvider GetAesProvider()
+        private AesCryptoServiceProvider GetAesProvider(byte[] key)
         {
             return new AesCryptoServiceProvider
             {
-                Key      = privateKey,
+                Key      = key,
                 Mode     = CipherMode.CBC,
                 Padding  = PaddingMode.PKCS7
             };

@@ -317,6 +317,7 @@
     <Compile Include="ModelDataControllers\Users\AppUserModelDataController.cs" />
     <Compile Include="Models\Contracts\IFilterModel.cs" />
     <Compile Include="Models\Courses\CourseModel.cs" />
+    <Compile Include="Models\Encryption\EncryptModel.cs" />
     <Compile Include="Models\FrolfGroups\FrolfGroupInviteModel.cs" />
     <Compile Include="Models\FrolfGroups\FrolfGroupModel.cs" />
     <Compile Include="Models\Contracts\IApiDataModel.cs" />
