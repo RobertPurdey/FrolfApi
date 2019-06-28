@@ -5,6 +5,7 @@ using Domain.Entities.Entities;
 using Domain.Query.Contracts;
 using Frolf.Api.Composers.Games;
 using Frolf.Api.Composers.Users;
+using Frolf.Api.Encryption;
 using Frolf.Api.Locators;
 using Frolf.Api.Mappers;
 using Frolf.Api.ModelDataControllers.Contracts;
@@ -45,7 +46,16 @@ namespace Frolf.Api.IoC
             For<ISecurityKeyProvider>().Use<SecurityKeyProvider>();
             For<ICommandExecutor>().Use<CommandExecutor>();
             For<ICommandLocator>().Use<CommandLocator>();
-            For<IEncryptionManager>().Use<EncryptionManager>();
+
+            // Encryption
+            For<IHashManager>().Use<HashManager>();
+            For<IAesEncryptionManager>().Use<AesEncryptionManager>();
+            For<IRsaEncryptionManager>().Use<RsaEncryptionManager>();
+            For<IRsaPrivateKeyInfo>().Use<RsaPrivateKeyInfo>();
+            For<IModelEncryptor>().Use<ModelEncryptor>();
+
+            // Key retriever
+            For<IAppUserPublicKeyRetriever>().Use<AppUserModelDataController>();
 
             // Model-data controllers
             For<IAppUserModelDataController>().Use<AppUserModelDataController>();

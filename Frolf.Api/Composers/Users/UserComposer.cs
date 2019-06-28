@@ -13,11 +13,11 @@ namespace Frolf.Api.Composers.Users
 
     public class UserComposer : IUserComposer
     {
-        private readonly IEncryptionManager encryption;
+        private readonly IHashManager hasher;
 
-        public UserComposer(IEncryptionManager encryption)
+        public UserComposer(IHashManager hasher)
         {
-            this.encryption = encryption;
+            this.hasher = hasher;
         }
 
         public AppUser NewAppUser(AppUserCreationModel creationRequest)
@@ -51,7 +51,7 @@ namespace Frolf.Api.Composers.Users
             var salt            = GenerateSalt();
             var saltyPassword   = userPassword + salt;
 
-            newUser.Password = encryption.Hash(saltyPassword);
+            newUser.Password = hasher.Hash(saltyPassword);
             newUser.Salt     = salt;
         }
 
@@ -68,11 +68,10 @@ namespace Frolf.Api.Composers.Users
 
         private string GenerateFriendCode()
         {
-            return RandomString(10);
+            return RandomFriendCode(10);
         }
 
-        //todo: move this to a utility class
-        private string RandomString(int length)
+        private string RandomFriendCode(int length)
         {
             var rando       = new Random();
             var chars       = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";

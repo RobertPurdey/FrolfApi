@@ -1,4 +1,6 @@
-﻿using Frolf.Api.Models.Contracts;
+﻿using Frolf.Api.Encryption;
+using Frolf.Api.ModelDataControllers.Users;
+using Frolf.Api.Models.Contracts;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -14,7 +16,10 @@ namespace Frolf.Api.Controllers
         where TApiModel     : class, IApiDataModel
         where TFilterModel  : class, IFilterModel
     {
-        public EditControllerBase()
+        public EditControllerBase(
+            IModelEncryptor modelEncryptor,
+            IAppUserPublicKeyRetriever userRsaKeyRetriever)
+            : base(modelEncryptor, userRsaKeyRetriever)
         {
 
         }

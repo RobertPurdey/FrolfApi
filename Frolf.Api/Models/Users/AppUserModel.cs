@@ -17,9 +17,6 @@ namespace Frolf.Api.Models.Users
         //todo: this email will be removed
         [JsonIgnore]
         public string Email { get; set; }
-
-        [JsonIgnore]
-        public string XmlPublicKey { get; set; }
     }
 
     public class AppUserFilterModel : IFilterModel

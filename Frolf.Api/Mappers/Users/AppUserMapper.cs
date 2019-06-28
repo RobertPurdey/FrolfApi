@@ -18,7 +18,6 @@ namespace Frolf.Api.Mappers.Users
             apiModel.Password      = entity.Password;
             apiModel.Email         = entity.Email;
             apiModel.FriendCode    = entity.FriendCode;
-            apiModel.XmlPublicKey  = entity.XmlPublicKey;
         }
 
         public void MapToEntity(AppUserModel apiModel, AppUser entity)

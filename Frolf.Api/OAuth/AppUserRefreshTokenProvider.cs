@@ -14,8 +14,8 @@ namespace Frolf.Api.OAuth
         public AppUserRefreshTokenProvider(
             ICommandExecutor executor,
             ICommandLocator locator,
-            IEncryptionManager encrytor)
-            : base (encrytor)
+            IHashManager hasher)
+            : base (hasher)
         {
             commandExecutor = executor;
             commandLocator  = locator;

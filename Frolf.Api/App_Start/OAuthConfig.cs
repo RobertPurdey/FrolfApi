@@ -56,7 +56,7 @@ namespace Frolf.Api.App_Start
                 RefreshTokenProvider        = new AppUserRefreshTokenProvider(
                     (ICommandExecutor)resolver.GetService(typeof(ICommandExecutor)), 
                     (ICommandLocator)resolver.GetService(typeof(ICommandLocator)),
-                    (IEncryptionManager)resolver.GetService(typeof(IEncryptionManager)) )
+                    (IHashManager)resolver.GetService(typeof(IHashManager)) )
             };
 
             app.UseOAuthAuthorizationServer(OAuthServerOptions);

@@ -89,7 +89,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Encryption\EncryptionManager.cs" />
+    <Compile Include="Encryption\AesEncryptionManager.cs" />
+    <Compile Include="Encryption\HashManager.cs" />
     <Compile Include="Encryption\RsaEncryptionManager.cs" />
     <Compile Include="Encryption\RsaPrivateKeyInfo.cs" />
     <Compile Include="Jwt\JwtTokenFormat.cs" />

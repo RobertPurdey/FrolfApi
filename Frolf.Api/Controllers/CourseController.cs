@@ -1,4 +1,6 @@
-﻿using Frolf.Api.ModelDataControllers.Contracts;
+﻿using Frolf.Api.Encryption;
+using Frolf.Api.ModelDataControllers.Contracts;
+using Frolf.Api.ModelDataControllers.Users;
 using Frolf.Api.Models.Courses;
 using System;
 using System.Collections.Generic;
@@ -13,7 +15,10 @@ namespace Frolf.Api.Controllers
         private readonly ICourseModelDataController courseGroupDataController;
 
         public CourseController(
+            IModelEncryptor modelEncryptor,
+            IAppUserPublicKeyRetriever userRsaKeyRetriever,
             ICourseModelDataController courseGroupDataController)
+            : base(modelEncryptor, userRsaKeyRetriever)
         {
             this.courseGroupDataController = courseGroupDataController;
         }

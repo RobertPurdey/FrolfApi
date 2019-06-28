@@ -9,11 +9,11 @@ namespace Security.OAuth
     public abstract class RefreshTokenProviderBase<TRefreshToken> : AuthenticationTokenProvider
         where TRefreshToken : class, IRefreshToken, new()
     {
-        private readonly IEncryptionManager encryptor;
+        private readonly IHashManager hasher;
 
-        protected RefreshTokenProviderBase(IEncryptionManager encryptor)
+        protected RefreshTokenProviderBase(IHashManager hasher)
         {
-            this.encryptor = encryptor;
+            this.hasher = hasher;
         }
 
         public override void Create(AuthenticationTokenCreateContext context)
@@ -23,7 +23,7 @@ namespace Security.OAuth
 
             var token = new TRefreshToken
             {
-                Token     = encryptor.Hash(refreshTokenId),
+                Token     = hasher.Hash(refreshTokenId),
                 UserId    = Guid.Parse(context.Ticket.Identity.FindFirst(ClaimTypes.NameIdentifier).Value),
                 IssuedOn  = issuedOn,
                 ExpiresOn = issuedOn.AddHours(6)
@@ -39,7 +39,7 @@ namespace Security.OAuth
 
         public override void Receive(AuthenticationTokenReceiveContext context)
         {
-            var hashedTokenId = encryptor.Hash(context.Token);
+            var hashedTokenId = hasher.Hash(context.Token);
             var refreshToken  = GetRefreshTokenRepository().
                 GetByKey(x => x.Token == hashedTokenId);
 

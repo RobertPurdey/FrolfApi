@@ -1,4 +1,6 @@
-﻿using Frolf.Api.ModelDataControllers.Contracts;
+﻿using Frolf.Api.Encryption;
+using Frolf.Api.ModelDataControllers.Contracts;
+using Frolf.Api.ModelDataControllers.Users;
 using Frolf.Api.Models.HoleScores;
 using System;
 using System.Collections.Generic;
@@ -13,7 +15,10 @@ namespace Frolf.Api.Controllers
         private readonly IHoleScoreModelDataController holeScoreDataController;
 
         public HoleScoreController(
+            IModelEncryptor modelEncryptor,
+            IAppUserPublicKeyRetriever userRsaKeyRetriever,
             IHoleScoreModelDataController holeScoreDataController)
+            : base(modelEncryptor, userRsaKeyRetriever)
         {
             this.holeScoreDataController = holeScoreDataController;
         }

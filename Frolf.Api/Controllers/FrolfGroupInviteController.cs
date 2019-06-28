@@ -1,4 +1,6 @@
-﻿using Frolf.Api.ModelDataControllers.Contracts;
+﻿using Frolf.Api.Encryption;
+using Frolf.Api.ModelDataControllers.Contracts;
+using Frolf.Api.ModelDataControllers.Users;
 using Frolf.Api.Models.FrolfGroups;
 using System;
 using System.Collections.Generic;
@@ -13,7 +15,10 @@ namespace Frolf.Api.Controllers
         private readonly IFrolfGroupInviteModelDataController frolfGroupInviteModelDataController;
 
         public FrolfGroupInviteController(
+            IModelEncryptor modelEncryptor,
+            IAppUserPublicKeyRetriever userRsaKeyRetriever,
             IFrolfGroupInviteModelDataController frolfGroupInviteDataController)
+            : base(modelEncryptor, userRsaKeyRetriever)
         {
             frolfGroupInviteModelDataController = frolfGroupInviteDataController;
         }

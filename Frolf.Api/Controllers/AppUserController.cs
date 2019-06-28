@@ -1,5 +1,7 @@
 ﻿using Domain.Entities;
+using Frolf.Api.Encryption;
 using Frolf.Api.ModelDataControllers.Contracts;
+using Frolf.Api.ModelDataControllers.Users;
 using Frolf.Api.Models.Encryption;
 using Frolf.Api.Models.Users;
 using Newtonsoft.Json;
@@ -19,7 +21,10 @@ namespace Frolf.Api.Controllers
         private readonly IAppUserModelDataController appUserModelDataController;
 
         public AppUserController(
+            IModelEncryptor modelEncryptor,
+            IAppUserPublicKeyRetriever userRsaKeyRetriever,
             IAppUserModelDataController appUserDataController)
+            : base(modelEncryptor, userRsaKeyRetriever)
         {
             appUserModelDataController = appUserDataController;
         }
@@ -35,26 +40,26 @@ namespace Frolf.Api.Controllers
 
         [HttpGet]
         [Route("info")]
-        public Task<EncryptModel> GetCurrentUserInfo()
+        public Task<AppUserModel> GetCurrentUserInfo()
         {
             var foundAppUser = appUserModelDataController.GetById(UserExtensions.GetCurrentUserId());
-            var encryptModel = new EncryptModel(); 
+            //var encryptModel = new EncryptModel(); 
 
-            using (var rsa = new RSACryptoServiceProvider(2048))
-            {
-                rsa.FromXmlString(foundAppUser.XmlPublicKey);
+            //using (var rsa = new RSACryptoServiceProvider(2048))
+            //{
+            //    rsa.FromXmlString(foundAppUser.XmlPublicKey);
 
-                var jsonUser = JsonConvert.SerializeObject(foundAppUser);
+            //    var jsonUser = JsonConvert.SerializeObject(foundAppUser);
 
-                var userBytes = rsa.Encrypt(Encoding.UTF8.GetBytes("i"), false);
+            //    var userBytes = rsa.Encrypt(Encoding.UTF8.GetBytes("i"), false);
 
-                var userEncryptedBase64 = Convert.ToBase64String(userBytes);
+            //    var userEncryptedBase64 = Convert.ToBase64String(userBytes);
 
-                encryptModel.EncryptedAesKey    = "lolWorkingOnIt";
-                encryptModel.EncryptedJson      = userEncryptedBase64;
-            }
+            //    encryptModel.EncryptedAesKey    = "lolWorkingOnIt";
+            //    encryptModel.EncryptedJson      = userEncryptedBase64;
+            //}
 
-            return Task.FromResult(encryptModel);
+            return Task.FromResult(foundAppUser);
         }
 
         [HttpPost]
@@ -62,25 +67,27 @@ namespace Frolf.Api.Controllers
         [Route("create/account")]
         public Task CreateAccount([FromBody] EncryptModel newUserRequest)
         {
+            var userRequest = DecryptModel<AppUserCreationModel>(newUserRequest);
+            appUserModelDataController.CreateAccount(userRequest);
             // todo: decrypt the model before sending to data controller
-         //   appUserModelDataController.CreateAccount(newUserRequest);
-            var encryptionMan   = new EncryptionManager();
-            var rsaPrivKeyInfo  = new RsaPrivateKeyInfo();
+            //   appUserModelDataController.CreateAccount(newUserRequest);
+            //var encryptionMan   = new AesEncryptionManager();
+            //var rsaPrivKeyInfo  = new RsaPrivateKeyInfo();
 
-            byte[] aesKey = Convert.FromBase64String(newUserRequest.EncryptedAesKey);
+            //byte[] aesKey = Convert.FromBase64String(newUserRequest.EncryptedAesKey);
 
-            using (var rsa = new RSACryptoServiceProvider(2048) )
-            {
-                rsa.FromXmlString(rsaPrivKeyInfo.GetRsaPrivateKeyXml());
+            //using (var rsa = new RSACryptoServiceProvider(2048) )
+            //{
+            //    rsa.FromXmlString(rsaPrivKeyInfo.GetRsaPrivateKeyXml());
 
-                var decryptedKeyBytes = rsa.Decrypt(aesKey, false);
-                //var decryptedKey      = Encoding.UTF8.GetString(decryptedKeyBytes, 0, decryptedKeyBytes.Length);
+            //    var decryptedKeyBytes = rsa.Decrypt(aesKey, false);
+            //    //var decryptedKey      = Encoding.UTF8.GetString(decryptedKeyBytes, 0, decryptedKeyBytes.Length);
 
-                var please = "work";
+            //    var please = "work";
 
-                var pleasePleaseWork = encryptionMan.Decrypt(decryptedKeyBytes, newUserRequest.EncryptedJson);
-                int x = 1;
-            }
+            //    //var pleasePleaseWork = encryptionMan.Decrypt(decryptedKeyBytes, newUserRequest.EncryptedJson);
+            //    int x = 1;
+            //}
 
 
 
@@ -103,16 +110,6 @@ namespace Frolf.Api.Controllers
             appUserModelDataController.UpdateAccount(updateUserRequest);
 
             return Task.FromResult(1);
-        }
-
-        // todo: this is to be removed
-        // game controller now has canAnnounce and canSpectate
-        [HttpGet]
-        [Route("allowedBroadcastAccess")]
-        public Task<bool> AllowedBroadcastAccess()
-        {
-            // todo: more strict rules to come
-            return Task.FromResult(true);
         }
 
         protected override Task<AppUserModel> Create([FromBody] AppUserModel newItem)

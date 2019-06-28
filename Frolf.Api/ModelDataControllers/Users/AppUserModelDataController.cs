@@ -14,7 +14,12 @@ using System.Web.Http;
 
 namespace Frolf.Api.ModelDataControllers.Users
 {
-    public class AppUserModelDataController : IAppUserModelDataController
+    public interface IAppUserPublicKeyRetriever
+    {
+        string GetXmlRsaPublicKey();
+    }
+
+    public class AppUserModelDataController : IAppUserModelDataController, IAppUserPublicKeyRetriever
     {
         private readonly IReadWriteEntityMapper<AppUserModel, AppUser> appUserMapper;
         private readonly IQueryService<AppUser> appUserQueryService;
@@ -73,6 +78,13 @@ namespace Frolf.Api.ModelDataControllers.Users
         public void Update(AppUserModel modelToUpdate)
         {
             throw new NotImplementedException();
+        }
+
+        public string GetXmlRsaPublicKey()
+        {
+            var currentUser = FindAppUser(UserExtensions.GetCurrentUserId());
+
+            return currentUser.XmlPublicKey;
         }
 
         public void SetPublicKey(PublicKeyModel keyModel)

@@ -1,13 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Security.Contracts
+﻿namespace Security.Contracts
 {
     public interface IRsaEncryptionManager
     {
-        byte[] GenerateKeys();
+        byte[] Encrypt(string xmlKey, string msg);
+        byte[] Decrypt(string xmlKey, byte[] encryptedMsg);
     }
 }

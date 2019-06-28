@@ -60,8 +60,8 @@ namespace Frolf.Api.OAuth
                 var foundUser = appUserRepo.GetAll().SingleOrDefault(
                     u => u.LoginName == context.UserName);
 
-                var encryption     = (IEncryptionManager)serviceLocator.GetService(typeof(IEncryptionManager));
-                var hashedPassword = encryption.Hash(context.Password + foundUser.Salt);
+                var hasher         = (IHashManager)serviceLocator.GetService(typeof(IHashManager));
+                var hashedPassword = hasher.Hash(context.Password + foundUser.Salt);
 
                 if (foundUser.Password != hashedPassword) throw new Exception();
 

@@ -77,7 +77,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="IEncryptionManager.cs" />
+    <Compile Include="IAesEncryptionManager.cs" />
+    <Compile Include="IHashManager.cs" />
     <Compile Include="IRefreshToken.cs" />
     <Compile Include="IRsaEncryptionManager.cs" />
     <Compile Include="IRsaPrivateKeyInfo.cs" />
