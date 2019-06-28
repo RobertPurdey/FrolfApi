@@ -21,6 +21,7 @@ namespace Domain.Entities
         public string Handle { get; set; }
         public string FriendCode { get; set; }
         public string Salt { get; set; }
+        public string XmlPublicKey { get; set; }
 
         public string AuthenticationType { get; set; }
         public string Name => EntityKey.ToString();

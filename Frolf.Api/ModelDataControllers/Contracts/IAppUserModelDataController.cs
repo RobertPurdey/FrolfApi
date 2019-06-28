@@ -7,5 +7,6 @@ namespace Frolf.Api.ModelDataControllers.Contracts
     {
         AppUser CreateAccount(AppUserCreationModel newUser);
         void UpdateAccount(AppUserUpdateModel updateUser);
+        void SetPublicKey(PublicKeyModel keyModel);
     }
 }

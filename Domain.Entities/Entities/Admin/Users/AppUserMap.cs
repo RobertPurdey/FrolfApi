@@ -42,6 +42,9 @@ namespace Domain.Entities
                 .IsRequired()
                 .HasColumnName("salt");
 
+            Property(u => u.XmlPublicKey)
+                .HasColumnName("public_key");
+
             // Ignore Identity properties
             Ignore(t => t.Name);
             Ignore(t => t.Identity);

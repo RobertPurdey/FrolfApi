@@ -334,6 +334,7 @@
     <Compile Include="Models\Users\AppUserCreationModel.cs" />
     <Compile Include="Models\Users\AppUserModel.cs" />
     <Compile Include="Models\Users\AppUserUpdateModel.cs" />
+    <Compile Include="Models\Users\PublicKeyModel.cs" />
     <Compile Include="OAuth\AppUserAuthorizationServerProvider.cs" />
     <Compile Include="OAuth\AppUserRefreshTokenProvider.cs" />
     <Compile Include="OAuth\OwinContextExtensions.cs" />

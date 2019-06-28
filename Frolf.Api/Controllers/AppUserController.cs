@@ -2,6 +2,7 @@
 using Frolf.Api.ModelDataControllers.Contracts;
 using Frolf.Api.Models.Encryption;
 using Frolf.Api.Models.Users;
+using Newtonsoft.Json;
 using Security.Encryption;
 using System;
 using System.Collections.Generic;
@@ -34,15 +35,26 @@ namespace Frolf.Api.Controllers
 
         [HttpGet]
         [Route("info")]
-        public Task<AppUserModel> GetCurrentUserInfo()
+        public Task<EncryptModel> GetCurrentUserInfo()
         {
-            var rsa = new RsaEncryptionManager();
-
-            rsa.TestPubKeyDecrypt();
-
             var foundAppUser = appUserModelDataController.GetById(UserExtensions.GetCurrentUserId());
+            var encryptModel = new EncryptModel(); 
 
-            return Task.FromResult(foundAppUser);
+            using (var rsa = new RSACryptoServiceProvider(2048))
+            {
+                rsa.FromXmlString(foundAppUser.XmlPublicKey);
+
+                var jsonUser = JsonConvert.SerializeObject(foundAppUser);
+
+                var userBytes = rsa.Encrypt(Encoding.UTF8.GetBytes("i"), false);
+
+                var userEncryptedBase64 = Convert.ToBase64String(userBytes);
+
+                encryptModel.EncryptedAesKey    = "lolWorkingOnIt";
+                encryptModel.EncryptedJson      = userEncryptedBase64;
+            }
+
+            return Task.FromResult(encryptModel);
         }
 
         [HttpPost]
@@ -76,10 +88,19 @@ namespace Frolf.Api.Controllers
         }
 
         [HttpPost]
-        [Route("update/account")]
-        public Task UpdateAccount([FromBody] AppUserUpdateModel newUserRequest)
+        [Route("setPublicKey")]
+        public Task SetNewPublicKey([FromBody] PublicKeyModel publicKeyModel)
         {
-            appUserModelDataController.UpdateAccount(newUserRequest);
+            appUserModelDataController.SetPublicKey(publicKeyModel);
+
+            return Task.FromResult(1);
+        }
+
+        [HttpPost]
+        [Route("update/account")]
+        public Task UpdateAccount([FromBody] AppUserUpdateModel updateUserRequest)
+        {
+            appUserModelDataController.UpdateAccount(updateUserRequest);
 
             return Task.FromResult(1);
         }

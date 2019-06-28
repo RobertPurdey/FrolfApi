@@ -10,7 +10,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
-using System.Web;
 using System.Web.Http;
 
 namespace Frolf.Api.ModelDataControllers.Users
@@ -74,6 +73,14 @@ namespace Frolf.Api.ModelDataControllers.Users
         public void Update(AppUserModel modelToUpdate)
         {
             throw new NotImplementedException();
+        }
+
+        public void SetPublicKey(PublicKeyModel keyModel)
+        {
+            var user        = FindAppUser( UserExtensions.GetCurrentUserId() );
+            user.XmlPublicKey = keyModel.XmlRsaPublicKey;
+
+            commandExecutor.Execute(new UpdateAppUserCommand { User = user });
         }
 
         public AppUser CreateAccount(AppUserCreationModel creationRequest)
