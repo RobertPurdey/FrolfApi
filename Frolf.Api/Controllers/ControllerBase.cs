@@ -23,14 +23,14 @@ namespace Frolf.Api.Controllers
             this.userRsaKeyRetriever = userRsaKeyRetriever;
         }
 
-        protected EncryptModel EncryptModel<T>(T modelToEncrypt) where T : class
+        protected EncryptModel EncryptModel<TModel>(TModel modelToEncrypt) where TModel : class
         {
             return modelEncryptor.Encrypt(userRsaKeyRetriever.GetXmlRsaPublicKey(), modelToEncrypt);
         }
 
-        protected T DecryptModel<T>(EncryptModel model) where T : class
+        protected TModel DecryptModel<TModel>(EncryptModel model) where TModel : class
         {
-            return modelEncryptor.Decrypt<T>(model);
+            return modelEncryptor.Decrypt<TModel>(model);
         }
 
         protected virtual void ValidateNullArgument(object argument, string message)

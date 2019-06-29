@@ -33,7 +33,7 @@ namespace Security.Encryption
                     using (var cryptoStream = new CryptoStream(cipherStream, encryptor, CryptoStreamMode.Write))
                     using (var binaryWriter = new BinaryWriter(cryptoStream))
                     {
-                        //Prepend IV to data
+                        // Prepend IV to data
                         cipherStream.Write(iv, 0, 16);
                         binaryWriter.Write(inputBytes);
                         cryptoStream.FlushFinalBlock();

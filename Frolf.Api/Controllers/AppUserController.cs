@@ -4,12 +4,9 @@ using Frolf.Api.ModelDataControllers.Contracts;
 using Frolf.Api.ModelDataControllers.Users;
 using Frolf.Api.Models.Encryption;
 using Frolf.Api.Models.Users;
-using Newtonsoft.Json;
 using Security.Encryption;
 using System;
 using System.Collections.Generic;
-using System.Security.Cryptography;
-using System.Text;
 using System.Threading.Tasks;
 using System.Web.Http;
 
@@ -40,26 +37,12 @@ namespace Frolf.Api.Controllers
 
         [HttpGet]
         [Route("info")]
-        public Task<AppUserModel> GetCurrentUserInfo()
+        public Task<EncryptModel> GetCurrentUserInfo()
         {
-            var foundAppUser = appUserModelDataController.GetById(UserExtensions.GetCurrentUserId());
-            //var encryptModel = new EncryptModel(); 
+            var foundAppUser   = appUserModelDataController.GetById(UserExtensions.GetCurrentUserId());
+            var encryptedModel = EncryptModel(foundAppUser);
 
-            //using (var rsa = new RSACryptoServiceProvider(2048))
-            //{
-            //    rsa.FromXmlString(foundAppUser.XmlPublicKey);
-
-            //    var jsonUser = JsonConvert.SerializeObject(foundAppUser);
-
-            //    var userBytes = rsa.Encrypt(Encoding.UTF8.GetBytes("i"), false);
-
-            //    var userEncryptedBase64 = Convert.ToBase64String(userBytes);
-
-            //    encryptModel.EncryptedAesKey    = "lolWorkingOnIt";
-            //    encryptModel.EncryptedJson      = userEncryptedBase64;
-            //}
-
-            return Task.FromResult(foundAppUser);
+            return Task.FromResult(encryptedModel);
         }
 
         [HttpPost]
@@ -69,27 +52,6 @@ namespace Frolf.Api.Controllers
         {
             var userRequest = DecryptModel<AppUserCreationModel>(newUserRequest);
             appUserModelDataController.CreateAccount(userRequest);
-            // todo: decrypt the model before sending to data controller
-            //   appUserModelDataController.CreateAccount(newUserRequest);
-            //var encryptionMan   = new AesEncryptionManager();
-            //var rsaPrivKeyInfo  = new RsaPrivateKeyInfo();
-
-            //byte[] aesKey = Convert.FromBase64String(newUserRequest.EncryptedAesKey);
-
-            //using (var rsa = new RSACryptoServiceProvider(2048) )
-            //{
-            //    rsa.FromXmlString(rsaPrivKeyInfo.GetRsaPrivateKeyXml());
-
-            //    var decryptedKeyBytes = rsa.Decrypt(aesKey, false);
-            //    //var decryptedKey      = Encoding.UTF8.GetString(decryptedKeyBytes, 0, decryptedKeyBytes.Length);
-
-            //    var please = "work";
-
-            //    //var pleasePleaseWork = encryptionMan.Decrypt(decryptedKeyBytes, newUserRequest.EncryptedJson);
-            //    int x = 1;
-            //}
-
-
 
             return Task.FromResult(1);
         }

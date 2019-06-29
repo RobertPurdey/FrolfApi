@@ -21,13 +21,13 @@ namespace Frolf.Api.Encryption
             rsaKeyInfo  = serverKeyInfo;
         }
 
-        public EncryptModel Encrypt<T>(string xmlRsaClientKey, T model) where T : class
+        public EncryptModel Encrypt<TModel>(string xmlRsaClientKey, TModel model) where TModel : class
         {
             string aesKey = aes.GenerateKey();
 
             byte[] encryptedAesKey       = rsa.Encrypt( xmlRsaClientKey, aesKey );
-            string encryptedAesKeyBase64 = Convert.ToBase64String( encryptedAesKey );
             string encryptedJsonBase64   = aes.Encrypt( aesKey, JsonConvert.SerializeObject(model) );
+            string encryptedAesKeyBase64 = Convert.ToBase64String(encryptedAesKey);
 
             return new EncryptModel
             {
@@ -36,7 +36,7 @@ namespace Frolf.Api.Encryption
             };
         }
 
-        public T Decrypt<T>(EncryptModel model) where T : class
+        public TModel Decrypt<TModel>(EncryptModel model) where TModel : class
         {
             var encryptedAesKeyBytes  = Convert.FromBase64String(model.EncryptedAesKey);
             var serverRsaPrivKey      = rsaKeyInfo.GetRsaPrivateKeyXml();
@@ -45,7 +45,7 @@ namespace Frolf.Api.Encryption
             var decrytedAesKeyBase64 = Convert.ToBase64String(decrytedAesKeyBytes);
             var decryptedJsonBytes   = aes.Decrypt(decrytedAesKeyBase64, model.EncryptedJson);
 
-            return JsonConvert.DeserializeObject<T>(decryptedJsonBytes);
+            return JsonConvert.DeserializeObject<TModel>(decryptedJsonBytes);
         }
     }
 }
