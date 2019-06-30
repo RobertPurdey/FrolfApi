@@ -1,10 +1,11 @@
 ﻿using Frolf.Api.Encryption;
 using Frolf.Api.ModelDataControllers.Contracts;
 using Frolf.Api.ModelDataControllers.Users;
+using Frolf.Api.Models;
+using Frolf.Api.Models.Encryption;
 using Frolf.Api.Models.Games;
 using Frolf.Api.Models.HoleScores;
 using System;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Web.Http;
 
@@ -24,60 +25,69 @@ namespace Frolf.Api.Controllers
             this.gameDataController = gameDataController;
         }
 
-        public override Task<IEnumerable<GameModel>> GetAll()
+        public override Task<EncryptModel> GetAll()
         {
-            var foundGames = gameDataController.GetAll();
+            var foundGames    = gameDataController.GetAll();
+            var encryptGames  = EncryptModel(foundGames); 
 
-            return Task.FromResult(foundGames);
+            return Task.FromResult(encryptGames);
         }
 
-        public override Task<GameModel> GetById([FromUri] Guid id)
+        public override Task<EncryptModel> GetById([FromBody] EncryptModel id)
         {
-            var foundFrolfGroup = gameDataController.GetById(id);
+            var idModel         = DecryptModel<IdModel>(id);
+            var foundGameModel  = gameDataController.GetById(idModel.IdKey);
+            var encryptGame     = EncryptModel(foundGameModel);
 
-            return Task.FromResult(foundFrolfGroup);
+            return Task.FromResult(encryptGame);
         }
 
-        protected override Task<GameModel> Create([FromBody] GameModel newEntity)
+        protected override Task<EncryptModel> Create( EncryptModel newEntity)
         {
             throw new NotImplementedException();
         }
 
-        protected override Task Remove([FromUri] Guid id)
+        protected override Task Remove(EncryptModel id)
         {
             throw new NotImplementedException();
         }
 
-        protected override Task Update([FromBody] GameModel newDetails)
+        protected override Task Update(EncryptModel newDetails)
         {
             throw new NotImplementedException();
         }
 
-        public override Task<IEnumerable<GameModel>> GetWithFilter([FromBody] GameFilter filter)
+        public override Task<EncryptModel> GetWithFilter([FromBody] EncryptModel filter)
         {
-            var results = gameDataController.GetWithFilter(filter);
+            var gameFilter   = DecryptModel<GameFilter>(filter);
+            var results      = gameDataController.GetWithFilter(gameFilter);
+            var encryptGames = EncryptModel(results);
 
-            return Task.FromResult(results);
+            return Task.FromResult(encryptGames);
         }
 
         [HttpPost]
         [Route("holeScores")]
-        public Task UpdateGameHoles([FromBody] HoleScoreSetUpdateModel updateModel)
+        public Task UpdateGameHoles([FromBody] EncryptModel updateModel)
         {
-            gameDataController.SaveHoleScoreSet(updateModel);
+            var holeScoreSetUpdate = DecryptModel<HoleScoreSetUpdateModel>(updateModel);
+            gameDataController.SaveHoleScoreSet(holeScoreSetUpdate);
 
             return Task.FromResult(1);
         }
 
         [HttpGet]
-        [Route("{id:guid}/results")]
-        public Task<GameResultModel> GetGameResults([FromUri] Guid id)
+        [Route("results")]
+        public Task<EncryptModel> GetGameResults([FromBody] EncryptModel id)
         {
-            var gameResults = gameDataController.GetGameResults(id);
+            var idModel             = DecryptModel<IdModel>(id);
+            var gameResults         = gameDataController.GetGameResults(idModel.IdKey);
+            var encryptGameResult   = EncryptModel(gameResults);
 
-            return Task.FromResult(gameResults);
+            return Task.FromResult(encryptGameResult);
         }
 
+        // todo: deal with encryption (this mainly is called from the tcp server)
         [HttpGet]
         [Route("{id:guid}/spectate")]
         public Task<bool> CanSpectateGame([FromUri] Guid id)
@@ -87,6 +97,7 @@ namespace Frolf.Api.Controllers
             return Task.FromResult(result);
         }
 
+        // todo: deal with encryption (this mainly is called from the tcp server)
         [HttpGet]
         [Route("{id:guid}/announce")]
         public Task<bool> CanAnnounceGame([FromUri] Guid id)
@@ -97,10 +108,11 @@ namespace Frolf.Api.Controllers
         }
 
         [HttpPatch]
-        [Route("{id:guid}/complete")]
-        public Task CompleteGame([FromUri] Guid id)
+        [Route("complete")]
+        public Task CompleteGame([FromBody] EncryptModel id)
         {
-            gameDataController.CompleteGame(id);
+            var idModel = DecryptModel<IdModel>(id);
+            gameDataController.CompleteGame(idModel.IdKey);
 
             return Task.FromResult(1);
         }

@@ -1,9 +1,10 @@
 ﻿using Frolf.Api.Encryption;
 using Frolf.Api.ModelDataControllers.Contracts;
 using Frolf.Api.ModelDataControllers.Users;
+using Frolf.Api.Models;
+using Frolf.Api.Models.Encryption;
 using Frolf.Api.Models.FrolfGroups;
 using System;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Web.Http;
 
@@ -23,58 +24,68 @@ namespace Frolf.Api.Controllers
             frolfGroupInviteModelDataController = frolfGroupInviteDataController;
         }
 
-        public override Task<IEnumerable<FrolfGroupInviteModel>> GetAll()
+        public override Task<EncryptModel> GetAll()
         {
-            var foundFrolfGroupInvites = frolfGroupInviteModelDataController.GetAll();
+            var foundFrolfGroupInvites    = frolfGroupInviteModelDataController.GetAll();
+            var encryptFrolfGroupInvites  = EncryptModel(foundFrolfGroupInvites);
 
-            return Task.FromResult(foundFrolfGroupInvites);
+            return Task.FromResult(encryptFrolfGroupInvites);
         }
 
-        public override Task<IEnumerable<FrolfGroupInviteModel>> GetWithFilter([FromBody] FrolfGroupInviteFilterModel filter)
+        public override Task<EncryptModel> GetWithFilter([FromBody] EncryptModel filter)
         {
-            var foundInvites = frolfGroupInviteModelDataController.GetWithFilter(filter);
+            var frolfGroupInviteFilter = DecryptModel<FrolfGroupInviteFilterModel>(filter);
+            var foundInvites           = frolfGroupInviteModelDataController.GetWithFilter(frolfGroupInviteFilter);
+            var encryptInvites         = EncryptModel(foundInvites);
 
-            return Task.FromResult(foundInvites);
+            return Task.FromResult(encryptInvites);
         }
 
-        public override Task<FrolfGroupInviteModel> GetById([FromUri] Guid id)
+        public override Task<EncryptModel> GetById([FromBody] EncryptModel id)
         {
-            var foundFrolfGroupInvite = frolfGroupInviteModelDataController.GetById(id);
+            var idModel                 = DecryptModel<IdModel>(id);
+            var foundFrolfGroupInvite   = frolfGroupInviteModelDataController.GetById(idModel.IdKey);
+            var encryptFrolfGroupInvite = EncryptModel(foundFrolfGroupInvite);
 
-            return Task.FromResult(foundFrolfGroupInvite);
+            return Task.FromResult(encryptFrolfGroupInvite);
         }
 
-        protected override Task<FrolfGroupInviteModel> Create([FromBody] FrolfGroupInviteModel newEntity)
+        protected override Task<EncryptModel> Create(EncryptModel newEntity)
         {
-            frolfGroupInviteModelDataController.Insert(newEntity);
+            var newFrolfGroupInvite = DecryptModel<FrolfGroupInviteModel>(newEntity);
+            frolfGroupInviteModelDataController.Insert(newFrolfGroupInvite);
+            var encryptFrolfGroupInvite = EncryptModel(newFrolfGroupInvite);
 
-            return Task.FromResult(newEntity);
+            return Task.FromResult(encryptFrolfGroupInvite);
         }
 
-        protected override Task Remove([FromUri] Guid id)
+        protected override Task Remove(EncryptModel id)
         {
-            frolfGroupInviteModelDataController.Delete(new FrolfGroupInviteModel { IdKey = id });
+            var idModel = DecryptModel<IdModel>(id);
+            frolfGroupInviteModelDataController.Delete(new FrolfGroupInviteModel { IdKey = idModel.IdKey });
 
             return Task.FromResult(1);
         }
 
-        protected override Task Update([FromBody] FrolfGroupInviteModel newDetails)
+        protected override Task Update(EncryptModel newDetails)
         {
             throw new NotImplementedException();
         }
 
         [HttpGet]
-        [Route("{id:guid}/accept")]
-        public void Accept([FromUri] Guid id)
+        [Route("accept")]
+        public void Accept([FromBody] EncryptModel id)
         {
-            frolfGroupInviteModelDataController.Accept(id);
+            var idModel = DecryptModel<IdModel>(id);
+            frolfGroupInviteModelDataController.Accept(idModel.IdKey);
         }
 
         [HttpPost]
         [Route("send")]
-        public void Send(InviteCreationModel creationModel)
+        public void Send(EncryptModel creationModel)
         {
-            frolfGroupInviteModelDataController.Send(creationModel);
+            var inviteCreation = DecryptModel<InviteCreationModel>(creationModel);
+            frolfGroupInviteModelDataController.Send(inviteCreation);
         }
     }
 }

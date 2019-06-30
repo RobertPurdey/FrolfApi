@@ -1,10 +1,12 @@
 ﻿using Frolf.Api.Encryption;
 using Frolf.Api.ModelDataControllers.Contracts;
 using Frolf.Api.ModelDataControllers.Users;
+using Frolf.Api.Models;
+using Frolf.Api.Models.Encryption;
 using Frolf.Api.Models.FrolfGroups;
 using Frolf.Api.Models.Games;
+using Frolf.Api.Models.Players;
 using System;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Web.Http;
 
@@ -24,76 +26,88 @@ namespace Frolf.Api.Controllers
             frolfGroupModelDataController = frolfGroupDataController;
         }
 
-        public override Task<IEnumerable<FrolfGroupModel>> GetAll()
+        public override Task<EncryptModel> GetAll()
         {
-            var foundFrolfGroups = frolfGroupModelDataController.GetAll();
-
-            return Task.FromResult(foundFrolfGroups);
+            var foundFrolfGroups    = frolfGroupModelDataController.GetAll();
+            var encryptFrolfGroups  = EncryptModel(foundFrolfGroups);
+            
+            return Task.FromResult(encryptFrolfGroups);
         }
 
-        public override Task<FrolfGroupModel> GetById([FromUri] Guid id)
+        public override Task<EncryptModel> GetById(EncryptModel id)
         {
-            var foundFrolfGroup = frolfGroupModelDataController.GetById(id);
+            var idModel             = DecryptModel<IdModel>(id);
+            var foundFrolfGroup     = frolfGroupModelDataController.GetById(idModel.IdKey);
+            var encryptFrolfGroup   = EncryptModel(foundFrolfGroup);
 
-            return Task.FromResult(foundFrolfGroup);
+            return Task.FromResult(encryptFrolfGroup);
         }
 
-        protected override Task<FrolfGroupModel> Create([FromBody] FrolfGroupModel newEntity)
+        protected override Task<EncryptModel> Create([FromBody] EncryptModel newEntity)
         {
-            frolfGroupModelDataController.Insert(newEntity);
+            var newFrolfGroup = DecryptModel<FrolfGroupModel>(newEntity);
+            frolfGroupModelDataController.Insert(newFrolfGroup);
+            var encryptFrolfGroup = EncryptModel(newFrolfGroup);
 
-            return Task.FromResult(newEntity);
+            return Task.FromResult(encryptFrolfGroup);
         }
 
-        protected override Task Remove([FromUri] Guid id)
+        protected override Task Remove(EncryptModel id)
         {
             throw new NotImplementedException();
         }
 
-        protected override Task Update([FromBody] FrolfGroupModel newDetails)
+        protected override Task Update([FromBody] EncryptModel newDetails)
         {
-            frolfGroupModelDataController.Update(newDetails);
+            var frolfGroup = DecryptModel<FrolfGroupModel>(newDetails);
+            frolfGroupModelDataController.Update(frolfGroup);
 
             return Task.FromResult(1);
         }
 
-        public override Task<IEnumerable<FrolfGroupModel>> GetWithFilter([FromBody] FrolfGroupFilterModel filter)
+        public override Task<EncryptModel> GetWithFilter([FromBody] EncryptModel filter)
         {
             throw new NotImplementedException();
         }
 
         [HttpGet]
-        [Route("{id:guid}/groupmembers")]
-        public Task<IEnumerable<PlayerModel>> GetFrolfGroupMembers([FromUri] Guid id)
+        [Route("groupmembers")]
+        public Task<EncryptModel> GetFrolfGroupMembers([FromBody] EncryptModel id)
         {
-            var groupMembers = frolfGroupModelDataController.GetGroupMembers(id);
-            
-            return Task.FromResult(groupMembers);
+            var idModel         = DecryptModel<IdModel>(id);
+            var groupMembers    = frolfGroupModelDataController.GetGroupMembers(idModel.IdKey);
+            var encryptMembers  = EncryptModel(groupMembers); 
+
+            return Task.FromResult(encryptMembers);
         }
 
         [HttpPost]
         [Route("creategame")]
-        public Task<GameModel> CreateGame([FromBody] GameCreationModel model)
+        public Task<EncryptModel> CreateGame([FromBody] EncryptModel model)
         {
-            var createdGame = frolfGroupModelDataController.CreateGame(model);
+            var gameCreation    = DecryptModel<GameCreationModel>(model);
+            var createdGame     = frolfGroupModelDataController.CreateGame(gameCreation);
+            var encryptGame     = EncryptModel(createdGame);
 
-            return Task.FromResult(createdGame);
+            return Task.FromResult(encryptGame);
         }
 
         [HttpPost]
-        [Route("{id:guid}/leave")]
-        public Task LeaveGroup([FromUri] Guid id)
+        [Route("leave")]
+        public Task LeaveGroup([FromBody] EncryptModel id)
         {
-            frolfGroupModelDataController.LeaveGroup(id);
+            var idModel = DecryptModel<IdModel>(id);
+            frolfGroupModelDataController.LeaveGroup(idModel.IdKey);
 
             return Task.FromResult(1);
         }
 
         [HttpPost]
-        [Route("{id:guid}/removePlayer/{playerId:guid}")]
-        public Task RemovePlayer([FromUri] Guid id, [FromUri] Guid playerId)
+        [Route("removePlayer")]
+        public Task RemovePlayer(EncryptModel removePlayerModel)
         {
-            frolfGroupModelDataController.RemovePlayer(id, playerId);
+            var removePlayer = DecryptModel<RemovePlayerModel>(removePlayerModel);
+            frolfGroupModelDataController.RemovePlayer(removePlayer);
 
             return Task.FromResult(1);
         }

@@ -1,8 +1,8 @@
 ﻿using Frolf.Api.Encryption;
 using Frolf.Api.ModelDataControllers.Users;
 using Frolf.Api.Models.Contracts;
+using Frolf.Api.Models.Encryption;
 using System;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Web.Http;
 
@@ -24,27 +24,27 @@ namespace Frolf.Api.Controllers
 
         }
 
-        protected abstract Task<TApiModel> Create([FromBody] TApiModel newEntity);
+        protected abstract Task<EncryptModel> Create(EncryptModel newEntity);
 
-        protected abstract Task Remove([FromUri] Guid id);
+        protected abstract Task Remove(EncryptModel idModel);
 
-        protected abstract Task Update([FromBody] TApiModel newDetails);
+        protected abstract Task Update(EncryptModel newDetails);
         
         [HttpGet]
         [Route("")]
-        public abstract Task<IEnumerable<TApiModel>> GetAll();
+        public abstract Task<EncryptModel> GetAll();
 
         [HttpPost]
         [Route("filter")]
-        public abstract Task<IEnumerable<TApiModel>> GetWithFilter([FromBody] TFilterModel filter);
+        public abstract Task<EncryptModel> GetWithFilter([FromBody] EncryptModel filter);
 
-        [HttpGet]
-        [Route("{id:guid}")]
-        public abstract Task<TApiModel> GetById([FromUri] Guid id);
+        [HttpPost]
+        [Route("getById")]
+        public abstract Task<EncryptModel> GetById([FromBody] EncryptModel id);
 
         [HttpPost]
         [Route("insert")]
-        public async Task<TApiModel> Post([FromBody] TApiModel newEntity)
+        public async Task<EncryptModel> Post([FromBody] EncryptModel newEntity)
         {
             var result = await Create(newEntity);
 
@@ -52,15 +52,15 @@ namespace Frolf.Api.Controllers
         }
 
         [HttpDelete]
-        [Route("{id:guid}")]
-        public async Task Delete([FromUri] Guid id)
+        [Route("delete")]
+        public async Task Delete([FromBody] EncryptModel idModel)
         {
-            await Remove(id);
+            await Remove(idModel);
         }
 
         [HttpPost]
         [Route("update")]
-        public async Task Put([FromBody] TApiModel newDetails)
+        public async Task Put([FromBody] EncryptModel newDetails)
         {
             await Update(newDetails);
         }

@@ -2,11 +2,10 @@
 using Frolf.Api.Encryption;
 using Frolf.Api.ModelDataControllers.Contracts;
 using Frolf.Api.ModelDataControllers.Users;
+using Frolf.Api.Models;
 using Frolf.Api.Models.Encryption;
 using Frolf.Api.Models.Users;
-using Security.Encryption;
 using System;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Web.Http;
 
@@ -26,13 +25,15 @@ namespace Frolf.Api.Controllers
             appUserModelDataController = appUserDataController;
         }
 
-        [HttpGet]
-        [Route("{id:guid}")]
-        public override Task<AppUserModel> GetById([FromUri] Guid id)
+        [HttpPost]
+        [Route("getById")]
+        public override Task<EncryptModel> GetById([FromBody] EncryptModel id)
         {
-            var foundAppUser = appUserModelDataController.GetById(id);
+            var idModel      = DecryptModel<IdModel>(id);
+            var foundAppUser = appUserModelDataController.GetById(idModel.IdKey);
+            var encryptUser  = EncryptModel(foundAppUser);
 
-            return Task.FromResult(foundAppUser);
+            return Task.FromResult(encryptUser);
         }
 
         [HttpGet]
@@ -58,43 +59,45 @@ namespace Frolf.Api.Controllers
 
         [HttpPost]
         [Route("setPublicKey")]
-        public Task SetNewPublicKey([FromBody] PublicKeyModel publicKeyModel)
+        public Task SetNewPublicKey([FromBody] EncryptModel publicKeyModel)
         {
-            appUserModelDataController.SetPublicKey(publicKeyModel);
+            var newPublicKey = DecryptModel<PublicKeyModel>(publicKeyModel);
+            appUserModelDataController.SetPublicKey(newPublicKey);
 
             return Task.FromResult(1);
         }
 
         [HttpPost]
         [Route("update/account")]
-        public Task UpdateAccount([FromBody] AppUserUpdateModel updateUserRequest)
+        public Task UpdateAccount([FromBody] EncryptModel updateUserRequest)
         {
-            appUserModelDataController.UpdateAccount(updateUserRequest);
+            var userRequest = DecryptModel<AppUserUpdateModel>(updateUserRequest);
+            appUserModelDataController.UpdateAccount(userRequest);
 
             return Task.FromResult(1);
         }
 
-        protected override Task<AppUserModel> Create([FromBody] AppUserModel newItem)
+        protected override Task<EncryptModel> Create([FromBody] EncryptModel newItem)
         {
             throw new NotImplementedException();
         }
 
-        protected override Task Remove([FromUri] Guid id)
+        protected override Task Remove([FromUri] EncryptModel id)
         {
             throw new NotImplementedException();
         }
 
-        protected override Task Update([FromBody] AppUserModel newDetails)
+        protected override Task Update([FromBody] EncryptModel newDetails)
         {
             throw new NotImplementedException();
         }
 
-        public override Task<IEnumerable<AppUserModel>> GetAll()
+        public override Task<EncryptModel> GetAll()
         {
             throw new NotImplementedException();
         }
 
-        public override Task<IEnumerable<AppUserModel>> GetWithFilter([FromBody] AppUserFilterModel filter)
+        public override Task<EncryptModel> GetWithFilter([FromBody] EncryptModel filter)
         {
             throw new NotImplementedException();
         }

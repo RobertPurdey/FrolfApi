@@ -10,8 +10,8 @@ namespace Security.Encryption
     {
         public string GenerateKey()
         {
-            RNGCryptoServiceProvider provider = new RNGCryptoServiceProvider();
-            var newKey                        = new byte[16];
+            var provider  = new RNGCryptoServiceProvider();
+            var newKey    = new byte[16];
 
             provider.GetBytes(newKey);
 

@@ -1,9 +1,10 @@
 ﻿using Frolf.Api.Encryption;
 using Frolf.Api.ModelDataControllers.Contracts;
 using Frolf.Api.ModelDataControllers.Users;
+using Frolf.Api.Models;
+using Frolf.Api.Models.Encryption;
 using Frolf.Api.Models.HoleScores;
 using System;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Web.Http;
 
@@ -23,38 +24,43 @@ namespace Frolf.Api.Controllers
             this.holeScoreDataController = holeScoreDataController;
         }
 
-        public override Task<IEnumerable<HoleScoreModel>> GetAll()
+        public override Task<EncryptModel> GetAll()
         {
-            var foundHoleScores = holeScoreDataController.GetAll();
+            var foundHoleScores     = holeScoreDataController.GetAll();
+            var encryptHoleScores   = EncryptModel(foundHoleScores);
 
-            return Task.FromResult(foundHoleScores);
+            return Task.FromResult(encryptHoleScores);
         }
 
-        public override Task<HoleScoreModel> GetById([FromUri] Guid id)
+        public override Task<EncryptModel> GetById([FromBody] EncryptModel id)
         {
-            var foundFrolfGroup = holeScoreDataController.GetById(id);
+            var idModel          = DecryptModel<IdModel>(id);
+            var foundHoleScore   = holeScoreDataController.GetById(idModel.IdKey);
+            var encryptHoleScore = EncryptModel(foundHoleScore);
 
-            return Task.FromResult(foundFrolfGroup);
+            return Task.FromResult(encryptHoleScore);
         }
 
-        public override Task<IEnumerable<HoleScoreModel>> GetWithFilter([FromBody] HoleScoreFilterModel filter)
+        public override Task<EncryptModel> GetWithFilter([FromBody] EncryptModel filter)
         {
-            var foundHoleScores = holeScoreDataController.GetWithFilter(filter);
+            var holeScoreFilter   = DecryptModel<HoleScoreFilterModel>(filter);
+            var foundHoleScores   = holeScoreDataController.GetWithFilter(holeScoreFilter);
+            var encryptHoleScores = EncryptModel(foundHoleScores);
 
-            return Task.FromResult(foundHoleScores);
+            return Task.FromResult(encryptHoleScores);
         }
 
-        protected override Task<HoleScoreModel> Create([FromBody] HoleScoreModel newEntity)
+        protected override Task<EncryptModel> Create(EncryptModel newEntity)
         {
             throw new NotImplementedException();
         }
 
-        protected override Task Remove([FromUri] Guid id)
+        protected override Task Remove(EncryptModel id)
         {
             throw new NotImplementedException();
         }
 
-        protected override Task Update([FromBody] HoleScoreModel newDetails)
+        protected override Task Update(EncryptModel newDetails)
         {
             throw new NotImplementedException();
         }

@@ -1,9 +1,10 @@
 ﻿using Frolf.Api.Encryption;
 using Frolf.Api.ModelDataControllers.Contracts;
 using Frolf.Api.ModelDataControllers.Users;
+using Frolf.Api.Models;
 using Frolf.Api.Models.Courses;
+using Frolf.Api.Models.Encryption;
 using System;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Web.Http;
 
@@ -23,44 +24,52 @@ namespace Frolf.Api.Controllers
             this.courseGroupDataController = courseGroupDataController;
         }
 
-        public override Task<IEnumerable<CourseModel>> GetAll()
+        public override Task<EncryptModel> GetAll()
         {
-            var foundCourses = courseGroupDataController.GetAll();
+            var foundCourses    = courseGroupDataController.GetAll();
+            var encryptCourses  = EncryptModel(foundCourses);
 
-            return Task.FromResult(foundCourses);
+            return Task.FromResult(encryptCourses);
         }
 
-        public override Task<CourseModel> GetById([FromUri] Guid id)
+        public override Task<EncryptModel> GetById([FromUri] EncryptModel id)
         {
-            var foundFrolfGroup = courseGroupDataController.GetById(id);
+            var idModel         = DecryptModel<IdModel>(id);
+            var foundCourse     = courseGroupDataController.GetById(idModel.IdKey);
+            var encryptCourse   = EncryptModel(foundCourse);
 
-            return Task.FromResult(foundFrolfGroup);
+            return Task.FromResult(encryptCourse);
         }
 
-        protected override Task<CourseModel> Create([FromBody] CourseModel newEntity)
+        protected override Task<EncryptModel> Create(EncryptModel newEntity)
         {
-            courseGroupDataController.Insert(newEntity);
+            var newCourse = DecryptModel<CourseModel>(newEntity);
+            courseGroupDataController.Insert(newCourse);
+            var encryptCourse = EncryptModel(newCourse);
 
-            return Task.FromResult(newEntity);
+            return Task.FromResult(encryptCourse);
         }
 
-        protected override Task Remove([FromUri] Guid id)
+        protected override Task Remove(EncryptModel id)
         {
             throw new NotImplementedException();
         }
 
-        protected override Task Update([FromBody] CourseModel newDetails)
+        protected override Task Update(EncryptModel newDetails)
         {
-            courseGroupDataController.Update(newDetails);
+            var course = DecryptModel<CourseModel>(newDetails);
+            courseGroupDataController.Update(course);
 
             return Task.FromResult(1);
         }
 
-        public override Task<IEnumerable<CourseModel>> GetWithFilter([FromBody] CourseFilterModel filter)
+        public override Task<EncryptModel> GetWithFilter([FromBody] EncryptModel filter)
         {
-            var results = courseGroupDataController.GetWithFilter(filter);
+            var filterModel     = DecryptModel<CourseFilterModel>(filter);
+            var results         = courseGroupDataController.GetWithFilter(filterModel);
+            var encryptCourses  = EncryptModel(results);
 
-            return Task.FromResult(results);
+            return Task.FromResult(encryptCourses);
         }
     }
 }

@@ -10,6 +10,7 @@ using Frolf.Api.Mappers;
 using Frolf.Api.ModelDataControllers.Contracts;
 using Frolf.Api.Models.FrolfGroups;
 using Frolf.Api.Models.Games;
+using Frolf.Api.Models.Players;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -175,10 +176,10 @@ namespace Frolf.Api.ModelDataControllers.FrolfGroups
             commandExecutor.Execute(command);
         }
 
-        public void RemovePlayer(Guid id, Guid playerId)
+        public void RemovePlayer(RemovePlayerModel removePlayer)
         {
-            var groupToRemoveFrom   = FindEntity(id, frolfGroupQueryService);
-            var playerToRemove      = FindEntity(playerId, playerQueryService);
+            var groupToRemoveFrom   = FindEntity(removePlayer.FrolfGroupId, frolfGroupQueryService);
+            var playerToRemove      = FindEntity(removePlayer.PlayerId, playerQueryService);
 
             var command = new RemovePlayerCommand
             {
