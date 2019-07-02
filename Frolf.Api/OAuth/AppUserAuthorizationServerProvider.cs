@@ -6,6 +6,7 @@ using Security.OAuth;
 using System;
 using System.Linq;
 using System.Security.Claims;
+using System.Text;
 using System.Web.Http.Dependencies;
 
 namespace Frolf.Api.OAuth
@@ -54,14 +55,26 @@ namespace Frolf.Api.OAuth
         private AppUser FindAppUser(OAuthGrantResourceOwnerCredentialsContext context)
         {
             var appUserRepo = (IQueryService<AppUser>)serviceLocator.GetService(typeof(IQueryService<AppUser>));
+            var rsa         = (IRsaEncryptionManager)serviceLocator.GetService(typeof(IRsaEncryptionManager));
+            var rsaInfo     = (IRsaPrivateKeyInfo)serviceLocator.GetService(typeof(IRsaPrivateKeyInfo));
+
+            // decrypt login attempt
+            var encrytpedLoginName  = Convert.FromBase64String(context.UserName);
+            var loginNameBytes      = rsa.Decrypt(rsaInfo.GetRsaPrivateKeyXml(), encrytpedLoginName);
+            var loginName           = Encoding.UTF8.GetString(loginNameBytes);
 
             try
             {
                 var foundUser = appUserRepo.GetAll().SingleOrDefault(
-                    u => u.LoginName == context.UserName);
+                    u => u.LoginName == loginName);
+
+                // decrypt password attempt before comparing
+                var encrytpedPassword = Convert.FromBase64String(context.Password);
+                var passwordBytes     = rsa.Decrypt(rsaInfo.GetRsaPrivateKeyXml(), encrytpedPassword);
+                var password          = Encoding.UTF8.GetString(loginNameBytes);
 
                 var hasher         = (IHashManager)serviceLocator.GetService(typeof(IHashManager));
-                var hashedPassword = hasher.Hash(context.Password + foundUser.Salt);
+                var hashedPassword = hasher.Hash(password + foundUser.Salt);
 
                 if (foundUser.Password != hashedPassword) throw new Exception();
 
