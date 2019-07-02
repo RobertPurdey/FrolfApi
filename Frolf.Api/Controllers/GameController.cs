@@ -76,7 +76,7 @@ namespace Frolf.Api.Controllers
             return Task.FromResult(1);
         }
 
-        [HttpGet]
+        [HttpPost]
         [Route("results")]
         public Task<EncryptModel> GetGameResults([FromBody] EncryptModel id)
         {

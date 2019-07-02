@@ -70,7 +70,7 @@ namespace Frolf.Api.Controllers
             throw new NotImplementedException();
         }
 
-        [HttpGet]
+        [HttpPost]
         [Route("groupmembers")]
         public Task<EncryptModel> GetFrolfGroupMembers([FromBody] EncryptModel id)
         {

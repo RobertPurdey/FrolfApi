@@ -72,7 +72,7 @@ namespace Frolf.Api.Controllers
             throw new NotImplementedException();
         }
 
-        [HttpGet]
+        [HttpPost]
         [Route("accept")]
         public void Accept([FromBody] EncryptModel id)
         {
