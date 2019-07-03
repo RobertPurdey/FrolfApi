@@ -32,7 +32,7 @@ namespace Frolf.Api.Controllers
             return Task.FromResult(encryptCourses);
         }
 
-        public override Task<EncryptModel> GetById([FromUri] EncryptModel id)
+        public override Task<EncryptModel> GetById([FromBody] EncryptModel id)
         {
             var idModel         = DecryptModel<IdModel>(id);
             var foundCourse     = courseGroupDataController.GetById(idModel.IdKey);

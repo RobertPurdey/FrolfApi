@@ -71,7 +71,7 @@ namespace Frolf.Api.OAuth
                 // decrypt password attempt before comparing
                 var encrytpedPassword = Convert.FromBase64String(context.Password);
                 var passwordBytes     = rsa.Decrypt(rsaInfo.GetRsaPrivateKeyXml(), encrytpedPassword);
-                var password          = Encoding.UTF8.GetString(loginNameBytes);
+                var password          = Encoding.UTF8.GetString(passwordBytes);
 
                 var hasher         = (IHashManager)serviceLocator.GetService(typeof(IHashManager));
                 var hashedPassword = hasher.Hash(password + foundUser.Salt);

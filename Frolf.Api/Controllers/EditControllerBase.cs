@@ -51,7 +51,7 @@ namespace Frolf.Api.Controllers
             return result;
         }
 
-        [HttpDelete]
+        [HttpPost]
         [Route("delete")]
         public async Task Delete([FromBody] EncryptModel idModel)
         {
