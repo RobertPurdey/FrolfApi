@@ -5,6 +5,7 @@ using Frolf.Api.Models;
 using Frolf.Api.Models.Encryption;
 using Frolf.Api.Models.Games;
 using Frolf.Api.Models.HoleScores;
+using Security.Contracts;
 using System;
 using System.Threading.Tasks;
 using System.Web.Http;
@@ -18,9 +19,10 @@ namespace Frolf.Api.Controllers
 
         public GameController(
             IModelEncryptor modelEncryptor,
+            IRsaKeyInfo serverKeyInfo,
             IAppUserPublicKeyRetriever userRsaKeyRetriever,
             IGameModelDataController gameDataController)
-            : base(modelEncryptor, userRsaKeyRetriever)
+            : base(modelEncryptor, serverKeyInfo, userRsaKeyRetriever)
         {
             this.gameDataController = gameDataController;
         }
@@ -87,24 +89,26 @@ namespace Frolf.Api.Controllers
             return Task.FromResult(encryptGameResult);
         }
 
-        // todo: deal with encryption (this mainly is called from the tcp server)
-        [HttpGet]
-        [Route("{id:guid}/spectate")]
-        public Task<bool> CanSpectateGame([FromUri] Guid id)
+        [HttpPost]
+        [Route("spectate")]
+        public Task<EncryptModel> CanSpectateGame([FromBody] EncryptModel id)
         {
-            var result = gameDataController.CanSpectateGame(id);
+            var idModel         = DecryptModelFromServer<IdModel>(id);
+            var result          = gameDataController.CanSpectateGame(idModel.IdKey);
+            var encryptedResult = InternalEncryptModel(new BoolModel { Value = result });
 
-            return Task.FromResult(result);
+            return Task.FromResult(encryptedResult);
         }
 
-        // todo: deal with encryption (this mainly is called from the tcp server)
-        [HttpGet]
-        [Route("{id:guid}/announce")]
-        public Task<bool> CanAnnounceGame([FromUri] Guid id)
+        [HttpPost]
+        [Route("announce")]
+        public Task<EncryptModel> CanAnnounceGame([FromBody] EncryptModel id)
         {
-            var result = gameDataController.CanAnnounceGame(id);
+            var idModel         = DecryptModelFromServer<IdModel>(id);
+            var result          = gameDataController.CanAnnounceGame(idModel.IdKey);
+            var encryptedResult = InternalEncryptModel(new BoolModel { Value = result });
 
-            return Task.FromResult(result);
+            return Task.FromResult(encryptedResult);
         }
 
         [HttpPatch]

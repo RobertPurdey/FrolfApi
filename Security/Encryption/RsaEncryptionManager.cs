@@ -14,7 +14,9 @@ namespace Security.Encryption
             using (var rsa = new RSACryptoServiceProvider(2048))
             {
                 rsa.FromXmlString(xmlKey);
-                encryptedMsg = rsa.Encrypt(Encoding.UTF8.GetBytes(msg), false);
+
+                var bytes    = Encoding.UTF8.GetBytes(msg);
+                encryptedMsg = rsa.Encrypt(bytes, false);
             }
 
             return encryptedMsg;

@@ -2,6 +2,7 @@
 using Frolf.Api.ModelDataControllers.Users;
 using Frolf.Api.Models.Contracts;
 using Frolf.Api.Models.Encryption;
+using Security.Contracts;
 using System;
 using System.Threading.Tasks;
 using System.Web.Http;
@@ -18,8 +19,9 @@ namespace Frolf.Api.Controllers
     {
         public EditControllerBase(
             IModelEncryptor modelEncryptor,
+            IRsaKeyInfo serverKeyInfo,
             IAppUserPublicKeyRetriever userRsaKeyRetriever)
-            : base(modelEncryptor, userRsaKeyRetriever)
+            : base(modelEncryptor, serverKeyInfo, userRsaKeyRetriever)
         {
 
         }

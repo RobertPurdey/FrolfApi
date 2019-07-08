@@ -1,5 +1,6 @@
 ﻿using Domain.Entities;
 using Frolf.Api.Models.Users;
+using System;
 
 namespace Frolf.Api.ModelDataControllers.Contracts
 {
@@ -8,5 +9,6 @@ namespace Frolf.Api.ModelDataControllers.Contracts
         AppUser CreateAccount(AppUserCreationModel newUser);
         void UpdateAccount(AppUserUpdateModel updateUser);
         void SetPublicKey(PublicKeyModel keyModel);
+        AppUserModel GetExtendedUser(Guid id);
     }
 }

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Text;
 using Frolf.Api.Models.Encryption;
 using Newtonsoft.Json;
 using Security.Contracts;
@@ -9,12 +10,12 @@ namespace Frolf.Api.Encryption
     {
         private readonly IRsaEncryptionManager rsa;
         private readonly IAesEncryptionManager aes;
-        private readonly IRsaPrivateKeyInfo rsaKeyInfo;
+        private readonly IRsaKeyInfo rsaKeyInfo;
 
         public ModelEncryptor(
             IRsaEncryptionManager rsaManager,
             IAesEncryptionManager aesManager,
-            IRsaPrivateKeyInfo serverKeyInfo)
+            IRsaKeyInfo serverKeyInfo)
         {
             rsa         = rsaManager;
             aes         = aesManager;
@@ -39,10 +40,22 @@ namespace Frolf.Api.Encryption
         public TModel Decrypt<TModel>(EncryptModel model) where TModel : class
         {
             var encryptedAesKeyBytes  = Convert.FromBase64String(model.EncryptedAesKey);
-            var serverRsaPrivKey      = rsaKeyInfo.GetRsaPrivateKeyXml();
+            var serverRsaPrivKey      = rsaKeyInfo.GetPrivateKeyXml();
 
             var decrytedAesKeyBytes  = rsa.Decrypt(serverRsaPrivKey, encryptedAesKeyBytes);
             var decrytedAesKeyBase64 = Convert.ToBase64String(decrytedAesKeyBytes);
+            var decryptedJsonBytes   = aes.Decrypt(decrytedAesKeyBase64, model.EncryptedJson);
+
+            return JsonConvert.DeserializeObject<TModel>(decryptedJsonBytes);
+        }
+
+        public TModel DecryptFromServer<TModel>(EncryptModel model) where TModel : class
+        {
+            var encryptedAesKeyBytes = Convert.FromBase64String(model.EncryptedAesKey);
+            var serverRsaPrivKey     = rsaKeyInfo.GetPrivateKeyXml();
+
+            var decrytedAesKeyBytes  = rsa.Decrypt(serverRsaPrivKey, encryptedAesKeyBytes);
+            var decrytedAesKeyBase64 = Encoding.UTF8.GetString(decrytedAesKeyBytes);
             var decryptedJsonBytes   = aes.Decrypt(decrytedAesKeyBase64, model.EncryptedJson);
 
             return JsonConvert.DeserializeObject<TModel>(decryptedJsonBytes);

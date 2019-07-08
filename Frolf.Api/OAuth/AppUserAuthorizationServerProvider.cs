@@ -56,11 +56,11 @@ namespace Frolf.Api.OAuth
         {
             var appUserRepo = (IQueryService<AppUser>)serviceLocator.GetService(typeof(IQueryService<AppUser>));
             var rsa         = (IRsaEncryptionManager)serviceLocator.GetService(typeof(IRsaEncryptionManager));
-            var rsaInfo     = (IRsaPrivateKeyInfo)serviceLocator.GetService(typeof(IRsaPrivateKeyInfo));
+            var rsaInfo     = (IRsaKeyInfo)serviceLocator.GetService(typeof(IRsaKeyInfo));
 
             // decrypt login attempt
             var encrytpedLoginName  = Convert.FromBase64String(context.UserName);
-            var loginNameBytes      = rsa.Decrypt(rsaInfo.GetRsaPrivateKeyXml(), encrytpedLoginName);
+            var loginNameBytes      = rsa.Decrypt(rsaInfo.GetPrivateKeyXml(), encrytpedLoginName);
             var loginName           = Encoding.UTF8.GetString(loginNameBytes);
 
             try
@@ -70,7 +70,7 @@ namespace Frolf.Api.OAuth
 
                 // decrypt password attempt before comparing
                 var encrytpedPassword = Convert.FromBase64String(context.Password);
-                var passwordBytes     = rsa.Decrypt(rsaInfo.GetRsaPrivateKeyXml(), encrytpedPassword);
+                var passwordBytes     = rsa.Decrypt(rsaInfo.GetPrivateKeyXml(), encrytpedPassword);
                 var password          = Encoding.UTF8.GetString(passwordBytes);
 
                 var hasher         = (IHashManager)serviceLocator.GetService(typeof(IHashManager));

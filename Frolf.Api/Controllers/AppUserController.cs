@@ -5,6 +5,7 @@ using Frolf.Api.ModelDataControllers.Users;
 using Frolf.Api.Models;
 using Frolf.Api.Models.Encryption;
 using Frolf.Api.Models.Users;
+using Security.Contracts;
 using System;
 using System.Threading.Tasks;
 using System.Web.Http;
@@ -18,9 +19,10 @@ namespace Frolf.Api.Controllers
 
         public AppUserController(
             IModelEncryptor modelEncryptor,
+            IRsaKeyInfo serverKeyInfo,
             IAppUserPublicKeyRetriever userRsaKeyRetriever,
             IAppUserModelDataController appUserDataController)
-            : base(modelEncryptor, userRsaKeyRetriever)
+            : base(modelEncryptor, serverKeyInfo, userRsaKeyRetriever)
         {
             appUserModelDataController = appUserDataController;
         }
@@ -42,6 +44,16 @@ namespace Frolf.Api.Controllers
         {
             var foundAppUser   = appUserModelDataController.GetById(UserExtensions.GetCurrentUserId());
             var encryptedModel = EncryptModel(foundAppUser);
+
+            return Task.FromResult(encryptedModel);
+        }
+
+        [HttpGet]
+        [Route("info/internal")]
+        public Task<EncryptModel> GetCurrentUserInfoInternal()
+        {
+            var foundAppUser   = appUserModelDataController.GetExtendedUser(UserExtensions.GetCurrentUserId());
+            var encryptedModel = InternalEncryptModel(foundAppUser);
 
             return Task.FromResult(encryptedModel);
         }

@@ -2,9 +2,9 @@
 
 namespace Security.Encryption
 {
-    public class RsaPrivateKeyInfo : IRsaPrivateKeyInfo
+    public class RsaKeyInfo : IRsaKeyInfo
     {
-        public string GetRsaPrivateKeyXml()
+        public string GetPrivateKeyXml()
         {
             return  "<RSAKeyValue>"
                 +       "<Modulus>9zZBzXhq2GE2iDhwrjtI4goUARU2d2/R0TGZPiesbn6wOI7uNPePEhd3kaev8sa0Kb79S6oJdrD/0uf7FjUgEB6qtfC/gK3q0HofEFMzyAKyoJSqxWMd3s4bdBFYu9cWttHhNiwK0WbYjJMmUUUkRjkIVhPx6M6cQbKz45bEfl+OZUpC/JMMlUuIgQ4gqecKqdeV+de3Pk+hdTu5YgS0fPAu3WxiNBbFJ9l1rCyNkYDKdIH8GWGXon3Y70MT0P1vai+/VoKx9L2X3L2Dhl31zf1LTK7l1N/WIBYld/InA7ZtqLb/xJdWiNnoMUwFcoNCSCr3PEeMm9gk+g4bbWJfjQ==</Modulus>"
@@ -16,6 +16,14 @@ namespace Security.Encryption
                 +       "<InverseQ>rcVwRlpUIJtu1148IHE7R/HqgJOJrYZ0JZez85a8OrKhpr+pZdCnlaci7hellMDpDY0QelQgW+3NR6jzuQwhAbfw5s7x1nzskpmS8/2zSkFnVK9/1bXvhWupqloR+25VteTMWQ9UgyAU1mdFByEO9X9sXiOuLkUQddXe9gMTXRA=</InverseQ>"
                 +       "<D>zoPI3LjnqPMs9wcPOr3T2ODKbU0nPwduo+9nMQE7juLOm7DrVdwo7NglzsvitFFCWE1wlDDrzvd1/t5EZvziWBUGTw9bK0gejSI3qQ+YhlGan4MSVerDHUnYrVGAawr3sqoKFZMdRmlAJc8Xh3TXJMKoMCBhSjavWkLK/CkK5PWSRWw2CT6FOQZKjEOjs+i3ajhi3u3sbxnV5CS3IG1he/gS9p0lSVBe/o0t17jUXhw09PtEtT+P4vbl1qDkk6gCn6B8D6MPIcgR+6IR14PWVLud3LG5YylwEq/XMa7Jun/ndW78z3Vp1R7fspXhiDrprEivHSUBTpkIHXLRhEtCkQ==</D>"
                 +   "</RSAKeyValue>";
+        }
+
+        public string GetPublicKeyXml()
+        {
+            return "<RSAKeyValue>"
+                +      "<Modulus>9zZBzXhq2GE2iDhwrjtI4goUARU2d2/R0TGZPiesbn6wOI7uNPePEhd3kaev8sa0Kb79S6oJdrD/0uf7FjUgEB6qtfC/gK3q0HofEFMzyAKyoJSqxWMd3s4bdBFYu9cWttHhNiwK0WbYjJMmUUUkRjkIVhPx6M6cQbKz45bEfl+OZUpC/JMMlUuIgQ4gqecKqdeV+de3Pk+hdTu5YgS0fPAu3WxiNBbFJ9l1rCyNkYDKdIH8GWGXon3Y70MT0P1vai+/VoKx9L2X3L2Dhl31zf1LTK7l1N/WIBYld/InA7ZtqLb/xJdWiNnoMUwFcoNCSCr3PEeMm9gk+g4bbWJfjQ==</Modulus>"
+                +      "<Exponent>AQAB</Exponent>"
+                +  "</RSAKeyValue>";
         }
     }
 }

@@ -70,6 +70,19 @@ namespace Frolf.Api.ModelDataControllers.Users
             return model;
         }
 
+        public AppUserModel GetExtendedUser(Guid id)
+        {
+            var entity = FindAppUser(id);
+            var model  = new AppUserModel();
+
+            appUserMapper.MapToApiModel(model, entity);
+
+            // extended data
+            model.RsaPubXml = entity.XmlPublicKey;
+
+            return model;
+        }
+
         public void Insert(AppUserModel newModel)
         {
             throw new NotImplementedException();

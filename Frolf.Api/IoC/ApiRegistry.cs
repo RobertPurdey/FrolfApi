@@ -51,7 +51,7 @@ namespace Frolf.Api.IoC
             For<IHashManager>().Use<HashManager>();
             For<IAesEncryptionManager>().Use<AesEncryptionManager>();
             For<IRsaEncryptionManager>().Use<RsaEncryptionManager>();
-            For<IRsaPrivateKeyInfo>().Use<RsaPrivateKeyInfo>();
+            For<IRsaKeyInfo>().Use<RsaKeyInfo>();
             For<IModelEncryptor>().Use<ModelEncryptor>();
 
             // Key retriever

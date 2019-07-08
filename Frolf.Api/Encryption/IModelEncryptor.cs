@@ -6,5 +6,6 @@ namespace Frolf.Api.Encryption
     {
         EncryptModel Encrypt<T>(string xmlClientRsaKey, T model) where T : class;
         T Decrypt<T>(EncryptModel model) where T : class;
+        T DecryptFromServer<T>(EncryptModel model) where T : class;
     }
 }

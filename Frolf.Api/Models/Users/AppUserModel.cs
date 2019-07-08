@@ -10,6 +10,7 @@ namespace Frolf.Api.Models.Users
         public string LoginName { get; set; }
         public string Handle { get; set; }
         public string FriendCode { get; set; }
+        public string RsaPubXml { get; set; }
 
         [JsonIgnore]
         public string Password { get; set; }
