@@ -5,16 +5,11 @@ using System.Linq;
 
 namespace Application.Command.AppUsers.Conditions
 {
-    // todo: remove if not needed
-
-    /// <summary>
-    /// Determines if the App User exists
-    /// </summary>
-    public class AppUserExistsCondition : Condition<AppUser>
+    public class DoesLoginNameExist : Condition<AppUser>
     {
         private readonly IQueryService<AppUser> appUserService;
 
-        public AppUserExistsCondition(IQueryService<AppUser> appUserQueryService)
+        public DoesLoginNameExist(IQueryService<AppUser> appUserQueryService)
         {
             appUserService = appUserQueryService;
         }
@@ -23,7 +18,7 @@ namespace Application.Command.AppUsers.Conditions
         {
             return appUserService
                 .GetAll()
-                .Any(g => g.EntityKey == entity.EntityKey);
+                .Any(g => g.LoginName == entity.LoginName);
         }
     }
 }

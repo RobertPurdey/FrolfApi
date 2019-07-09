@@ -1,22 +1,20 @@
 ﻿using Domain.Commands;
 using Domain.Entities;
-using System.Linq;
 
 namespace Application.Command.FrolfGroups.Conditions
 {
     /// <summary>
-    /// Determines if the group has any invites
+    /// Determines if the group is null
     /// </summary>
-    public class FrolfGroupHasInvitesCondition : Condition<FrolfGroup>
+    public class IsFrolfGroupNull : Condition<FrolfGroup>
     {
-        public FrolfGroupHasInvitesCondition()
+        public IsFrolfGroupNull()
         {
-
         }
 
         public override bool Validate(FrolfGroup entity)
         {
-            return entity.Invites.Any();
+            return entity == null;
         }
     }
 }

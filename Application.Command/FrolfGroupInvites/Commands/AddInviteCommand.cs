@@ -53,21 +53,21 @@ namespace Application.Command.FrolfGroupInvites.Commands
 
         private void AssertInviterIsCurrentUser(FrolfGroupInvite invite)
         {
-            var isValid = new IsInviterCurrentUserCondition().Validate(invite);
+            var isValid = new IsInviterCurrentUser().Validate(invite);
 
             Assert(isValid, "The inviter must be the current user.");
         }
 
         private void AssertInviterHasPrivileges(FrolfGroup frolfGroup, Guid inviterId)
         {
-            var isValid = new CanUserInviteCondition(inviterId).Validate(frolfGroup);
+            var isValid = new CanUserInvite(inviterId).Validate(frolfGroup);
 
             Assert(isValid, "Inviter must be an administrator in the group being invited to.");
         }
 
         private void AssertInviteeIsntInGroup(FrolfGroup frolfGroup, Guid InviteeId)
         {
-            var isValid = !new IsUserAGroupMemberCondition(InviteeId).Validate(frolfGroup);
+            var isValid = !new IsUserAGroupMember(InviteeId).Validate(frolfGroup);
 
             Assert(isValid, "User being invited is already in the group.");
 
@@ -75,7 +75,7 @@ namespace Application.Command.FrolfGroupInvites.Commands
 
         private void AssertFrolfGroupExists(FrolfGroup frolfGroup)
         {
-            var isValid = new FrolfGroupExistsCondition().Validate(frolfGroup);
+            var isValid = !new IsFrolfGroupNull().Validate(frolfGroup);
 
             Assert(isValid, "Frolf group being invited to does not exist.");
         }
@@ -88,7 +88,7 @@ namespace Application.Command.FrolfGroupInvites.Commands
                          &&  fg.InviteeId    == invite.InviteeId)
                 .SingleOrDefault();
 
-            var isValid = !new InviteExistsCondition().Validate(frolfGroupInvite);
+            var isValid = new IsInviteNull().Validate(frolfGroupInvite);
 
             Assert(isValid, "Invite has already been sent to the user.");
         }

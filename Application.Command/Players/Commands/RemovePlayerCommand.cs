@@ -43,7 +43,7 @@ namespace Application.Command.Players.Commands
 
         private void AssertPlayerIsInGroup(RemovePlayerCommand command)
         {
-            var isValid = new IsUserAGroupMemberCondition(command.Player.AppUserId).Validate(command.FrolfGroup);
+            var isValid = new IsUserAGroupMember(command.Player.AppUserId).Validate(command.FrolfGroup);
 
             Assert(isValid, "Player cannot be removed if they are not in the group.");
         }

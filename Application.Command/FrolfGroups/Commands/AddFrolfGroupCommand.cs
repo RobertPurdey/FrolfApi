@@ -28,14 +28,14 @@ namespace Application.Command.FrolfGroups.Commands
 
         private void AssertHasNoInvites(AddFrolfGroupCommand command)
         {
-            var isValid = !new FrolfGroupHasInvitesCondition().Validate(command.newEntity);
+            var isValid = !new DoesFrolfGroupHaveInvites().Validate(command.newEntity);
 
             Assert(isValid, "Cannot add a new frolf group if it contains invites");
         }
 
         private void AssertOnlyUserIsCreator(AddFrolfGroupCommand command)
         {
-            var isValid = new FrolfGroupOnlyContainsCurrentUser().Validate(command.newEntity);
+            var isValid = new DoesFrolfGroupOnlyContainCurrentUser().Validate(command.newEntity);
 
             Assert(isValid, "The player creating the group must be in the group being created and be the only player added.");
         }

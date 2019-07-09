@@ -146,7 +146,7 @@ namespace Frolf.Api.ModelDataControllers.Games
             var currentUserId   = UserExtensions.GetCurrentUserId();
             var game            = FindEntity(gameId, gameQueryService);
             var user            = FindEntity(currentUserId, userQueryService);
-            var canSpectate     = new IsUserAGroupMemberCondition(user.EntityKey).Validate(game.FrolfGroup);
+            var canSpectate     = new IsUserAGroupMember(user.EntityKey).Validate(game.FrolfGroup);
 
             return canSpectate;
         }

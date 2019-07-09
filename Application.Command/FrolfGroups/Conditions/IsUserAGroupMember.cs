@@ -5,11 +5,11 @@ using System.Linq;
 
 namespace Application.Command.FrolfGroups.Conditions
 {
-    public class IsUserAGroupMemberCondition : Condition<FrolfGroup>
+    public class IsUserAGroupMember : Condition<FrolfGroup>
     {
         private readonly Guid userId;
 
-        public IsUserAGroupMemberCondition(Guid userId)
+        public IsUserAGroupMember(Guid userId)
         {
             this.userId = userId;
         }

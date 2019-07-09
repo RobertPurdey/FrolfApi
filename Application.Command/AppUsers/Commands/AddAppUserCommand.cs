@@ -31,7 +31,7 @@ namespace Application.Command.AppUsers.Commands
 
         private void AssertFriendCodeUnique(AddAppUserCommand command)
         {
-            var isValid = !new FriendCodeExistsCondition(appUserQuery).Validate(command.NewUser);
+            var isValid = !new DoesFriendCodeExist(appUserQuery).Validate(command.NewUser);
 
             // Vague reason for failure to conceal giving away sensative information
             Assert(isValid, "Cannot create user");
@@ -39,7 +39,7 @@ namespace Application.Command.AppUsers.Commands
 
         private void AssertLoginNameUnique(AddAppUserCommand command)
         {
-            var isValid = !new LoginNameExistsCondition(appUserQuery).Validate(command.NewUser);
+            var isValid = !new DoesLoginNameExist(appUserQuery).Validate(command.NewUser);
 
             // Vague for failure to conceal giving away sensative information
             Assert(isValid, "Login name exists.");

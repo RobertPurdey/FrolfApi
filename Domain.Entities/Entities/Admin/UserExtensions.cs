@@ -48,7 +48,7 @@ namespace Domain.Entities
             }
         }
 
-        public static void ImpersonateAdmin(Guid userId)
+        public static void ImpersonateUser(Guid userId)
         {
             SetCurrentUser(new AppUser
             {

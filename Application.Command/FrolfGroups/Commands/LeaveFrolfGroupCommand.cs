@@ -44,7 +44,7 @@ namespace Application.Command.FrolfGroups.Commands
 
         private void AssertPlayerIsInGroup(LeaveFrolfGroupCommand command)
         {
-            var isValid = new IsUserAGroupMemberCondition(command.Player.AppUserId).Validate(command.FrolfGroup);
+            var isValid = new IsUserAGroupMember(command.Player.AppUserId).Validate(command.FrolfGroup);
 
             Assert(isValid, "Player cannot leave the group if its not in the group.");
         }

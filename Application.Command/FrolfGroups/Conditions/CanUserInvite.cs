@@ -6,15 +6,19 @@ using System.Linq;
 namespace Application.Command.FrolfGroups.Conditions
 {
     /// <summary>
-    /// Determines if the user inviting has a high enough role to do so.
+    /// Determines if the user can invite to the frolf group.
+    /// 
+    /// Rules:
+    ///     - Must be in the group
+    ///     - Must be an administrator
     /// </summary>
-    public class CanUserInviteCondition : Condition<FrolfGroup>
+    public class CanUserInvite : Condition<FrolfGroup>
     {
-        private readonly Guid inviterId;
+        private readonly Guid appuserId;
 
-        public CanUserInviteCondition(Guid inviterId)
+        public CanUserInvite(Guid appuserId)
         {
-            this.inviterId = inviterId;
+            this.appuserId = appuserId;
         }
 
         public override bool Validate(FrolfGroup entity)
@@ -25,7 +29,7 @@ namespace Application.Command.FrolfGroups.Conditions
         private bool IsInviterGroupAdmin(FrolfGroup group)
         {
             return group.Members.Any(
-                p => p.AppUserId == inviterId
+                p => p.AppUserId == appuserId
                   && p.GroupRole == GroupRole.Administrator);
         }
     }

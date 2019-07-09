@@ -32,7 +32,7 @@ namespace Application.Command.FrolfGroupInvites.Commands
         public override void OnPreHandleCommand(DeleteInviteCommand command)
         {
             Assert(
-                new IsInviteeCurrentUserCondition().Validate(command.Invite),
+                new IsInviteeCurrentUser().Validate(command.Invite),
                 "Users can only accept their own invites.");
         }
     }

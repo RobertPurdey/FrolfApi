@@ -32,7 +32,7 @@ namespace Application.Command.Games
 
         private void AssertCurrentUserInGroup(AddGameCommand command)
         {
-            var isValid = new IsUserAGroupMemberCondition( UserExtensions.GetCurrentUserId() )
+            var isValid = new IsUserAGroupMember( UserExtensions.GetCurrentUserId() )
                 .Validate( command.NewGame.FrolfGroup );
 
             Assert(isValid, "Cannot create a game for a group you are not a part of.");

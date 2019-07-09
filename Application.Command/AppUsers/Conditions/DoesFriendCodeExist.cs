@@ -5,11 +5,11 @@ using System.Linq;
 
 namespace Application.Command.AppUsers.Conditions
 {
-    public class LoginNameExistsCondition : Condition<AppUser>
+    public class DoesFriendCodeExist : Condition<AppUser>
     {
         private readonly IQueryService<AppUser> appUserService;
 
-        public LoginNameExistsCondition(IQueryService<AppUser> appUserQueryService)
+        public DoesFriendCodeExist(IQueryService<AppUser> appUserQueryService)
         {
             appUserService = appUserQueryService;
         }
@@ -18,7 +18,7 @@ namespace Application.Command.AppUsers.Conditions
         {
             return appUserService
                 .GetAll()
-                .Any(g => g.LoginName == entity.LoginName);
+                .Any(g => g.FriendCode == entity.FriendCode);
         }
     }
 }
