@@ -83,10 +83,7 @@ namespace Domain.Entities.Entities
             modelBuilder.Configurations.Add(new HoleMap());
             modelBuilder.Configurations.Add(new HoleScoreMap());
             modelBuilder.Configurations.Add(new RoundMap());
-            modelBuilder.Configurations.Add(new GameMap());
-
-            
-            
+            modelBuilder.Configurations.Add(new GameMap());          
         }
     }
 }
