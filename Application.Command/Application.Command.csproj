@@ -65,13 +65,13 @@
     <Compile Include="FrolfGroups\Conditions\DoesFrolfGroupOnlyContainCurrentUser.cs" />
     <Compile Include="FrolfGroups\Conditions\IsCurrentUserGroupCreator.cs" />
     <Compile Include="FrolfGroups\Conditions\IsUserAGroupMember.cs" />
-    <Compile Include="Games\AddGameCommand.cs" />
-    <Compile Include="Games\CompleteGameCommand.cs" />
+    <Compile Include="Games\Commands\AddGameCommand.cs" />
+    <Compile Include="Games\Commands\CompleteGameCommand.cs" />
     <Compile Include="Games\Conditions\IsGameMembersOnly.cs" />
     <Compile Include="Games\Conditions\IsGameCourseInGroup.cs" />
     <Compile Include="Games\Conditions\IsGameCreatedByCurrentUser.cs" />
     <Compile Include="Games\Conditions\IsGameInProgress.cs" />
-    <Compile Include="HoleScores\BatchUpdateHoleScoreCommand.cs" />
+    <Compile Include="HoleScores\Commands\BatchUpdateHoleScoreCommand.cs" />
     <Compile Include="HoleScores\Conditions\AreHoleScoresForSameGame.cs" />
     <Compile Include="Players\Commands\RemovePlayerCommand.cs" />
     <Compile Include="Players\Conditions\IsPlayerCreatorOfGroup.cs" />

@@ -1,7 +1,9 @@
 ﻿using Application.Command.FrolfGroups.Conditions;
 using Application.Command.Games;
+using Application.Command.Games.Commands;
 using Application.Command.Games.Conditions;
 using Application.Command.HoleScores;
+using Application.Command.HoleScores.Commands;
 using Application.Query.Services.Games;
 using Domain.Commands.Contracts;
 using Domain.Entities;

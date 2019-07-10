@@ -5,7 +5,7 @@ using Domain.Commands.Contracts;
 using Domain.Entities;
 using Domain.Query.Contracts;
 
-namespace Application.Command.Games
+namespace Application.Command.Games.Commands
 {
     public class AddGameCommand : ICommand
     {

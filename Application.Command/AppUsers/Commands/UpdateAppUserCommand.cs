@@ -36,14 +36,14 @@ namespace Application.Command.AppUsers.Commands
 
     public class UpdateAppUserCommandHandler : CommandHandler<UpdateAppUserCommand>
     {
-        private readonly IQueryService<Player> playerGroupQuery;
+        private readonly IQueryService<Player> playerQuery;
 
         public UpdateAppUserCommandHandler(
             IWorkUnit workUnit,
-            IQueryService<Player> playerGroupQueryService)
+            IQueryService<Player> playerQueryService)
             : base(workUnit)
         {
-            playerGroupQuery = playerGroupQueryService;
+            playerQuery = playerQueryService;
         }
 
         protected override void OnHandleCommand(UpdateAppUserCommand command)
@@ -55,7 +55,7 @@ namespace Application.Command.AppUsers.Commands
         private void UpdateOwnPlayerHandles(AppUser user)
         {
             var playerRepo  = GetRepository<Player>();
-            var players     = playerGroupQuery.GetAll().Where(e => e.AppUserId == user.EntityKey);
+            var players     = playerQuery.GetAll().Where(e => e.AppUserId == user.EntityKey);
 
             foreach (var player in players)
             {

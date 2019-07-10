@@ -8,7 +8,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Application.Command.HoleScores
+namespace Application.Command.HoleScores.Commands
 {
     public class BatchUpdateHoleScoreCommand : ICommand
     {
