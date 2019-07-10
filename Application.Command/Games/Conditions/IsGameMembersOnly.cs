@@ -4,9 +4,9 @@ using System.Linq;
 
 namespace Application.Command.Games.Conditions
 {
-    public class GameOnlyContainsGroupMembers : Condition<Game>
+    public class IsGameMembersOnly : Condition<Game>
     {
-        public GameOnlyContainsGroupMembers()
+        public IsGameMembersOnly()
         {
 
         }

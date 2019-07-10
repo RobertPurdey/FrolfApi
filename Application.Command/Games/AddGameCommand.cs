@@ -40,7 +40,7 @@ namespace Application.Command.Games
 
         private void AssertAllPlayersAreGroupMembers(AddGameCommand command)
         {
-            var isValid = new GameOnlyContainsGroupMembers().Validate(command.NewGame);
+            var isValid = new IsGameMembersOnly().Validate(command.NewGame);
 
             Assert(isValid, "Cannot create a game when some members are not in the group.");
         }

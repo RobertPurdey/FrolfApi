@@ -136,7 +136,7 @@ namespace Frolf.Api.ModelDataControllers.Games
         {
             var currentUserId   = UserExtensions.GetCurrentUserId();
             var game            = FindEntity(gameId, gameQueryService);           
-            var canAnnounce     = new IsGameCreatedByCurrentUserCondition().Validate(game);
+            var canAnnounce     = new IsGameCreatedByCurrentUser().Validate(game);
 
             return canAnnounce;
         }

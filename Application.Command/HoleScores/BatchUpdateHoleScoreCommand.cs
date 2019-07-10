@@ -45,7 +45,7 @@ namespace Application.Command.HoleScores
 
         private void AssertOnlyOneGamesHolesUpdated(BatchUpdateHoleScoreCommand command)
         {
-            var isOnlyOneGame = new AreHoleScoresForSameGameCondition().Validate(command.HolesToUpdate);
+            var isOnlyOneGame = new AreHoleScoresForSameGame().Validate(command.HolesToUpdate);
 
             Assert(
                 isOnlyOneGame,
@@ -58,7 +58,7 @@ namespace Application.Command.HoleScores
                 .Where(g => g.EntityKey == command.GameId)
                 .FirstOrDefault();
 
-            var isGameOwnerCurrentUser = new IsGameCreatedByCurrentUserCondition().Validate(game);
+            var isGameOwnerCurrentUser = new IsGameCreatedByCurrentUser().Validate(game);
 
             Assert(isGameOwnerCurrentUser, "Only creator can score a game");
         }

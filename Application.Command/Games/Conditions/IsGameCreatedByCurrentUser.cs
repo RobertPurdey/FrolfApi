@@ -3,16 +3,16 @@ using Domain.Entities;
 
 namespace Application.Command.Games.Conditions
 {
-    public class IsGameCreatedByCurrentUserCondition : Condition<Game>
+    public class IsGameCreatedByCurrentUser : Condition<Game>
     {
-        public IsGameCreatedByCurrentUserCondition()
+        public IsGameCreatedByCurrentUser()
         {
 
         }
 
         public override bool Validate(Game entity)
         {
-            return entity != null
+            return entity           != null
                 && entity.CreatedBy == UserExtensions.GetCurrentUserId();
         }
     }

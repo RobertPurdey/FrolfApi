@@ -72,6 +72,14 @@
     <Compile Include="FrolfGroups\Conditions\IsCurrentUserGroupCreatorTests.cs" />
     <Compile Include="FrolfGroups\Conditions\IsFrolfGroupNullTests.cs" />
     <Compile Include="FrolfGroups\Conditions\IsUserAGroupMemberTests.cs" />
+    <Compile Include="Games\Conditions\IsGameCourseInGroupTests.cs" />
+    <Compile Include="Games\Conditions\IsGameCreatedByCurrentUserTests.cs" />
+    <Compile Include="Games\Conditions\IsGameInProgressTests.cs" />
+    <Compile Include="Games\Conditions\IsGameMembersOnlyTests.cs" />
+    <Compile Include="HoleScores\Conditions\AreHoleScoresForSameGameTests.cs" />
+    <Compile Include="Players\Conditions\IsPlayerCreatorOfGroupTests.cs" />
+    <Compile Include="Players\Conditions\IsPlayerCurrentUserTests.cs" />
+    <Compile Include="Players\Conditions\IsPlayerPartOfGameInProgressTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
