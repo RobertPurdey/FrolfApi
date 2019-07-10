@@ -1,8 +1,9 @@
-﻿using Domain.Commands;
+﻿using Application.Command.Courses.Conditions;
+using Application.Command.FrolfGroups.Conditions;
+using Domain.Commands;
 using Domain.Commands.Contracts;
 using Domain.Entities;
 using Domain.Query.Contracts;
-using System.Collections.Generic;
 using System.Linq;
 
 namespace Application.Command.Courses.Commands
@@ -35,69 +36,56 @@ namespace Application.Command.Courses.Commands
             AssertCurrentUserInFrolfGroup(course);
             AssertCourseHolesSet(course);
             AssertCourseHolePars(course);
-            AssertCourseHoleTeeNoDuplicate(course);
+            AssertCourseHoleOrderUnique(course);
             AssertCourseHoleTeeSequence(course);
         }
 
         private void AssertFrolfGroupExists(Course course)
         {
-            var frolfGroupExists = frolfGroupQuery.GetAll().Any(e => e.EntityKey == course.FrolfGroupId);
+            var foundFrolfGroup = frolfGroupQuery
+                .GetAll()
+                .SingleOrDefault(e => e.EntityKey == course.FrolfGroupId);
 
-            Assert(frolfGroupExists, "Frolf group does not exist");
+            var isValid = !new IsFrolfGroupNull().Validate(foundFrolfGroup);
+
+            Assert(isValid, "Frolf group does not exist");
         }
 
         private void AssertCurrentUserInFrolfGroup(Course course)
         {
-            var frolfGroup = frolfGroupQuery.GetAll().SingleOrDefault(e => e.EntityKey == course.FrolfGroupId);
-            var currentUserId = UserExtensions.GetCurrentUserId();
+            var frolfGroup      = frolfGroupQuery.GetAll().SingleOrDefault(e => e.EntityKey == course.FrolfGroupId);
+            var currentUserId   = UserExtensions.GetCurrentUserId();
 
-            var userInGroup = frolfGroup != null && frolfGroup.Members.Any(m => m.AppUserId == currentUserId);
+            var isValid = new IsUserAGroupMember(currentUserId).Validate(frolfGroup);
 
-            Assert(userInGroup, "Frolf group does not exist");
+            Assert(isValid, "User not a member");
         }
 
         private void AssertCourseHolesSet(Course course)
         {
-            Assert(course.Holes != null, "Course holes must be set");
+            var isValid = !new AreCourseHolesNull().Validate(course);
+
+            Assert(isValid, "Course holes must be set");
         }
 
         private void AssertCourseHolePars(Course course)
         {
-            var parsAboveOne = !course.Holes.Any(h => h.Par < 1);
-            Assert(parsAboveOne, "Course hole pars must be more than 1");
+            var isValid = new DoCourseHolesMeetParRequirement().Validate(course);
+
+            Assert(isValid, "Course hole pars must be more than 1");
         }
 
-        private void AssertCourseHoleTeeNoDuplicate(Course course)
+        private void AssertCourseHoleOrderUnique(Course course)
         {
-            var holeOrders = course.Holes.Select(h => h.Order);
-            var uniqueOrders = holeOrders.Distinct().OrderBy(e => e);
-
-            var duplicateOrders = holeOrders.Count() != uniqueOrders.Count();
+            var isValid = new IsCourseHolesOrderUnique().Validate(course);
 
 
-            Assert(!duplicateOrders, "No duplicate hole orders");
+            Assert(isValid, "No duplicate hole orders");
         }
 
         private void AssertCourseHoleTeeSequence(Course course)
         {
-            var uniqueTees = course.Holes.Distinct().OrderBy(e => e.Order).Select(e => e.Order);
-            var expectedTees = new HashSet<int>();
-
-            var expectedTee = 1;
-            foreach (var order in uniqueTees)
-            {
-                expectedTees.Add(expectedTee++);
-            }
-
-            var s = new List<string>();
-            var x = new List<string>();
-
-            var a = s.SequenceEqual(x);
-
-            var startsAtOne = uniqueTees.First() == 1;
-            var sequenceMatches = uniqueTees.SequenceEqual(expectedTees.AsEnumerable());
-
-            var isValid = startsAtOne && sequenceMatches;
+            var isValid = new IsCourseHolesOrderSequenced().Validate(course);
 
             Assert(isValid, "The sequence is out of place");
         }

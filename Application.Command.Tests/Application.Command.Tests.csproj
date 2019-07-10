@@ -69,6 +69,14 @@
     <Compile Include="AppUsers\Conditions\DoesFriendCodeExistTests.cs" />
     <Compile Include="AppUsers\Conditions\DoesLoginNameExistTests.cs" />
     <Compile Include="AppUsers\Conditions\IsAppUserCurrentUserTests.cs" />
+    <Compile Include="Courses\Commands\AddCourseCommandHandlerTests.cs" />
+    <Compile Include="Courses\Commands\AddCourseCommandValidationTests.cs" />
+    <Compile Include="Courses\Commands\UpdateCourseCommandHandlerTests.cs" />
+    <Compile Include="Courses\Commands\UpdateCourseCommandValidationTests.cs" />
+    <Compile Include="Courses\Conditions\AreCourseHolesNullTests.cs" />
+    <Compile Include="Courses\Conditions\DoCourseHolesMeetParRequirementTests.cs" />
+    <Compile Include="Courses\Conditions\IsCourseHolesOrderSequencedTests.cs" />
+    <Compile Include="Courses\Conditions\IsCourseHolesOrderUniqueTests.cs" />
     <Compile Include="FrolfGroupInvites\Conditions\IsInviteeCurrentUserTests.cs" />
     <Compile Include="FrolfGroupInvites\Conditions\IsInviteNullTests.cs" />
     <Compile Include="FrolfGroupInvites\Conditions\IsInviterCurrentUserTests.cs" />
