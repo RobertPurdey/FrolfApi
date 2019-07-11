@@ -77,6 +77,14 @@
     <Compile Include="Courses\Conditions\DoCourseHolesMeetParRequirementTests.cs" />
     <Compile Include="Courses\Conditions\IsCourseHolesOrderSequencedTests.cs" />
     <Compile Include="Courses\Conditions\IsCourseHolesOrderUniqueTests.cs" />
+    <Compile Include="FrolfGroupInvites\Commands\AcceptInviteCommandHandlerTests.cs" />
+    <Compile Include="FrolfGroupInvites\Commands\AcceptInviteCommandTests.cs" />
+    <Compile Include="FrolfGroupInvites\Commands\AcceptInviteCommandValidationTests.cs" />
+    <Compile Include="FrolfGroupInvites\Commands\AddInviteCommandHandlerTests.cs" />
+    <Compile Include="FrolfGroupInvites\Commands\AddInviteCommandValidationTests.cs" />
+    <Compile Include="FrolfGroupInvites\Commands\DeleteInviteCommandHandlerTests.cs" />
+    <Compile Include="FrolfGroupInvites\Commands\DeleteInviteCommandTests.cs" />
+    <Compile Include="FrolfGroupInvites\Commands\DeleteInviteCommandValidationTests.cs" />
     <Compile Include="FrolfGroupInvites\Conditions\IsInviteeCurrentUserTests.cs" />
     <Compile Include="FrolfGroupInvites\Conditions\IsInviteNullTests.cs" />
     <Compile Include="FrolfGroupInvites\Conditions\IsInviterCurrentUserTests.cs" />
