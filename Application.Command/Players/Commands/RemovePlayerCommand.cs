@@ -16,14 +16,10 @@ namespace Application.Command.Players.Commands
 
     public class RemovePlayerCommandValidation : CommandPreHandler<RemovePlayerCommand>
     {
-        private readonly IQueryService<FrolfGroup> frolfGroupQuery;
-
-        public RemovePlayerCommandValidation(
-            IWorkUnit workUnit,
-            IQueryService<FrolfGroup> frolfGroupQuery)
+        public RemovePlayerCommandValidation(IWorkUnit workUnit)
             : base(workUnit)
         {
-            this.frolfGroupQuery = frolfGroupQuery;
+
         }
 
         public override void OnPreHandleCommand(RemovePlayerCommand command)
@@ -65,56 +61,15 @@ namespace Application.Command.Players.Commands
 
     public class RemovePlayerCommandHandler : CommandHandler<RemovePlayerCommand>
     {
-        private readonly IQueryService<HoleScore> holeScoreQuery;
-        private readonly IQueryService<Round> roundQuery;
-
-        public RemovePlayerCommandHandler(
-            IWorkUnit workUnit,
-            IQueryService<HoleScore> holeScoreQuery,
-            IQueryService<Round> roundQuery)
+        public RemovePlayerCommandHandler(IWorkUnit workUnit)
             : base(workUnit)
         {
-            this.holeScoreQuery = holeScoreQuery;
-            this.roundQuery     = roundQuery;
+
         }
 
         protected override void OnHandleCommand(RemovePlayerCommand command)
         {
-            // Remove all associations the player has with the frolf group before removing the player
-            RemoveHoleScores(command);
-            RemoveRounds(command);
-
             GetRepository<Player>().Remove(command.Player);
-
-        }
-
-        /// <summary>
-        /// Remove hole scores associated with the player for the group the playe is being removed from.
-        /// </summary>
-        /// <param name="command"></param>
-        private void RemoveHoleScores(RemovePlayerCommand command)
-        {
-            var holeScoreToRemove = holeScoreQuery
-                .GetAll()
-                .Where(
-                    hs => hs.Game.FrolfGroupId  == command.FrolfGroup.EntityKey
-                       && hs.PlayerId           == command.Player.EntityKey);
-
-            var holeScoreRepo = GetRepository<HoleScore>();
-
-            foreach (var holeScore in holeScoreToRemove)
-            {
-                holeScoreRepo.Remove(holeScore);
-            }
-        }
-
-        private void RemoveRounds(RemovePlayerCommand command)
-        {
-            var roundsToRemove = roundQuery
-                .GetAll()
-                .Where(
-                    r => r.Game.FrolfGroupId == command.FrolfGroup.EntityKey
-                      && r.PlayerId          == command.Player.EntityKey);
         }
     }
 }

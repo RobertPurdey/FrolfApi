@@ -38,6 +38,8 @@ namespace Application.Command.HoleScores.Commands
         {
             // Only need one match to continue validation
             Assert(command.HolesToUpdate.Any(hs => hs.GameId == command.GameId), "game id doesn't match hole score game id");
+            Assert(!command.HolesToUpdate.Any(hs => hs.Strokes < 1), "Can't have less than 1 stroke for a hole");
+
 
             AssertOnlyOneGamesHolesUpdated(command);
             AssertCurrentUserIsGameOwner(command);

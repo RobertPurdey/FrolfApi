@@ -38,6 +38,8 @@ namespace Frolf.Api.Composers.Games
             var players = GetMembers(group, creationModel.PlayerIds);
             if (players.Count() == 0) throw new Exception("Unable to retrieve players.");
 
+            // todo: throw error on no name provided?
+
             return NewGame(creationModel, course, group, players);
         }
 
@@ -49,9 +51,13 @@ namespace Frolf.Api.Composers.Games
         {
             var newGame = new Game
             {
-                Name        = creationModel.Name,
-                Course      = course,
-                FrolfGroup  = group,
+                Course       = course,
+                FrolfGroup   = group,
+
+                CourseId     = creationModel.CourseId,
+                FrolfGroupId = creationModel.GroupId,
+                Name         = creationModel.Name,
+
                 Rounds      = new List<Round>(),
                 HoleScores  = new List<HoleScore>()
             };

@@ -88,20 +88,34 @@
     <Compile Include="FrolfGroupInvites\Conditions\IsInviteeCurrentUserTests.cs" />
     <Compile Include="FrolfGroupInvites\Conditions\IsInviteNullTests.cs" />
     <Compile Include="FrolfGroupInvites\Conditions\IsInviterCurrentUserTests.cs" />
+    <Compile Include="FrolfGroups\Commands\AddFrolfGroupCommandHandlerTests.cs" />
+    <Compile Include="FrolfGroups\Commands\AddFrolfGroupCommandValidationTests.cs" />
+    <Compile Include="FrolfGroups\Commands\LeaveFrolfGroupCommandHandlerTests.cs" />
+    <Compile Include="FrolfGroups\Commands\LeaveFrolfGroupCommandValidationTests.cs" />
+    <Compile Include="FrolfGroups\Commands\UpdateFrolfGroupCommandHandlerTests.cs" />
+    <Compile Include="FrolfGroups\Commands\UpdateFrolfGroupCommandValidationTests.cs" />
     <Compile Include="FrolfGroups\Conditions\CanUserInviteTests.cs" />
     <Compile Include="FrolfGroups\Conditions\DoesFrolfGroupHaveInvitesTests.cs" />
     <Compile Include="FrolfGroups\Conditions\DoesFrolfGroupOnlyContainCurrentUserTests.cs" />
     <Compile Include="FrolfGroups\Conditions\IsCurrentUserGroupCreatorTests.cs" />
     <Compile Include="FrolfGroups\Conditions\IsFrolfGroupNullTests.cs" />
     <Compile Include="FrolfGroups\Conditions\IsUserAGroupMemberTests.cs" />
+    <Compile Include="Games\Commands\AddGameCommandHandlerTests.cs" />
+    <Compile Include="Games\Commands\AddGameCommandValidationTests.cs" />
+    <Compile Include="Games\Commands\CompleteGameCommandHandlerTests.cs" />
+    <Compile Include="Games\Commands\CompleteGameCommandValidationTests.cs" />
     <Compile Include="Games\Conditions\IsGameCourseInGroupTests.cs" />
     <Compile Include="Games\Conditions\IsGameCreatedByCurrentUserTests.cs" />
     <Compile Include="Games\Conditions\IsGameInProgressTests.cs" />
     <Compile Include="Games\Conditions\IsGameMembersOnlyTests.cs" />
+    <Compile Include="HoleScores\Commands\BatchUpdateHoleScoreCommandHandlerTests.cs" />
+    <Compile Include="HoleScores\Commands\BatchUpdateHoleScoreCommandValidationTests.cs" />
     <Compile Include="HoleScores\Conditions\AreHoleScoresForSameGameTests.cs" />
     <Compile Include="Players\Conditions\IsPlayerCreatorOfGroupTests.cs" />
     <Compile Include="Players\Conditions\IsPlayerCurrentUserTests.cs" />
     <Compile Include="Players\Conditions\IsPlayerPartOfGameInProgressTests.cs" />
+    <Compile Include="Players\RemovePlayerCommandHandlerTests.cs" />
+    <Compile Include="Players\RemovePlayerCommandValidationTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

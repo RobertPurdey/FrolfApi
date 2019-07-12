@@ -23,7 +23,7 @@ namespace Application.Command.FrolfGroups.Commands
             // todo: move this to entity validator?
             Assert( !string.IsNullOrWhiteSpace(command.newEntity.Name), "Group name must be set");
             AssertHasNoInvites(command);
-            AssertOnlyUserIsCreator(command);
+            AssertOnlyMemberIsCurrentUserAsAdmin(command);
         }
 
         private void AssertHasNoInvites(AddFrolfGroupCommand command)
@@ -33,7 +33,7 @@ namespace Application.Command.FrolfGroups.Commands
             Assert(isValid, "Cannot add a new frolf group if it contains invites");
         }
 
-        private void AssertOnlyUserIsCreator(AddFrolfGroupCommand command)
+        private void AssertOnlyMemberIsCurrentUserAsAdmin(AddFrolfGroupCommand command)
         {
             var isValid = new DoesFrolfGroupOnlyContainCurrentUser().Validate(command.newEntity);
 

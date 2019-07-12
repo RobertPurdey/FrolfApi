@@ -3,7 +3,6 @@ using Application.Command.Games.Conditions;
 using Domain.Commands;
 using Domain.Commands.Contracts;
 using Domain.Entities;
-using Domain.Query.Contracts;
 
 namespace Application.Command.Games.Commands
 {
@@ -14,20 +13,18 @@ namespace Application.Command.Games.Commands
 
     public class AddGameCommandValidation : CommandPreHandler<AddGameCommand>
     {
-        private readonly IQueryService<FrolfGroup> frolfGroupQuery;
-
-        public AddGameCommandValidation(
-            IWorkUnit workUnit,
-            IQueryService<FrolfGroup> frolfGroupQueryService)
+        public AddGameCommandValidation(IWorkUnit workUnit)
             : base(workUnit)
         {
-            frolfGroupQuery = frolfGroupQueryService;
+
         }
 
         public override void OnPreHandleCommand(AddGameCommand command)
         {
+            Assert(!string.IsNullOrWhiteSpace(command.NewGame.Name), "Game name must be set");
             AssertCurrentUserInGroup(command);
             AssertAllPlayersAreGroupMembers(command);
+            AssertCourseIsInGroup(command);
         }
 
         private void AssertCurrentUserInGroup(AddGameCommand command)

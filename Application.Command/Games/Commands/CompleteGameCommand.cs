@@ -14,14 +14,10 @@ namespace Application.Command.Games.Commands
 
     public class CompleteGameCommandValidation : CommandPreHandler<CompleteGameCommand>
     {
-        private readonly IQueryService<FrolfGroup> frolfGroupQuery;
-
-        public CompleteGameCommandValidation(
-            IWorkUnit workUnit,
-            IQueryService<FrolfGroup> frolfGroupQueryService)
+        public CompleteGameCommandValidation(IWorkUnit workUnit)
             : base(workUnit)
         {
-            frolfGroupQuery = frolfGroupQueryService;
+
         }
 
         public override void OnPreHandleCommand(CompleteGameCommand command)
