@@ -22,10 +22,10 @@ namespace Frolf.Api.Mappers.Courses
         public void MapToApiModel(CourseModel apiModel, Course entity)
         {
             apiModel.IdKey           = entity.EntityKey;
+            apiModel.FrolfGroupId    = entity.FrolfGroupId;
             apiModel.Name            = entity.Name;
             apiModel.Par             = entity.Holes.Sum( h => h.Par );
             apiModel.HoleCount       = entity.Holes.Count();
-            apiModel.FrolfGroupId    = entity.FrolfGroupId;
             apiModel.HoleIds         = entity.Holes.Select(h => h.EntityKey);
         }
     }

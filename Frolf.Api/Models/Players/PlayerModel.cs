@@ -2,7 +2,7 @@
 using Frolf.Api.Models.Contracts;
 using System;
 
-namespace Frolf.Api.Models.FrolfGroups
+namespace Frolf.Api.Models.Players
 {
     public class PlayerModel : IApiDataModel
     {

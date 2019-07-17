@@ -9,7 +9,6 @@ namespace Domain.Entities.Contracts
     {
         string LoginName { get; set; }
         string Password { get; set; }
-        string Email { get; set; }
 
         // todo: possibly app identification info
     }

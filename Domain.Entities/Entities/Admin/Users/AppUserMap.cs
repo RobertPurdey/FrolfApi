@@ -26,10 +26,6 @@ namespace Domain.Entities
                 .IsRequired()
                 .HasColumnName("password");
 
-            Property(u => u.Email)
-                .IsRequired()
-                .HasColumnName("email");
-
             Property(u => u.Handle)
                 .IsRequired()
                 .HasColumnName("handle");

@@ -16,7 +16,6 @@ namespace Frolf.Api.Mappers.Users
             apiModel.LoginName     = entity.LoginName;
             apiModel.Handle        = entity.Handle;
             apiModel.Password      = entity.Password;
-            apiModel.Email         = entity.Email;
             apiModel.FriendCode    = entity.FriendCode;
         }
 
@@ -26,7 +25,6 @@ namespace Frolf.Api.Mappers.Users
             entity.LoginName    = apiModel.LoginName;
             entity.Handle       = apiModel.Handle;
             entity.Password     = apiModel.Password;
-            entity.Email        = apiModel.Email;
         }
     }
 }

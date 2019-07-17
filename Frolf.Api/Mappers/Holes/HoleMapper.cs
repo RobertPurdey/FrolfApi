@@ -8,9 +8,9 @@ namespace Frolf.Api.Mappers.Holes
         public void MapToApiModel(HoleModel apiModel, Hole entity)
         {
             apiModel.IdKey      = entity.EntityKey;
+            apiModel.CourseId   = entity.CourseId;
             apiModel.Order      = entity.Order;
             apiModel.Par        = entity.Par;
-            apiModel.CourseId   = entity.CourseId;
         }
 
         public void MapToEntity(HoleModel apiModel, Hole entity)

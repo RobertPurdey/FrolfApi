@@ -1,5 +1,5 @@
 ﻿using Domain.Entities;
-using Frolf.Api.Models.FrolfGroups;
+using Frolf.Api.Models.Players;
 
 namespace Frolf.Api.Mappers.Players
 {

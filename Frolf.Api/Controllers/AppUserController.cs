@@ -58,16 +58,18 @@ namespace Frolf.Api.Controllers
             return Task.FromResult(encryptedModel);
         }
 
-        [HttpPost]
-        [AllowAnonymous]
-        [Route("create/account")]
-        public Task CreateAccount([FromBody] EncryptModel newUserRequest)
-        {
-            var userRequest = DecryptModel<AppUserCreationModel>(newUserRequest);
-            appUserModelDataController.CreateAccount(userRequest);
+        // commented out -- dont want this endpoint public while testing cloud hosting
 
-            return Task.FromResult(1);
-        }
+        //[HttpPost]
+        //[AllowAnonymous]
+        //[Route("create/account")]
+        //public Task CreateAccount([FromBody] EncryptModel newUserRequest)
+        //{
+        //    var userRequest = DecryptModel<AppUserCreationModel>(newUserRequest);
+        //    appUserModelDataController.CreateAccount(userRequest);
+
+        //    return Task.FromResult(1);
+        //}
 
         [HttpPost]
         [Route("setPublicKey")]
