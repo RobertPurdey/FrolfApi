@@ -82,6 +82,7 @@
     <Compile Include="IRefreshToken.cs" />
     <Compile Include="IRsaEncryptionManager.cs" />
     <Compile Include="IRsaKeyInfo.cs" />
+    <Compile Include="ISaltShaker.cs" />
     <Compile Include="ISecurityKeyProvider.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

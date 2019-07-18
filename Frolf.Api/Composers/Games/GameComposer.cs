@@ -98,14 +98,16 @@ namespace Frolf.Api.Composers.Games
 
         private Course GetCourse(Guid courseId)
         {
-            return courseQuerySerivce.GetAll()
+            return courseQuerySerivce
+                .GetAll()
                 .Where(c => c.EntityKey == courseId)
                 .SingleOrDefault();
         }
 
         private FrolfGroup GetFrolfGroup(Guid groupId)
         {
-            return groupQueryService.GetAll()
+            return groupQueryService
+                .GetAll()
                 .Where(c => c.EntityKey == groupId)
                 .SingleOrDefault();
         }
@@ -114,8 +116,7 @@ namespace Frolf.Api.Composers.Games
         {
             var distinctIds = new HashSet<Guid>(playerIds.Distinct());
 
-            return group.Members.Where(
-                m => distinctIds.Contains(m.EntityKey) );
+            return group.Members.Where(m => distinctIds.Contains(m.EntityKey) );
         }
     }
 }

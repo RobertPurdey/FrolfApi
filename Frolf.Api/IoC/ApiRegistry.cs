@@ -53,6 +53,7 @@ namespace Frolf.Api.IoC
             For<IRsaEncryptionManager>().Use<RsaEncryptionManager>();
             For<IRsaKeyInfo>().Use<RsaKeyInfo>();
             For<IModelEncryptor>().Use<ModelEncryptor>();
+            For<ISaltShaker>().Use<SaltShaker>();
 
             // Key retriever
             For<IAppUserPublicKeyRetriever>().Use<AppUserModelDataController>();
@@ -68,6 +69,7 @@ namespace Frolf.Api.IoC
             // Composers
             For<IGameComposer>().Use<GameComposer>();
             For<IUserComposer>().Use<UserComposer>();
+            For<IFriendCodeGenerator>().Use<FriendCodeGenerator>();
         }
     }
 }

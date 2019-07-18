@@ -35,7 +35,13 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Castle.Core, Version=4.0.0.0, Culture=neutral, PublicKeyToken=407dd0808d44fbdc, processorArchitecture=MSIL">
+      <HintPath>..\packages\Castle.Core.4.4.0\lib\net45\Castle.Core.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Moq, Version=4.12.0.0, Culture=neutral, PublicKeyToken=69f491c39445e920, processorArchitecture=MSIL">
+      <HintPath>..\packages\Moq.4.12.0\lib\net45\Moq.dll</HintPath>
+    </Reference>
     <Reference Include="nunit.framework, Version=3.12.0.0, Culture=neutral, PublicKeyToken=2638cd05610744eb, processorArchitecture=MSIL">
       <HintPath>..\packages\NUnit.3.12.0\lib\net45\nunit.framework.dll</HintPath>
     </Reference>
@@ -44,6 +50,12 @@
     <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Runtime.CompilerServices.Unsafe, Version=4.0.4.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Runtime.CompilerServices.Unsafe.4.5.0\lib\netstandard2.0\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Threading.Tasks.Extensions, Version=4.2.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Threading.Tasks.Extensions.4.5.1\lib\netstandard2.0\System.Threading.Tasks.Extensions.dll</HintPath>
+    </Reference>
     <Reference Include="System.Web" />
     <Reference Include="System.Web.ApplicationServices" />
     <Reference Include="System.Web.Extensions" />
@@ -92,6 +104,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Composers\Games\GameComposerTests.cs" />
+    <Compile Include="Composers\Users\UserComposerTests.cs" />
     <Compile Include="Mappers\Courses\CourseMapperTests.cs" />
     <Compile Include="Mappers\FrolfGroups\FrolfGroupMapperTests.cs" />
     <Compile Include="Mappers\Games\GameMapperTests.cs" />
@@ -115,9 +129,17 @@
       <Project>{ab73659a-9e59-411f-be6b-2c8cca48a107}</Project>
       <Name>Domain.Entities</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Domain.Query.Contracts\Domain.Query.Contracts.csproj">
+      <Project>{af643ad4-e199-4692-9eb2-18e459e10538}</Project>
+      <Name>Domain.Query.Contracts</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Frolf.Api\Frolf.Api.csproj">
       <Project>{df08d53b-ee44-4e69-95ca-c4f69103a5d6}</Project>
       <Name>Frolf.Api</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Security.Contracts\Security.Contracts.csproj">
+      <Project>{a411714e-95cd-46a1-81bb-54e9ba0e9ddf}</Project>
+      <Name>Security.Contracts</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />

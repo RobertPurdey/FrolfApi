@@ -14,73 +14,49 @@ namespace Frolf.Api.Composers.Users
     public class UserComposer : IUserComposer
     {
         private readonly IHashManager hasher;
+        private readonly IFriendCodeGenerator friendCodeGenerator;
+        private readonly ISaltShaker saltShaker;
 
-        public UserComposer(IHashManager hasher)
+        public UserComposer(
+            IHashManager hasher,
+            IFriendCodeGenerator friendCodeGenerator,
+            ISaltShaker saltShaker )
         {
-            this.hasher = hasher;
+            this.hasher              = hasher;
+            this.friendCodeGenerator = friendCodeGenerator;
+            this.saltShaker          = saltShaker;
         }
 
         public AppUser NewAppUser(AppUserCreationModel creationRequest)
         {
-            if ( creationRequest.Password != creationRequest.ConfirmPassword )
-            {
-                throw new Exception("Password doesn't match");
-            }
-
             if ( string.IsNullOrEmpty(creationRequest.LoginName ) )       throw new ArgumentNullException(nameof(creationRequest.LoginName));
             if ( string.IsNullOrEmpty(creationRequest.Handle) )           throw new ArgumentNullException(nameof(creationRequest.Handle));
             if ( string.IsNullOrEmpty(creationRequest.Password) )         throw new ArgumentNullException(nameof(creationRequest.Password));
             if ( string.IsNullOrEmpty(creationRequest.ConfirmPassword) )  throw new ArgumentNullException(nameof(creationRequest.ConfirmPassword));
 
-            var newUser = new AppUser();
-    
-            newUser.LoginName   = creationRequest.LoginName;
-            newUser.Handle      = creationRequest.Handle;
-            newUser.FriendCode  = GenerateFriendCode();
+            if ( creationRequest.Password != creationRequest.ConfirmPassword )
+            {
+                throw new Exception("Password doesn't match");
+            }
 
-            GenerateHashPassword(newUser, creationRequest.Password);
+            var newUser = new AppUser
+            {
+                LoginName   = creationRequest.LoginName,
+                Handle      = creationRequest.Handle,
+                FriendCode  = friendCodeGenerator.Generate()
+            };
+
+            SetSaltyPassword(newUser, creationRequest.Password);
 
             return newUser;
         }
 
-        private void GenerateHashPassword(AppUser newUser, string userPassword)
+        private void SetSaltyPassword(AppUser newUser, string userPassword)
         {
-            var salt            = GenerateSalt();
-            var saltyPassword   = userPassword + salt;
+            var salt = saltShaker.Shake(32);
 
-            newUser.Password = hasher.Hash(saltyPassword);
+            newUser.Password = hasher.Hash(userPassword, salt);
             newUser.Salt     = salt;
         }
-
-        private string GenerateSalt()
-        {
-            using (RandomNumberGenerator rng = new RNGCryptoServiceProvider())
-            {
-                byte[] tokenData = new byte[32];
-                rng.GetBytes(tokenData);
-
-                return Convert.ToBase64String(tokenData);
-            }
-        }
-
-        private string GenerateFriendCode()
-        {
-            return RandomFriendCode(10);
-        }
-
-        private string RandomFriendCode(int length)
-        {
-            var rando       = new Random();
-            var chars       = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
-            string value    = string.Empty;
-
-            for (int i = 0; i < length; i++)
-            {
-                value += chars[rando.Next(chars.Length)];
-            }
-
-            return value;
-        }
-
     }
 }

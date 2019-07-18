@@ -15,5 +15,10 @@ namespace Security.Encryption
 
             return Convert.ToBase64String(outputBytes);
         }
+
+        public string Hash(string input, string salt)
+        {
+            return Hash(input, salt);
+        }
     }
 }

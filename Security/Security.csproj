@@ -93,6 +93,7 @@
     <Compile Include="Encryption\HashManager.cs" />
     <Compile Include="Encryption\RsaEncryptionManager.cs" />
     <Compile Include="Encryption\RsaPrivateKeyInfo.cs" />
+    <Compile Include="Encryption\SaltShaker.cs" />
     <Compile Include="Jwt\JwtTokenFormat.cs" />
     <Compile Include="OAuth\AuthorizationServiceProviderBase.cs" />
     <Compile Include="OAuth\RefreshTokenProviderBase.cs" />
