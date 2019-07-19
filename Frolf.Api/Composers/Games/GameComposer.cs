@@ -14,26 +14,22 @@ namespace Frolf.Api.Composers.Games
 
     public class GameComposer : IGameComposer
     {
-        private readonly IQueryService<Course> courseQuerySerivce;
         private readonly IQueryService<FrolfGroup> groupQueryService;
 
-        public GameComposer(
-            IQueryService<Course> courseQuerySerivce,
-            IQueryService<FrolfGroup> groupQueryService)
+        public GameComposer(IQueryService<FrolfGroup> groupQueryService)
         {
-            this.courseQuerySerivce = courseQuerySerivce;
             this.groupQueryService  = groupQueryService;
         }
 
         public Game NewGame(GameCreationModel creationModel)
         {
-            if ( creationModel == null ) throw new ArgumentNullException(creationModel.ToString());
-
-            var course = GetCourse( creationModel.CourseId );
-            if ( course == null ) throw new Exception("Unable to retrieve course.");
+            if ( creationModel == null ) throw new ArgumentNullException( typeof(GameCreationModel).Name );
 
             var group = GetFrolfGroup(creationModel.GroupId);
             if ( group  == null ) throw new Exception("Unable to retrieve group.");
+
+            var course = GetCourse(group, creationModel.CourseId);
+            if ( course == null ) throw new Exception("Unable to get course.");
 
             var players = GetMembers(group, creationModel.PlayerIds);
             if (players.Count() == 0) throw new Exception("Unable to retrieve players.");
@@ -96,10 +92,9 @@ namespace Frolf.Api.Composers.Games
             return newRound;
         }
 
-        private Course GetCourse(Guid courseId)
+        private Course GetCourse(FrolfGroup group, Guid courseId)
         {
-            return courseQuerySerivce
-                .GetAll()
+            return group.Courses              
                 .Where(c => c.EntityKey == courseId)
                 .SingleOrDefault();
         }
