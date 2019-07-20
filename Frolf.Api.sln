@@ -43,6 +43,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Application.Command", "Appl
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Application.Command.Tests", "Application.Command.Tests\Application.Command.Tests.csproj", "{A37BCC22-7010-46A8-A19D-88B5E457F7B5}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Security.Tests", "Security.Tests\Security.Tests.csproj", "{F4661D16-A12F-4782-A3EB-9F1625117355}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -111,6 +113,10 @@ Global
 		{A37BCC22-7010-46A8-A19D-88B5E457F7B5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A37BCC22-7010-46A8-A19D-88B5E457F7B5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A37BCC22-7010-46A8-A19D-88B5E457F7B5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F4661D16-A12F-4782-A3EB-9F1625117355}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F4661D16-A12F-4782-A3EB-9F1625117355}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F4661D16-A12F-4782-A3EB-9F1625117355}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F4661D16-A12F-4782-A3EB-9F1625117355}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -131,6 +137,7 @@ Global
 		{C9232A5D-3E89-493C-BE2F-8450AA098560} = {85D20FC2-C8D7-4066-891C-C8800827E2D9}
 		{FD6C6F49-32E2-422A-B12F-7FCDD83C57B9} = {85D20FC2-C8D7-4066-891C-C8800827E2D9}
 		{A37BCC22-7010-46A8-A19D-88B5E457F7B5} = {85D20FC2-C8D7-4066-891C-C8800827E2D9}
+		{F4661D16-A12F-4782-A3EB-9F1625117355} = {D76ADCF6-D77D-4EBE-8305-565D7999F745}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {5D660A42-8A66-431C-91D8-B5BF7E4F5DED}

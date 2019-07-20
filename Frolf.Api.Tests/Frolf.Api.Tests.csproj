@@ -105,6 +105,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Composers\Games\GameComposerTests.cs" />
+    <Compile Include="Composers\Users\FriendCodeGeneratorTests.cs" />
     <Compile Include="Composers\Users\UserComposerTests.cs" />
     <Compile Include="Mappers\Courses\CourseMapperTests.cs" />
     <Compile Include="Mappers\FrolfGroups\FrolfGroupMapperTests.cs" />

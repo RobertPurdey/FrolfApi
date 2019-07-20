@@ -32,6 +32,7 @@ namespace Security.Encryption
                 decryptedBytes = rsa.Decrypt(encryptedMsg, false);
             }
 
+            // todo: Look into making this convert to UTF8 string
             return decryptedBytes;
         }
     }

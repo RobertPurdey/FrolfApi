@@ -21,8 +21,7 @@ namespace Domain.Query
 
         public virtual IQueryable<TEntity> GetWithQueryArg(IQueryArg<TEntity> arg)
         {
-            return GetQueryableData()
-                .Where(arg.FilterBy);
+            return GetQueryableData().Where(arg.FilterBy);
         }
 
         private IQueryable<TEntity> GetQueryableData()
