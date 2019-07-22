@@ -18,7 +18,9 @@ namespace Security.Encryption
 
         public string Hash(string input, string salt)
         {
-            return Hash(input, salt);
+            var saltyPassword = input + salt;
+
+            return Hash(saltyPassword);
         }
     }
 }
