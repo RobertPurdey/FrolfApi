@@ -15,6 +15,7 @@ using Frolf.Api.Models.HoleScores;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 
 namespace Frolf.Api.ModelDataControllers.Games
 {
@@ -51,10 +52,16 @@ namespace Frolf.Api.ModelDataControllers.Games
         {
             foreach (var entity in gameQueryService.GetAll())
             {
-                var model = new GameModel();
-                gameMapper.MapToApiModel(model, entity);
+                var isCurrUserInGroup = entity.FrolfGroup.Members
+                    .Any(p => p.AppUserId == UserExtensions.GetCurrentUserId());
 
-                yield return model;
+                if ( isCurrUserInGroup )
+                { 
+                    var model = new GameModel();
+                    gameMapper.MapToApiModel(model, entity);
+
+                    yield return model;
+                }
             }
         }
 
@@ -64,10 +71,16 @@ namespace Frolf.Api.ModelDataControllers.Games
 
             foreach (var entity in gameQueryService.GetWithQueryArg(queryArg))
             {
-                var model = new GameModel();
-                gameMapper.MapToApiModel(model, entity);
+                var isCurrUserInGroup = entity.FrolfGroup.Members
+                    .Any(p => p.AppUserId == UserExtensions.GetCurrentUserId());
 
-                yield return model;
+                if ( isCurrUserInGroup )
+                { 
+                    var model = new GameModel();
+                    gameMapper.MapToApiModel(model, entity);
+
+                    yield return model;
+                }
             }
         }
 
@@ -75,6 +88,8 @@ namespace Frolf.Api.ModelDataControllers.Games
         {
             var entity  = FindEntity(id, gameQueryService);
             var model   = new GameModel();
+
+            IsCurrentUserInGroupVerify(entity);
 
             gameMapper.MapToApiModel(model, entity);
 
@@ -116,10 +131,11 @@ namespace Frolf.Api.ModelDataControllers.Games
         }
 
         public GameResultModel GetGameResults(Guid gameId)
-        {
-            // todo: deny when requester is not part of the group the game is for
+        {            
             var game         = FindEntity(gameId, gameQueryService);
             var gameResult   = new GameResultModel();
+
+            IsCurrentUserInGroupVerify(game);
 
             gameResultMapper.MapToApiModel(gameResult, game);
 
@@ -157,7 +173,24 @@ namespace Frolf.Api.ModelDataControllers.Games
         {
             var game = FindEntity(gameId, gameQueryService);
 
+            // Deny early 
+            if ( game.CreatedBy != UserExtensions.GetCurrentUserId() )
+            {
+                throw new Exception("Cannot complete game that wasn't created by you.");
+            }
+
             commandExecutor.Execute(new CompleteGameCommand { Game = game });
+        }
+
+        public void IsCurrentUserInGroupVerify(Game game)
+        {
+            var isCurrUserInGroup = game.FrolfGroup.Members
+                .Any(p => p.AppUserId == UserExtensions.GetCurrentUserId());
+
+            if ( !isCurrUserInGroup )
+            {
+                ThrowHttpResponseException("No group access.", HttpStatusCode.Unauthorized);
+            }
         }
     }
 }

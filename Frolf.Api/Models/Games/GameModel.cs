@@ -16,7 +16,8 @@ namespace Frolf.Api.Models.Games
 
         public string Name { get; set; }
         public string CourseName { get; set; }
-        
+        public string GroupName { get; set; }
+
         public GameState State { get; set; }
 
         public IEnumerable<Guid> RoundIds { get; set; }

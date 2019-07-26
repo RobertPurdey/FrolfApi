@@ -23,15 +23,16 @@ namespace Frolf.Api.Tests.Mappers.Games
         Hole hole2;
 
         Course course;
+        FrolfGroup group;
 
         int expectedHoleCount;
-        int expectedPar;
 
         [SetUp]
         public void Setup()
         {
             SetupHoles();
             SetupCourse();
+            SetupFrolfGroup();
 
             SetupEntity();
             SetupModel();
@@ -51,8 +52,16 @@ namespace Frolf.Api.Tests.Mappers.Games
         {
             course = new Course
             {
-                EntityKey = Guid.NewGuid(),
+                Name      = "Pender",
                 Holes     = new List<Hole> { hole1, hole2 }
+            };
+        }
+
+        private void SetupFrolfGroup()
+        {
+            group = new FrolfGroup
+            {
+                Name = "dudes n bros",
             };
         }
 
@@ -68,6 +77,7 @@ namespace Frolf.Api.Tests.Mappers.Games
                 Name         = "Pender 2018",
                 State        = GameState.Completed,
                 Course       = course,
+                FrolfGroup   = group
             };
 
 
@@ -100,17 +110,18 @@ namespace Frolf.Api.Tests.Mappers.Games
 
             mapper.MapToApiModel(mappedModel, entity);
 
-            Assert.AreEqual( entity.EntityKey,     mappedModel.IdKey      );
-            Assert.AreEqual( entity.FrolfGroupId,  mappedModel.GroupId    );
-            Assert.AreEqual( entity.Name,          mappedModel.Name       );
-            Assert.AreEqual( entity.Course.Name,   mappedModel.CourseName );
-            Assert.AreEqual( entity.State,         mappedModel.State      );
+            Assert.AreEqual( entity.EntityKey,        mappedModel.IdKey      );
+            Assert.AreEqual( entity.FrolfGroupId,     mappedModel.GroupId    );
+            Assert.AreEqual( entity.Name,             mappedModel.Name       );
+            Assert.AreEqual( entity.Course.Name,      mappedModel.CourseName );
+            Assert.AreEqual( entity.FrolfGroup.Name,  mappedModel.GroupName  );
+            Assert.AreEqual( entity.State,            mappedModel.State      );
             
             // Test hole id list in detail
             // - correct hole ids
             // - correct count
-            var hasHole1   = mappedModel.HoleIds.Any(holeId => holeId == hole1.EntityKey);           
-            var hasHole2   = mappedModel.HoleIds.Any(holeId => holeId == hole2.EntityKey);
+            var hasHole1   = mappedModel.HoleIds.Any( holeId => holeId == hole1.EntityKey );           
+            var hasHole2   = mappedModel.HoleIds.Any( holeId => holeId == hole2.EntityKey );
             var holeCount  = mappedModel.HoleIds.Count();
 
             Assert.IsTrue( hasHole1 );

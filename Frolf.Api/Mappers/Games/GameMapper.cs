@@ -22,6 +22,7 @@ namespace Frolf.Api.Mappers.Games
 
             apiModel.Name           = entity.Name;
             apiModel.CourseName     = entity.Course.Name;
+            apiModel.GroupName      = entity.FrolfGroup.Name;
 
             apiModel.State          = entity.State;
 

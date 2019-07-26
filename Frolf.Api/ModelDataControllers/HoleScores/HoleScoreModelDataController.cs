@@ -7,6 +7,7 @@ using Frolf.Api.ModelDataControllers.Contracts;
 using Frolf.Api.Models.HoleScores;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Frolf.Api.ModelDataControllers.HoleScores
 {
@@ -46,10 +47,10 @@ namespace Frolf.Api.ModelDataControllers.HoleScores
 
         public override IEnumerable<HoleScoreModel> GetWithFilter(HoleScoreFilterModel filter)
         {
-            var queryArg             = ConvertToQueryArg(filter);
-            var filteredInvites      = holeScoreQueryService.GetWithQueryArg(queryArg);
+            var queryArg       = ConvertToQueryArg(filter);
+            var filteredHoles  = holeScoreQueryService.GetWithQueryArg(queryArg);
 
-            foreach (var entity in filteredInvites)
+            foreach (var entity in filteredHoles.OrderBy(hs => hs.Player.Handle))
             {
                 var model = new HoleScoreModel();
                 holeScoreMapper.MapToApiModel(model, entity);

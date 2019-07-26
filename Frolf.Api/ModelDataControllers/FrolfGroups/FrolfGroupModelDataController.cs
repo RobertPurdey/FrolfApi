@@ -88,6 +88,8 @@ namespace Frolf.Api.ModelDataControllers.FrolfGroups
             var entity = FindEntity(id, frolfGroupQueryService);
             var model  = new FrolfGroupModel();
 
+            IsCurrentUserInGroupVerify(entity);
+
             frolfGroupMapper.MapToApiModel(model, entity);
 
             return model;
@@ -122,22 +124,25 @@ namespace Frolf.Api.ModelDataControllers.FrolfGroups
         {
             var group = FindEntity(groupId, frolfGroupQueryService);
 
-            var isCurrUserInGroup = group.Members
-                .Any(p => p.AppUserId == UserExtensions.GetCurrentUserId() );
+            IsCurrentUserInGroupVerify(group);
 
-            if ( !isCurrUserInGroup )
-            {
-                ThrowHttpResponseException(
-                    "You can't access groups you don't belong in.",
-                    HttpStatusCode.Unauthorized);
-            }
-
-            foreach ( var player in group.Members )
+            foreach ( var player in group.Members.OrderBy(m => m.Handle) )
             {
                 var model = new PlayerModel();
                 playerMapper.MapToApiModel(model, player);
 
                 yield return model;
+            }
+        }
+
+        public void IsCurrentUserInGroupVerify(FrolfGroup group)
+        {
+            var isCurrUserInGroup = group.Members
+                .Any(p => p.AppUserId == UserExtensions.GetCurrentUserId());
+
+            if ( !isCurrUserInGroup )
+            {
+                ThrowHttpResponseException("No group access.", HttpStatusCode.Unauthorized);
             }
         }
 
