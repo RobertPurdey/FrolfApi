@@ -8,6 +8,7 @@ using Frolf.Api.Models.Games;
 using Frolf.Api.Models.Players;
 using Security.Contracts;
 using System;
+using System.Linq;
 using System.Threading.Tasks;
 using System.Web.Http;
 
@@ -31,7 +32,8 @@ namespace Frolf.Api.Controllers
         public override Task<EncryptModel> GetAll()
         {
             var foundFrolfGroups    = frolfGroupModelDataController.GetAll();
-            var encryptFrolfGroups  = EncryptModel(foundFrolfGroups);
+            var orderedGroups       = foundFrolfGroups.OrderBy(g => g.Name);
+            var encryptFrolfGroups  = EncryptModel(orderedGroups);
             
             return Task.FromResult(encryptFrolfGroups);
         }

@@ -6,6 +6,7 @@ using Frolf.Api.Models.Courses;
 using Frolf.Api.Models.Encryption;
 using Security.Contracts;
 using System;
+using System.Linq;
 using System.Threading.Tasks;
 using System.Web.Http;
 
@@ -29,7 +30,8 @@ namespace Frolf.Api.Controllers
         public override Task<EncryptModel> GetAll()
         {
             var foundCourses    = courseGroupDataController.GetAll();
-            var encryptCourses  = EncryptModel(foundCourses);
+            var orderedCourses  = foundCourses.OrderBy(c => c.Name);
+            var encryptCourses  = EncryptModel(orderedCourses);
 
             return Task.FromResult(encryptCourses);
         }
@@ -69,7 +71,8 @@ namespace Frolf.Api.Controllers
         {
             var filterModel     = DecryptModel<CourseFilterModel>(filter);
             var results         = courseGroupDataController.GetWithFilter(filterModel);
-            var encryptCourses  = EncryptModel(results);
+            var orderedCourses  = results.OrderBy(c => c.Name);
+            var encryptCourses  = EncryptModel(orderedCourses);
 
             return Task.FromResult(encryptCourses);
         }
