@@ -7,6 +7,7 @@ using Frolf.Api.Models.Games;
 using Frolf.Api.Models.HoleScores;
 using Security.Contracts;
 using System;
+using System.Linq;
 using System.Threading.Tasks;
 using System.Web.Http;
 
@@ -63,7 +64,8 @@ namespace Frolf.Api.Controllers
         {
             var gameFilter   = DecryptModel<GameFilter>(filter);
             var results      = gameDataController.GetWithFilter(gameFilter);
-            var encryptGames = EncryptModel(results);
+            var orderedGames = results.OrderByDescending(g => g.CreatedDate);
+            var encryptGames = EncryptModel(orderedGames);
 
             return Task.FromResult(encryptGames);
         }
