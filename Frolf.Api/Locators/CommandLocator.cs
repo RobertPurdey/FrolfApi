@@ -1,6 +1,4 @@
 ﻿using Domain.Commands.Contracts;
-using System.Collections.Generic;
-using System.Linq;
 using System.Web.Http.Dependencies;
 
 namespace Frolf.Api.Locators
@@ -14,38 +12,21 @@ namespace Frolf.Api.Locators
             dependencyContainer = container;
         }
 
-        public IEnumerable<ICommandPreHandler<TCommand>> GetCommandPreHandler<TCommand>() 
+        public ICommandPreHandler<TCommand> GetCommandPreHandler<TCommand>() 
             where TCommand : class, ICommand
         {
-            return dependencyContainer
-                .GetServices(typeof(ICommandPreHandler<TCommand>))
-                .Cast<ICommandPreHandler<TCommand>>();
+            return (ICommandPreHandler<TCommand>)
+                dependencyContainer.GetService(typeof(ICommandPreHandler<TCommand>));
         }
 
-        public IEnumerable<ICommandHandler<TCommand>> GetCommandHandler<TCommand>() 
+        public ICommandHandler<TCommand> GetCommandHandler<TCommand>() 
             where TCommand : class, ICommand
         {
-            return dependencyContainer
-                .GetServices(typeof(ICommandHandler<TCommand>))
-                .Cast<ICommandHandler<TCommand>>();
+            return (ICommandHandler<TCommand>) 
+                dependencyContainer.GetService(typeof(ICommandHandler<TCommand>));
         }
 
-        public IEnumerable<ICommandPostHandler<TCommand>> GetCommandPostHandler<TCommand>() 
-            where TCommand : class, ICommand
-        {
-            return dependencyContainer
-                .GetServices(typeof(ICommandPostHandler<TCommand>))
-                .Cast<ICommandPostHandler<TCommand>>();
-        }
-
-        public IEnumerable<IEntityValidator<TEntity>> GetEntityValidators<TEntity>()
-            where TEntity : class
-        {
-            return dependencyContainer
-                .GetServices(typeof(IEntityValidator<TEntity>))
-                .Cast<IEntityValidator<TEntity>>();
-        }
-
+        // todo: find out if this is still needed
         public IWorkUnit GetWorkUnit()
         {
             return (IWorkUnit) dependencyContainer.GetService(typeof(IWorkUnit));

@@ -19,6 +19,7 @@ namespace Frolf.Api.IoC
             childContainer.Name   = "child container";
             var scope             = new StructureMapScope(childContainer);
 
+            // Injecting IDependencyScope will give access to dependencies
             childContainer.Inject(typeof(IDependencyScope), scope);
 
             return scope;

@@ -6,6 +6,10 @@ using System.Web.Http.Dependencies;
 
 namespace Frolf.Api.IoC
 {
+    /**
+     * 
+     * Setup found at https://marisks.net/2012/08/19/configuring-structuremap-in-aspnet-webapi/
+     */
     public class StructureMapScope : IDependencyScope
     {
         private readonly IContainer dependencyContainer;

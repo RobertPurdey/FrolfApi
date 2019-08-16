@@ -44,9 +44,7 @@
     <Compile Include="ICommandExecutor.cs" />
     <Compile Include="ICommandHandler.cs" />
     <Compile Include="ICommandLocator.cs" />
-    <Compile Include="ICommandPostHandler.cs" />
     <Compile Include="ICommandPreHandler.cs" />
-    <Compile Include="IEntityValidator.cs" />
     <Compile Include="IRepository.cs" />
     <Compile Include="IWorkUnit.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

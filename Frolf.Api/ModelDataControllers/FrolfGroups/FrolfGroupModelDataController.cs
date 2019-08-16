@@ -65,16 +65,16 @@ namespace Frolf.Api.ModelDataControllers.FrolfGroups
 
             foreach ( var entity in frolfGroupQueryService.GetAll() )
             {
-                var isCurrUserInGroup = 
-                    entity.Members.Any(gm => gm.AppUserId == currUserGuid);
+                //var isCurrUserInGroup = 
+                   // entity.Members.Any(gm => gm.AppUserId == currUserGuid);
 
-                if ( isCurrUserInGroup )
-                {
+              //  if ( isCurrUserInGroup )
+                //{
                     var model = new FrolfGroupModel();
                     frolfGroupMapper.MapToApiModel(model, entity);
 
                     yield return model;
-                }
+              //  }
             }       
         }
 
@@ -88,7 +88,7 @@ namespace Frolf.Api.ModelDataControllers.FrolfGroups
             var entity = FindEntity(id, frolfGroupQueryService);
             var model  = new FrolfGroupModel();
 
-            IsCurrentUserInGroupVerify(entity);
+            //IsCurrentUserInGroupVerify(entity);
 
             frolfGroupMapper.MapToApiModel(model, entity);
 
@@ -124,7 +124,7 @@ namespace Frolf.Api.ModelDataControllers.FrolfGroups
         {
             var group = FindEntity(groupId, frolfGroupQueryService);
 
-            IsCurrentUserInGroupVerify(group);
+            //IsCurrentUserInGroupVerify(group);
 
             foreach ( var player in group.Members.OrderBy(m => m.Handle) )
             {
@@ -135,7 +135,7 @@ namespace Frolf.Api.ModelDataControllers.FrolfGroups
             }
         }
 
-        public void IsCurrentUserInGroupVerify(FrolfGroup group)
+        private void IsCurrentUserInGroupVerify(FrolfGroup group)
         {
             var isCurrUserInGroup = group.Members
                 .Any(p => p.AppUserId == UserExtensions.GetCurrentUserId());

@@ -1,5 +1,4 @@
 ﻿using Domain.Commands.Contracts;
-using System.Collections.Generic;
 
 namespace Domain.Commands
 {
@@ -15,35 +14,25 @@ namespace Domain.Commands
         public void Execute<TCommand>(TCommand command)
             where TCommand : class, ICommand
         {
-            CallPreHandlers(command, commandLocator.GetCommandPreHandler<TCommand>());
-            CallHandlers(command, commandLocator.GetCommandHandler<TCommand>());
-            CallPostHandlers(command, commandLocator.GetCommandPostHandler<TCommand>());
+            CallPreHandler(command, commandLocator.GetCommandPreHandler<TCommand>());
+            CallHandler(command, commandLocator.GetCommandHandler<TCommand>());
         }
 
-        private static void CallPreHandlers<TCommand>(TCommand command, IEnumerable<ICommandPreHandler<TCommand>> handlers)
+        private static void CallPreHandler<TCommand>(TCommand command, ICommandPreHandler<TCommand> handler)
             where TCommand : class, ICommand
         {
-            foreach (var handler in handlers)
-            {
+            if (handler != null)
+            { 
                 handler.PreHandle(command);
             }
         }
 
-        private static void CallHandlers<TCommand>(TCommand command, IEnumerable<ICommandHandler<TCommand>> handlers)
+        private static void CallHandler<TCommand>(TCommand command, ICommandHandler<TCommand> handler)
             where TCommand : class, ICommand
         {
-            foreach (var handler in handlers)
-            {
+            if (handler != null)
+            { 
                 handler.Handle(command);
-            }
-        }
-
-        private static void CallPostHandlers<TCommand>(TCommand command, IEnumerable<ICommandPostHandler<TCommand>> handlers)
-            where TCommand : class, ICommand
-        {
-            foreach (var handler in handlers)
-            {
-                handler.PostHandle(command);
             }
         }
     }

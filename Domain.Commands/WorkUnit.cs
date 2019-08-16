@@ -8,19 +8,15 @@ namespace Domain.Commands
     public class WorkUnit : IWorkUnit
     {
         protected IEntityDbContext EntityContext { get; private set; }
-        protected ICommandLocator CommandLocator { get; }
 
-        public WorkUnit(IEntityDbContext context, ICommandLocator commandLocator)
+        public WorkUnit(IEntityDbContext context)
         {
             EntityContext  = context ?? throw new ArgumentNullException(nameof(context));
-            CommandLocator = commandLocator ?? throw new ArgumentNullException(nameof(commandLocator));
         }
 
         public virtual IRepository<TEntity> GetRepository<TEntity>() where TEntity : class
         {
-            return new Repository<TEntity>(
-                EntityContext,
-                CommandLocator.GetEntityValidators<TEntity>());
+            return new Repository<TEntity>(EntityContext);
         }
 
         public void Commit()

@@ -51,9 +51,6 @@ namespace Frolf.Api.ModelDataControllers.Courses
 
         public override IEnumerable<CourseModel> GetAll()
         {
-            var currUserGuid = UserExtensions.GetCurrentUserId();
-
-            // todo: make sure its one from the group they are in
             foreach ( var entity in CourseQueryService.GetAll() )
             {
                 var model = new CourseModel();
@@ -65,7 +62,7 @@ namespace Frolf.Api.ModelDataControllers.Courses
 
         public override IEnumerable<CourseModel> GetWithFilter(CourseFilterModel filter)
         {
-            AssertCanMakeFilterCall(filter);
+           // AssertCanMakeFilterCall(filter);
 
             var queryArg = ConvertToQueryArg(filter);
 

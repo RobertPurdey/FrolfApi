@@ -45,7 +45,6 @@ namespace Frolf.Api.ModelDataControllers.FrolfGroups
 
         public override IEnumerable<FrolfGroupInviteModel> GetAll()
         {
-            // todo: lock this down on the query service?
             var currUserGuid = UserExtensions.GetCurrentUserId();
 
             foreach ( var entity in frolfGroupInviteQueryService.GetAll() )

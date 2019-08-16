@@ -52,16 +52,16 @@ namespace Frolf.Api.ModelDataControllers.Games
         {
             foreach (var entity in gameQueryService.GetAll())
             {
-                var isCurrUserInGroup = entity.FrolfGroup.Members
-                    .Any(p => p.AppUserId == UserExtensions.GetCurrentUserId());
+               // var isCurrUserInGroup = entity.FrolfGroup.Members
+               //     .Any(p => p.AppUserId == UserExtensions.GetCurrentUserId());
 
-                if ( isCurrUserInGroup )
-                { 
+             //   if ( isCurrUserInGroup )
+             //   { 
                     var model = new GameModel();
                     gameMapper.MapToApiModel(model, entity);
 
                     yield return model;
-                }
+               // }
             }
         }
 
@@ -71,16 +71,16 @@ namespace Frolf.Api.ModelDataControllers.Games
 
             foreach (var entity in gameQueryService.GetWithQueryArg(queryArg))
             {
-                var isCurrUserInGroup = entity.FrolfGroup.Members
-                    .Any(p => p.AppUserId == UserExtensions.GetCurrentUserId());
+              //  var isCurrUserInGroup = entity.FrolfGroup.Members
+               //     .Any(p => p.AppUserId == UserExtensions.GetCurrentUserId());
 
-                if ( isCurrUserInGroup )
-                { 
+                //if ( isCurrUserInGroup )
+               // { 
                     var model = new GameModel();
                     gameMapper.MapToApiModel(model, entity);
 
                     yield return model;
-                }
+               // }
             }
         }
 
@@ -89,7 +89,7 @@ namespace Frolf.Api.ModelDataControllers.Games
             var entity  = FindEntity(id, gameQueryService);
             var model   = new GameModel();
 
-            IsCurrentUserInGroupVerify(entity);
+          //  IsCurrentUserInGroupVerify(entity);
 
             gameMapper.MapToApiModel(model, entity);
 
@@ -135,7 +135,7 @@ namespace Frolf.Api.ModelDataControllers.Games
             var game         = FindEntity(gameId, gameQueryService);
             var gameResult   = new GameResultModel();
 
-            IsCurrentUserInGroupVerify(game);
+           // IsCurrentUserInGroupVerify(game);
 
             gameResultMapper.MapToApiModel(gameResult, game);
 
@@ -182,7 +182,7 @@ namespace Frolf.Api.ModelDataControllers.Games
             commandExecutor.Execute(new CompleteGameCommand { Game = game });
         }
 
-        public void IsCurrentUserInGroupVerify(Game game)
+        private void IsCurrentUserInGroupVerify(Game game)
         {
             var isCurrUserInGroup = game.FrolfGroup.Members
                 .Any(p => p.AppUserId == UserExtensions.GetCurrentUserId());

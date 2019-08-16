@@ -36,9 +36,7 @@ namespace Frolf.Api.IoC
                 s.AddAllTypesOf(typeof(IModelDataController<,>));
                 s.AddAllTypesOf(typeof(IQueryService<>));
                 s.AddAllTypesOf(typeof(ICommandHandler<>));
-                s.AddAllTypesOf(typeof(ICommandPostHandler<>));
                 s.AddAllTypesOf(typeof(ICommandPreHandler<>));
-                s.AddAllTypesOf(typeof(IEntityValidator<>));
             });
 
             For<IEntityDbContext>().Use(() => new EntityDbContext());

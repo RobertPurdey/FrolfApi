@@ -12,5 +12,14 @@ namespace Application.Query.Services.FrolfGroups
         {
 
         }
+
+        public override IQueryable<FrolfGroup> GetAll()
+        {
+            var query        = base.GetAll();
+            var currUserGuid = UserExtensions.GetCurrentUserId();
+
+            return query.Where(
+                g => g.Members.Any(m => m.AppUserId == currUserGuid) );
+        }
     }
 }
