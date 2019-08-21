@@ -47,7 +47,6 @@ namespace Frolf.Api.App_Start
 
             var OAuthServerOptions = new OAuthAuthorizationServerOptions()
             {
-                // todo: allow insecure for initial testing then change to https to deploy. better way for it to happen?
                 AllowInsecureHttp           = true,
                 TokenEndpointPath           = new PathString("/oauth2/token"),
                 AccessTokenExpireTimeSpan   = TimeSpan.FromMinutes(60),

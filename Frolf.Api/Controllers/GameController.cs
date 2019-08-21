@@ -71,6 +71,17 @@ namespace Frolf.Api.Controllers
         }
 
         [HttpPost]
+        [Route("creategame")]
+        public Task<EncryptModel> CreateGame([FromBody] EncryptModel model)
+        {
+            var gameCreation = DecryptModel<GameCreationModel>(model);
+            var createdGame  = gameDataController.CreateGame(gameCreation);
+            var encryptGame  = EncryptModel(createdGame);
+
+            return Task.FromResult(encryptGame);
+        }
+
+        [HttpPost]
         [Route("holeScores")]
         public Task UpdateGameHoles([FromBody] EncryptModel updateModel)
         {

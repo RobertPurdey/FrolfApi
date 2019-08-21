@@ -22,12 +22,14 @@ namespace Frolf.Api.Encryption
             rsaKeyInfo  = serverKeyInfo;
         }
 
-        public EncryptModel Encrypt<TModel>(string xmlRsaClientKey, TModel model) where TModel : class
+        public EncryptModel Encrypt<TModel>(string xmlRsaClientKey, TModel model)
+            where TModel : class
         {
-            string aesKey = aes.GenerateKey();
+            string aesKey                = aes.GenerateKey();
+            var jsonModel                = JsonConvert.SerializeObject(model);
+            string encryptedJsonBase64   = aes.Encrypt(aesKey, jsonModel);
 
             byte[] encryptedAesKey       = rsa.Encrypt( xmlRsaClientKey, aesKey );
-            string encryptedJsonBase64   = aes.Encrypt( aesKey, JsonConvert.SerializeObject(model) );
             string encryptedAesKeyBase64 = Convert.ToBase64String(encryptedAesKey);
 
             return new EncryptModel
@@ -37,19 +39,22 @@ namespace Frolf.Api.Encryption
             };
         }
 
-        public TModel Decrypt<TModel>(EncryptModel model) where TModel : class
+        public TModel Decrypt<TModel>(EncryptModel model)
+            where TModel : class
         {
             var encryptedAesKeyBytes  = Convert.FromBase64String(model.EncryptedAesKey);
-            var serverRsaPrivKey      = rsaKeyInfo.GetPrivateKeyXml();
 
-            var decrytedAesKeyBytes  = rsa.Decrypt(serverRsaPrivKey, encryptedAesKeyBytes);
-            var decrytedAesKeyBase64 = Convert.ToBase64String(decrytedAesKeyBytes);
-            var decryptedJsonBytes   = aes.Decrypt(decrytedAesKeyBase64, model.EncryptedJson);
+            var serverRsaPrivKey      = rsaKeyInfo.GetPrivateKeyXml();
+            var decrytedAesKeyBytes   = rsa.Decrypt(serverRsaPrivKey, encryptedAesKeyBytes);
+
+            var decrytedAesKeyBase64  = Convert.ToBase64String(decrytedAesKeyBytes);
+            var decryptedJsonBytes    = aes.Decrypt(decrytedAesKeyBase64, model.EncryptedJson);
 
             return JsonConvert.DeserializeObject<TModel>(decryptedJsonBytes);
         }
 
-        public TModel DecryptFromServer<TModel>(EncryptModel model) where TModel : class
+        public TModel DecryptFromServer<TModel>(EncryptModel model)
+            where TModel : class
         {
             var encryptedAesKeyBytes = Convert.FromBase64String(model.EncryptedAesKey);
             var serverRsaPrivKey     = rsaKeyInfo.GetPrivateKeyXml();

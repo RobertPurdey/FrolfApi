@@ -8,6 +8,7 @@ using Application.Query.Services.Games;
 using Domain.Commands.Contracts;
 using Domain.Entities;
 using Domain.Query.Contracts;
+using Frolf.Api.Composers.Games;
 using Frolf.Api.Mappers;
 using Frolf.Api.ModelDataControllers.Contracts;
 using Frolf.Api.Models.Games;
@@ -27,6 +28,7 @@ namespace Frolf.Api.ModelDataControllers.Games
         private readonly IReadOnlyEntityMapper<GameResultModel, Game> gameResultMapper;
         private readonly IQueryService<Game> gameQueryService;
         private readonly IQueryService<AppUser> userQueryService;
+        private readonly IGameComposer gameComposer;
         private readonly ICommandExecutor commandExecutor;
 
         public GameModelDataController(
@@ -34,12 +36,14 @@ namespace Frolf.Api.ModelDataControllers.Games
             IReadOnlyEntityMapper<GameResultModel, Game> gameResultMapping,
             IQueryService<Game> gameService,
             IQueryService<AppUser> userService,
+            IGameComposer gameComp,
             ICommandExecutor cmdExecutor)
         {
             gameMapper          = gameMapping;
             gameResultMapper    = gameResultMapping;
             gameQueryService    = gameService;
             userQueryService    = userService;
+            gameComposer        = gameComp;
             commandExecutor     = cmdExecutor;
         }
 
@@ -52,16 +56,10 @@ namespace Frolf.Api.ModelDataControllers.Games
         {
             foreach (var entity in gameQueryService.GetAll())
             {
-               // var isCurrUserInGroup = entity.FrolfGroup.Members
-               //     .Any(p => p.AppUserId == UserExtensions.GetCurrentUserId());
+                var model = new GameModel();
+                gameMapper.MapToApiModel(model, entity);
 
-             //   if ( isCurrUserInGroup )
-             //   { 
-                    var model = new GameModel();
-                    gameMapper.MapToApiModel(model, entity);
-
-                    yield return model;
-               // }
+                yield return model;
             }
         }
 
@@ -71,16 +69,10 @@ namespace Frolf.Api.ModelDataControllers.Games
 
             foreach (var entity in gameQueryService.GetWithQueryArg(queryArg))
             {
-              //  var isCurrUserInGroup = entity.FrolfGroup.Members
-               //     .Any(p => p.AppUserId == UserExtensions.GetCurrentUserId());
+                var model = new GameModel();
+                gameMapper.MapToApiModel(model, entity);
 
-                //if ( isCurrUserInGroup )
-               // { 
-                    var model = new GameModel();
-                    gameMapper.MapToApiModel(model, entity);
-
-                    yield return model;
-               // }
+                yield return model;
             }
         }
 
@@ -89,11 +81,21 @@ namespace Frolf.Api.ModelDataControllers.Games
             var entity  = FindEntity(id, gameQueryService);
             var model   = new GameModel();
 
-          //  IsCurrentUserInGroupVerify(entity);
-
             gameMapper.MapToApiModel(model, entity);
 
             return model;
+        }
+
+        public GameModel CreateGame(GameCreationModel model)
+        {
+            var game         = gameComposer.NewGame(model);
+            var addCommand   = new AddGameCommand { NewGame = game };
+            var newGameModel = new GameModel();
+
+            commandExecutor.Execute(addCommand);
+            gameMapper.MapToApiModel(newGameModel, game);
+
+            return newGameModel;
         }
 
         public override void Insert(GameModel newModel)

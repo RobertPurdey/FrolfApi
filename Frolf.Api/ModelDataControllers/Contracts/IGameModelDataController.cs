@@ -8,6 +8,7 @@ namespace Frolf.Api.ModelDataControllers.Contracts
         : IModelDataController<GameModel, GameFilter>
     {
         void SaveHoleScoreSet(HoleScoreSetUpdateModel updateRequest);
+        GameModel CreateGame(GameCreationModel groupId);
         GameResultModel GetGameResults(Guid gameId);
         bool CanAnnounceGame(Guid gameId);
         bool CanSpectateGame(Guid gameId);

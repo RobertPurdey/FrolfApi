@@ -1,16 +1,12 @@
 ﻿using Application.Command.FrolfGroups.Commands;
-using Application.Command.Games;
-using Application.Command.Games.Commands;
 using Application.Command.Players.Commands;
 using Application.Query.Services.FrolfGroups;
 using Domain.Commands.Contracts;
 using Domain.Entities;
 using Domain.Query.Contracts;
-using Frolf.Api.Composers.Games;
 using Frolf.Api.Mappers;
 using Frolf.Api.ModelDataControllers.Contracts;
 using Frolf.Api.Models.FrolfGroups;
-using Frolf.Api.Models.Games;
 using Frolf.Api.Models.Players;
 using System;
 using System.Collections.Generic;
@@ -25,33 +21,27 @@ namespace Frolf.Api.ModelDataControllers.FrolfGroups
     {
         private readonly IReadWriteEntityMapper<FrolfGroupModel, FrolfGroup> frolfGroupMapper;
         private readonly IReadWriteEntityMapper<PlayerModel, Player> playerMapper;
-        private readonly IReadWriteEntityMapper<GameModel, Game> gameMapper;
 
         private readonly IQueryService<FrolfGroup> frolfGroupQueryService;
         private readonly IQueryService<AppUser> appUserQueryService;
         private readonly IQueryService<Player> playerQueryService;
 
         private readonly ICommandExecutor commandExecutor;
-        private readonly IGameComposer gameComposer;
 
         public FrolfGroupModelDataController(
             IReadWriteEntityMapper<FrolfGroupModel, FrolfGroup> frolfGroupMapping,
             IReadWriteEntityMapper<PlayerModel, Player> playerMapping,
-            IReadWriteEntityMapper<GameModel, Game> gameMapping,
             IQueryService<FrolfGroup> frolfGroupService,
             IQueryService<AppUser> appUserService,
             IQueryService<Player> playerService,
-            ICommandExecutor cmdExecutor,
-            IGameComposer gameComp)
+            ICommandExecutor cmdExecutor)
         {
             frolfGroupMapper         = frolfGroupMapping;
             playerMapper             = playerMapping;
-            gameMapper               = gameMapping;
             frolfGroupQueryService   = frolfGroupService;
             appUserQueryService      = appUserService;
             playerQueryService       = playerService;
             commandExecutor          = cmdExecutor;
-            gameComposer             = gameComp;
         }
 
         public override void Delete(FrolfGroupModel modelToDelete)
@@ -144,19 +134,6 @@ namespace Frolf.Api.ModelDataControllers.FrolfGroups
             {
                 ThrowHttpResponseException("No group access.", HttpStatusCode.Unauthorized);
             }
-        }
-
-        public GameModel CreateGame(GameCreationModel model)
-        {
-            var game       = gameComposer.NewGame(model);
-            var addCommand = new AddGameCommand { NewGame = game };
-
-            commandExecutor.Execute(addCommand);
-
-            var newGameModel = new GameModel();
-            gameMapper.MapToApiModel(newGameModel, game);
-
-            return newGameModel;
         }
 
         public void LeaveGroup(Guid id)

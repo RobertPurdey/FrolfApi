@@ -10,7 +10,6 @@ using System.Web.Http;
 namespace Frolf.Api.Controllers
 {
     [Authorize]
-    //[RequireHttpsAuthorizationFilter]
     [AppUserLoginAuthorizationFilter]
     public class ControllerBase : ApiController
     {

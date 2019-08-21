@@ -10,7 +10,6 @@ namespace Frolf.Api.ModelDataControllers.Contracts
         : IModelDataController<FrolfGroupModel, FrolfGroupFilterModel>
     {
         IEnumerable<PlayerModel> GetGroupMembers(Guid groupId);
-        GameModel CreateGame(GameCreationModel groupId);
         void LeaveGroup(Guid id);
         void RemovePlayer(RemovePlayerModel removePlayer);
     }

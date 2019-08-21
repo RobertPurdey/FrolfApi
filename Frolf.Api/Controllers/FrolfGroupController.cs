@@ -4,7 +4,6 @@ using Frolf.Api.ModelDataControllers.Users;
 using Frolf.Api.Models;
 using Frolf.Api.Models.Encryption;
 using Frolf.Api.Models.FrolfGroups;
-using Frolf.Api.Models.Games;
 using Frolf.Api.Models.Players;
 using Security.Contracts;
 using System;
@@ -83,17 +82,6 @@ namespace Frolf.Api.Controllers
             var encryptMembers  = EncryptModel(groupMembers); 
 
             return Task.FromResult(encryptMembers);
-        }
-
-        [HttpPost]
-        [Route("creategame")]
-        public Task<EncryptModel> CreateGame([FromBody] EncryptModel model)
-        {
-            var gameCreation    = DecryptModel<GameCreationModel>(model);
-            var createdGame     = frolfGroupModelDataController.CreateGame(gameCreation);
-            var encryptGame     = EncryptModel(createdGame);
-
-            return Task.FromResult(encryptGame);
         }
 
         [HttpPost]
