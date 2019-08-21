@@ -32,6 +32,7 @@ namespace Frolf.Api.Mappers.Games
             var lastIndex     = rankedPlayers.Count() - 1;
             var rank          = 1;
             var index         = 0;
+            var sharedRank    = 0;
 
             foreach ( var player in rankedPlayers )
             {
@@ -43,7 +44,12 @@ namespace Frolf.Api.Mappers.Games
 
                     if ( nextPlayer != null && player.TotalScore < nextPlayer.TotalScore )
                     {
-                        rank++;
+                        rank       += sharedRank + 1;
+                        sharedRank  = 0;
+                    }
+                    else
+                    {
+                        sharedRank++;
                     }
                 }
             }
