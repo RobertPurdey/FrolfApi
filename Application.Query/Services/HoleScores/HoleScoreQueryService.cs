@@ -1,6 +1,7 @@
 ﻿using Domain.Entities;
 using Domain.Entities.Contracts;
 using Domain.Query;
+using Domain.Query.Contracts;
 using System.Linq;
 
 namespace Application.Query.Services.HoleScores
@@ -17,6 +18,17 @@ namespace Application.Query.Services.HoleScores
         {
             var query         = base.GetAll();
             var currUserGuid  = UserExtensions.GetCurrentUserId();
+
+            // Only allow access to hole scores where the current user is part
+            // of the group attached to the game the score is for.
+            return query.Where(
+                g => g.Round.Game.FrolfGroup.Members.Any(p => p.AppUserId == currUserGuid));
+        }
+
+        public override IQueryable<HoleScore> GetWithQueryArg(IQueryArg<HoleScore> arg)
+        {
+            var query = base.GetWithQueryArg(arg);
+            var currUserGuid = UserExtensions.GetCurrentUserId();
 
             // Only allow access to hole scores where the current user is part
             // of the group attached to the game the score is for.
