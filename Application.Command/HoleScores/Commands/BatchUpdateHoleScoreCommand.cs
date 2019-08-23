@@ -12,11 +12,13 @@ namespace Application.Command.HoleScores.Commands
 {
     public class BatchUpdateHoleScoreCommand : ICommand
     {
+        public Game Game;
         public Guid GameId;
         public IEnumerable<HoleScore> HolesToUpdate { get; set; }
 
-        public BatchUpdateHoleScoreCommand(Guid gameId, IEnumerable<HoleScore> holesToUpdate)
+        public BatchUpdateHoleScoreCommand(Game game, Guid gameId, IEnumerable<HoleScore> holesToUpdate)
         {
+            Game            = game;
             GameId          = gameId;
             HolesToUpdate   = holesToUpdate;
         }
@@ -36,6 +38,8 @@ namespace Application.Command.HoleScores.Commands
 
         public override void OnPreHandleCommand(BatchUpdateHoleScoreCommand command)
         {
+            AssertGameInProgress(command);
+
             // Only need one match to continue validation
             Assert(command.HolesToUpdate.Any(hs => hs.GameId == command.GameId), "game id doesn't match hole score game id");
             Assert(!command.HolesToUpdate.Any(hs => hs.Strokes < 1), "Can't have less than 1 stroke for a hole");
@@ -43,6 +47,13 @@ namespace Application.Command.HoleScores.Commands
 
             AssertOnlyOneGamesHolesUpdated(command);
             AssertCurrentUserIsGameOwner(command);
+        }
+
+        private void AssertGameInProgress(BatchUpdateHoleScoreCommand command)
+        {
+            var isValid = new IsGameInProgress().Validate(command.Game);
+
+            Assert(isValid, "Cannot complete a game that is not in the 'In Progress' state");
         }
 
         private void AssertOnlyOneGamesHolesUpdated(BatchUpdateHoleScoreCommand command)

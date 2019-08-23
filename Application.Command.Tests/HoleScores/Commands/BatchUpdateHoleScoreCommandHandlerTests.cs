@@ -1,6 +1,7 @@
 ﻿using Application.Command.HoleScores.Commands;
 using Domain.Commands.Contracts;
 using Domain.Entities;
+using Domain.Entities.Entities.Games;
 using Domain.Query.Contracts;
 using Moq;
 using NUnit.Framework;
@@ -23,6 +24,8 @@ namespace Application.Command.Tests.HoleScores.Commands
         Guid holeOneId;
         Guid holeTwoId;
 
+        Game game;
+
         List<HoleScore> holeScores;
 
         Mock<IRepository<HoleScore>> mockHoleScoreRepo;
@@ -31,11 +34,17 @@ namespace Application.Command.Tests.HoleScores.Commands
         [SetUp]
         public void Setup()
         {
+            SetupGame();
             SetupHoleScores();
             SetupMockWorkUnit();
 
-            command = new BatchUpdateHoleScoreCommand(Guid.NewGuid(), holeScores);
+            command = new BatchUpdateHoleScoreCommand(game, Guid.NewGuid(), holeScores);
             handler = new BatchUpdateHoleScoreCommandHandler(mockWorkUnit.Object);
+        }
+
+        private void SetupGame()
+        {
+            game = new Game { State = GameState.InProgress };
         }
 
         private void SetupHoleScores()

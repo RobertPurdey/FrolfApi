@@ -46,13 +46,14 @@ namespace Frolf.Api.ModelDataControllers.Users
 
         public IEnumerable<AppUserModel> GetAll()
         {
-            foreach (var entity in appUserQueryService.GetAll())
-            {
-                var model = new AppUserModel();
-                appUserMapper.MapToApiModel(model, entity);
+            throw new NotImplementedException();
+            //foreach (var entity in appUserQueryService.GetAll())
+            //{
+            //    var model = new AppUserModel();
+            //    appUserMapper.MapToApiModel(model, entity);
 
-                yield return model;
-            }       
+            //    yield return model;
+            //}       
         }
 
         public IEnumerable<AppUserModel> GetWithFilter(AppUserFilterModel filter)
@@ -62,12 +63,13 @@ namespace Frolf.Api.ModelDataControllers.Users
 
         public AppUserModel GetById(Guid id)
         {
-            var entity = FindAppUser(id);
-            var model  = new AppUserModel();
+            throw new NotImplementedException();
+            //var entity = FindAppUser(id);
+            //var model  = new AppUserModel();
 
-            appUserMapper.MapToApiModel(model, entity);
+            //appUserMapper.MapToApiModel(model, entity);
 
-            return model;
+            //return model;
         }
 
         public AppUserModel GetExtendedUser(Guid id)

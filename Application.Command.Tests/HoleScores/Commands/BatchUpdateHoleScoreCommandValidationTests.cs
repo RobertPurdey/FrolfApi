@@ -1,6 +1,7 @@
 ﻿using Application.Command.HoleScores.Commands;
 using Domain.Commands.Contracts;
 using Domain.Entities;
+using Domain.Entities.Entities.Games;
 using Domain.Query.Contracts;
 using Moq;
 using NUnit.Framework;
@@ -38,7 +39,7 @@ namespace Application.Command.Tests.HoleScores.Commands
             SetupHoleScores();
             SetupMockWorkUnit();
 
-            command = new BatchUpdateHoleScoreCommand(gameId, holeScores);
+            command = new BatchUpdateHoleScoreCommand(game, gameId, holeScores);
             handler = new BatchUpdateHoleScoreCommandValidation(mockWorkUnit.Object, mockGameQuery.Object);
         }
 
@@ -54,7 +55,9 @@ namespace Application.Command.Tests.HoleScores.Commands
             game = new Game
             { 
                 EntityKey = gameId,
-                CreatedBy = currentUserId
+                CreatedBy = currentUserId,
+                State     = GameState.InProgress
+               
             };
         }
 
@@ -92,6 +95,16 @@ namespace Application.Command.Tests.HoleScores.Commands
             UserExtensions.ImpersonateUser(currentUserId);
 
             Assert.DoesNotThrow( () => handler.PreHandle(command) );
+        }
+
+        [Test]
+        public void BatchUpdateHoleScoreCommandValidation_PreHandle_ExpectException_WhenGameCompleted()
+        {
+            UserExtensions.ImpersonateUser(currentUserId);
+
+            game.State = GameState.Completed;
+
+            Assert.Throws<Exception>( () => handler.PreHandle(command) );
         }
 
         [Test]

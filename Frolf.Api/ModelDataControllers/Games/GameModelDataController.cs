@@ -113,7 +113,7 @@ namespace Frolf.Api.ModelDataControllers.Games
             var gameId          = updateRequest.GameId;
             var newHoleScores   = updateRequest.HoleScoreUpdates;
             var game            = FindEntity(gameId, gameQueryService);
-            
+
             // Deny early 
             if ( game.CreatedBy != UserExtensions.GetCurrentUserId() )
             {
@@ -128,7 +128,7 @@ namespace Frolf.Api.ModelDataControllers.Games
                 holeScore.Strokes = newHoleScores[holeScore.EntityKey];
             }
 
-            var saveCmd = new BatchUpdateHoleScoreCommand(gameId, updatedHoleScores);
+            var saveCmd = new BatchUpdateHoleScoreCommand(game, gameId, updatedHoleScores);
             commandExecutor.Execute(saveCmd);
         }
 
@@ -165,8 +165,7 @@ namespace Frolf.Api.ModelDataControllers.Games
         {
             var currentUserId   = UserExtensions.GetCurrentUserId();
             var game            = FindEntity(gameId, gameQueryService);
-            var user            = FindEntity(currentUserId, userQueryService);
-            var canSpectate     = new IsUserAGroupMember(user.EntityKey).Validate(game.FrolfGroup);
+            var canSpectate     = new IsUserAGroupMember(currentUserId).Validate(game.FrolfGroup);
 
             return canSpectate;
         }

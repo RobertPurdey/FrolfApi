@@ -63,16 +63,17 @@ namespace Frolf.Api.ModelDataControllers.FrolfGroups
     
         public override IEnumerable<FrolfGroupInviteModel> GetWithFilter(FrolfGroupInviteFilterModel filter)
         {
-            var queryArg         = ConvertToQueryArg(filter); 
-            var filteredInvites  = frolfGroupInviteQueryService.GetWithQueryArg(queryArg);
+            throw new NotImplementedException();
+            //var queryArg         = ConvertToQueryArg(filter); 
+            //var filteredInvites  = frolfGroupInviteQueryService.GetWithQueryArg(queryArg);
 
-            foreach ( var entity in filteredInvites )
-            {
-                var model = new FrolfGroupInviteModel();
-                frolfGroupInviteMapper.MapToApiModel(model, entity);
+            //foreach ( var entity in filteredInvites )
+            //{
+            //    var model = new FrolfGroupInviteModel();
+            //    frolfGroupInviteMapper.MapToApiModel(model, entity);
 
-                yield return model;
-            }  
+            //    yield return model;
+            //}  
         }
 
         public override FrolfGroupInviteModel GetById(Guid id)
